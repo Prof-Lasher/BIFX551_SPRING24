@@ -28,7 +28,9 @@ This class introduces the R programming language and advanced concepts and techn
 On completion of the course, students should be comfortable with the following:
 * Best practices for developing code
 * R programming and package development within RStudio
-* Verison tracking and Collaborative woftware development using GitHub / git
+* Version tracking and Collaborative software development using GitHub / git
+* Creating Data visulaizations to be able to understand information about a given dataset
+* Linear regression and other data mining techinques
 
 ### Grading
 * Homework (25%): Short reading assignments and exercises that reinforce what is discussed in class. 
