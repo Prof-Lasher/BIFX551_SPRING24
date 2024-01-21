@@ -30,7 +30,7 @@ On completion of the course, students should be comfortable with the following:
 * R programming and package development within RStudio
 * Version tracking and Collaborative software development using GitHub / git
 * Creating Data visualizations to be able to understand information about a given dataset
-* Linear regression and other data mining techinques
+* Linear regression and other data mining techniques
 
 ### Grading
 * Homework (25%): Short reading assignments and exercises that reinforce what is discussed in class. 
