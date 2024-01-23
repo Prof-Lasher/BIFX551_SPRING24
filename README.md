@@ -87,7 +87,7 @@ This course is intended to be accessible for all students, including those with 
 |Apr 18, 2024| **Final Project Assigned** | |
 |Apr 25, 2024| Finish up any remaining topics <br> Final Project Questions | |
 |May 2, 2024| Final Project Questions | |
-|May 10, 2024| **FInal Project Due** | |
+|May 10, 2024| **Final Project Due** | |
 
 
 
