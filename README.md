@@ -1,7 +1,5 @@
 ## **BIFX551 - Advanced Data Analytics Programming with R - SPRING 2024**
 
-Brandon Lasher
-
 ### Course Description:
 
 This class introduces the R programming language and advanced concepts and techniques to discover patterns in data. Students will explore datasets by identifying variables with the most predictive power, and developing and assessing predictive models in R. Discussion topics include exploratory data analysis, visualization, and data transformation. Students will implement the following data mining techniques: regression, neural networks, classification, clustering, principal component analysis, and survival analysis. Advanced techniques such as bagging, boosting, and random forests will also be explored. Significant time will be spent learning to program within an integrated development environment and implementing version tracking.
