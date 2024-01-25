@@ -70,7 +70,7 @@ This course is intended to be accessible for all students, including those with 
 
 |Date|Topics|Reading|
 |:---:|:---|:---|
-|Jan 25, 2024| Syllabus <br> GitHub Demo <br> Markdown Review| Chapter 2 of [Hands-On Programming with R](https://rstudio-education.github.io/hopr/)  |
+|Jan 25, 2024| Syllabus <br> GitHub Demo <br> Markdown Review <br> [Markdown Documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)| Chapter 2 of [Hands-On Programming with R](https://rstudio-education.github.io/hopr/)  |
 |Feb 1, 2024| Basic R: basic functions, data frames, <br> factor variables, and other data types | Chapter 7 of [R for Data Science](https://r4ds.hadley.nz/) |
 |Feb 8, 2024| Basic R: Importing .txt and .csv, using <br> packages, plotting with base R | Chapter 2 of [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) |
 |Feb 15, 2024| R packages: knitr,tidyr/dplyr | Chapters 3 & 5 of [R for Data Science](https://r4ds.hadley.nz/)  |
