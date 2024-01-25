@@ -43,7 +43,7 @@ On completion of the course, students should be comfortable with the following:
 ### Grading
 * Homework (30%): Short reading assignments and exercises that reinforce what is discussed in class. 
 * Course Projects (60%): There will be 2 course projects throughout the semester.
-* Attendance and participation (10%): Being active on discord and in class. Do not be afraid to ask questions because I am sure you won't be the only one who is thinking it.
+* Attendance and participation (10%): Being active on discord and in class.
 * Homework is due by the end of the day on next class (or what would be the next class).
 * Late work will not be accepted. 
 * Hood's Grading Scale:
