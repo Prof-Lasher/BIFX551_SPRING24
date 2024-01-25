@@ -5,7 +5,7 @@ Out of undergrad I worked as a post bac on Fort Detrick in the Cancer and Develo
 
 ### Home life
 I have a dog named _Mocha_. She is a ~~naughty menace~~ very good girl! <br> 
-<img src="DSC_0035.JPG" wdith="200">
+<img src="DSC_0035.JPG" wdith="200" height="500">
 
 ###Hobbies
 
