@@ -14,7 +14,7 @@ I have a 12 year old son, named Clark, and a dog named Lily. <br>
 
 |Tic|Tac|Toe|
 |:-:|:-:|:-:|
-| O | X | |
-| O | O | X|
-| X | | O |
+| X | O | |
+| X | X | O|
+| O | | X |
 
