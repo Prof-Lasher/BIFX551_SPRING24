@@ -5,8 +5,7 @@ I’ve been working in the technology industry for 15 years. A work at Hughes ne
 
 ### Family
 I have a 12 year old son, named Clark, and a dog named Lily. <br>
-![My Lily Dog](lily_dog.jpg)
-
+<img src="lily_dog.jpg" width="200">
 
 ### Hobbies and interests
 * I actively code in 6 different coding languages, though I know many more.
