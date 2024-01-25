@@ -9,7 +9,7 @@ I have a 12 year old son, named Clark, and a dog named Lily. <br>
 
 ### Hobbies and interests
 * I actively code in 6 different coding languages, though I know many more.
-* I love to snowboard and play soccer
+* I love to snowboard and play soccer.
 * I'm a fan of Magic the Gathering.
 
 |Tic|Tac|Toe|
