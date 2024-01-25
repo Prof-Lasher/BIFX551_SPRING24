@@ -8,7 +8,7 @@ I have a 12 year old son, named **_Clark_**, and a dog named _Lily_. <br>
 <img src="lily_dog.jpg" width="200">
 
 ### Hobbies and interests
-* I'm a huge fan of strategy games. 
+* I'm a huge fan of strategy games and puzzles. 
 * I love to snowboard and play soccer.
 
 |Tic|Tac|Toe|
