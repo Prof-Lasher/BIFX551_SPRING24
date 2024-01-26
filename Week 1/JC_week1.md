@@ -14,10 +14,12 @@ I enjoy reading journal articles on the developing immunological therapeutics be
 Outside of laboratory related activities I like to spend my time visiting and trying new coffee or tea spots around the DMV area. I've created a reference with a few that I recommend.
 
 | Cafe            | Location        | Notes                                                                                                                      |
-|------------|------------|------------------------------------------------|
+|-------------------|-------------------|----------------------------------|
 | Coffee Republic | Rockville, MD   | Really strong coffee, LOVE IT!                                                                                             |
 | Manifest Bread  | Riverdale, MD   | Really good local bread. Their homemade vanilla syrup is the best!                                                         |
 | Gute Leute      | Arlington, VA   | If you love Espresso shots this is the place.                                                                              |
 | Bon Tea House   | Centreville, VA | Mainly sells Matcha drinks. Their Tea Blends are really refreshing. **Bonus Item** -they have Matcha soft-serve ice-cream! |
 
-Had to attach an image of the ice-cream OBSSESED.
+#### [The ice-cream below, OBSSESED!]{.underline}
+
+<img src="image_67221761.jpg" width="250"/>\
