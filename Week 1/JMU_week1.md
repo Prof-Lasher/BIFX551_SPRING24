@@ -15,6 +15,8 @@ I have a dog named _Mocha_. She is a ~~naughty menace~~ very good girl! <br>
 + Playing board games
 
 _Full Body Workout Plan_ 
-|Deadlift|3 x 5|185lbs|
-|Bench Press|3 x 5|120 lbs|
-|Bicep curls|3 x 15|15 lbs|
+| Movement | Sets/Reps | Weight |
+| --------------- | --------------- | --------------- | 
+| Deadlift | 3 x 5 | 185lbs | 
+| Bench Press | 3 x 5 | 120 lbs |
+| Bicep curls | 3 x 15 | 15 lbs |
