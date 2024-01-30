@@ -15,9 +15,16 @@ I have worked in several fields:
 
 ### Family
 
-I don't have any children. I used to have two dogs named Aggie and Ziva.\
-<img src=“IMG_0566.jpg” width=2>\
-*Aggie* (black dog), *Ziva* (red dog)
+I don't have any children. I used to have two dogs named Aggie and Ziva.<br>
+<img src="IMG_0566.jpg" width="220" /></br>
+<!---
+This is another way you could have also displayed the image. 
+![Aggie(black dog) and Ziva(red dog)](IMG_0566.jpg) <br>
+---->
+
+*Aggie* (black dog), *Ziva* (red dog) <br>
+
+
 
 ### Hobbies and interests
 
