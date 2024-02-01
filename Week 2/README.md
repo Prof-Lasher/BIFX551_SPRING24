@@ -2,6 +2,13 @@
 <ol>
 <li>Write your own function to convert between any two units. The function should take two arguments, a number, and an argument specifying the direction of the conversion. Include your function with documentation string (description of arguments and how the function works) in an R-markdown or .R file.</li>
 <li>Load a builtin dataframe, you can see the list with data(). Use the summary function to write a short description of some interesting aspects of the dataframe. Write your results in an R-markdown file.</li>
+<li>Reading
+<ul>
+  <li>https://r4ds.hadley.nz/data-import</li>
+  <li>https://bookdown.org/rdpeng/exdata/the-base-plotting-system-1.html</li>
+</ul>
+  
+</li>
 </ol>
 
 # Submission
