@@ -126,17 +126,17 @@ mat1[, aa]
 d1 <- letters[1:10]                           #letters a...j
 d2 <- 1:10                                    #numbers 1 to 10
 d3 <- 10:1
-str(df1)                                       
-str(df2)
+str(d1)                                       
+str(d2)
 df23 <- data.frame(d2, d3)                   #concatenate as data frame
 df23
-is.matrix(df11)                                #a data frame is not a matrix by this test!
+is.matrix(df23)                                #a data frame is not a matrix by this test!
 df12 <- data.frame(d1, d2)                   
 str(df12)
 df12[5, ]                                      #select 5th row
 
 #---List---                                    #ordered set of components that may have different types; most flexbile data structure
-list1 <- list(df1, df2, vec1, mat1)            #list of letters, vectors, matrix
+list1 <- list(d1, d2, vec1, mat1)            #list of letters, vectors, matrix
 list1[1]                                       #select first list element, keeping the name
 list1[[1]]                                     #select first list element (letters), dropping the name
 list1[1:3]                                     #select the first 3 elements of the list
