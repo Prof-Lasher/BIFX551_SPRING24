@@ -3,14 +3,12 @@
 <li>Write your own function to convert between any two units. The function should take two arguments, a number, and an argument specifying the direction of the conversion. Include your function with documentation string (description of arguments and how the function works) in an R-markdown or .R file.</li>
 <li>Load a builtin dataframe, you can see the list with data(). Use the summary function to write a short description of some interesting aspects of the dataframe. Write your results in an R-markdown file.</li>
 </ol>
-___
 
 # Submission
 Please submit in the same format as previous weeks (however in the week 2 folder)  <br>
 \<INTIALS\>_week2.R or <INTIALS>_week2.Rmd <br>
 It is okay to use the same .Rmd file to do both part just be sure to mark it clearly with headings.
 
-___
 
 # Helpful References 
 ## Functions
