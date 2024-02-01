@@ -13,7 +13,7 @@
 
 # Submission
 Please submit in the same format as previous weeks (however in the week 2 folder)  <br>
-\<INTIALS\>_week2.R or <INTIALS>_week2.Rmd <br>
+\<INTIALS\>_week2.R or \<INTIALS\>_week2.Rmd <br>
 It is okay to use the same .Rmd file to do both part just be sure to mark it clearly with headings.
 
 
