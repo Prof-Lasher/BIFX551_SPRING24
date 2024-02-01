@@ -12,14 +12,11 @@ It is okay to use the same .Rmd file to do both part just be sure to mark it cle
 
 # Helpful References 
 ## Functions
-<ul>
-<li>[https://rstudio-education.github.io/hopr/basics.html#write-functions](https://rstudio-education.github.io/hopr/basics.html#write-functions)</li>
-<li>[https://intro2r.com/functions-in-r.html](https://intro2r.com/functions-in-r.html)</li>
-</ul>
+* [https://rstudio-education.github.io/hopr/basics.html#write-functions](https://rstudio-education.github.io/hopr/basics.html#write-functions)
+* [https://intro2r.com/functions-in-r.html](https://intro2r.com/functions-in-r.html)
 
 ## R Markdown
-<ul>
-<li>[https://bookdown.org/yihui/rmarkdown/](https://bookdown.org/yihui/rmarkdown/)</li>
-<li>[https://intro2r.com/rmarkdown_r.html](https://intro2r.com/rmarkdown_r.html)</li>
-<li>[https://r4ds.had.co.nz/r-markdown.html](https://r4ds.had.co.nz/r-markdown.html)</li>
-<ul>
+* [https://bookdown.org/yihui/rmarkdown/](https://bookdown.org/yihui/rmarkdown/) 
+* [https://intro2r.com/rmarkdown_r.html](https://intro2r.com/rmarkdown_r.html)
+* [https://r4ds.had.co.nz/r-markdown.html](https://r4ds.had.co.nz/r-markdown.html)
+
