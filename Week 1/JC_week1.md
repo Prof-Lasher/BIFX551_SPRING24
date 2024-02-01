@@ -22,4 +22,4 @@ Outside of laboratory related activities I like to spend my time visiting and tr
 
 #### [The ice-cream below, OBSSESED!]{.underline}
 
-<img src="image_67221761.jpg" width="250"/>\
+<img src="image_67221761.JPG" width="250"/>\
