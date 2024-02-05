@@ -1,0 +1,58 @@
+---
+title: "MJM_week2"
+author: "Mike Murphy"
+date: "2024-02-01"
+output: html_document
+---
+
+```{r Question 1}
+#Write your own function to convert between any two units. The function should take two arguments, a number, and an argument specifying the direction of the conversion. Include your function with documentation string (description of arguments and how the function works) in an R-markdown or .R file.
+
+#Converts grams to pounds or pounds to grams
+#number = weight in grams or pounds
+#direction = native units (g or lbs)
+#1 gram = 0.00220462 pounds
+g_lbs <- function(number, direction){
+  if (direction == "g") {
+    result = round(number*0.00220462, 6)
+    return(paste(result, "lbs"))
+  }
+  else if(direction =="lbs"){
+    result = round(number/0.00220462, 2) 
+    return(paste(result, "g"))
+  }
+  else{
+    return("Error: please input direction as g or lbs")
+  }
+}
+
+g_lbs(137, "g") #Expected result is 0.302033
+g_lbs(493, "lbs") #Expected result is 223621
+```
+
+```{r Question 2}
+#Load a builtin dataframe, you can see the list with data(). Use the summary function to write a short description of some interesting aspects of the dataframe. Write your results in an R-markdown file.
+
+#loading librarys
+library("ggplot2")
+
+#Summary of Orange data
+summary(Orange)
+#Storing Orange data in dataframe to view in Rstudio
+Orange_df <- data.frame(Orange)
+#Factoring tree variable to order in graph
+Orange_df$Tree <- factor(c(Orange_df$Tree), levels = c("1", "2", "3", "4", "5"))
+#Plotting Orange data
+ggplot(data= Orange_df, aes(x=`age`, y=`circumference`, color = `Tree`)) +
+  geom_point() + #Adds point
+  geom_line() + #Adds line
+  theme_bw() + #Changes theme of graph
+  ggtitle("Organge Trees") +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  xlab("Age") + 
+  ylab("Circumference") +
+  scale_color_brewer(palette="Dark2") #Changing colors on graph
+
+#The 'Orange' dataset measures 5 tree's circumference over time. There are 7 data points across time for each tree. Circumference in the orange trees increases with age. Tree 1 and 3 are the smallest, with the final circumference <150. Tree 4 is has the largest circumference at 214. 
+
+```
