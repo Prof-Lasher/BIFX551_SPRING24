@@ -1,0 +1,34 @@
+# Q1
+
+## conversion of cup to mL or mL to cup
+
+### 1 cup = 236.59 mL
+
+### requires the measurement and input unit to convert - use either mL or cup to convert
+
+conversion <- function(measurement, input_unit) {result = switch(input_unit, "mL"=(1/236.59)*measurement, "cup"=measurement*236.59) 
+return(result)}
+
+### test run of conversion
+
+conversion(100, "mL") 
+
+conversion(100, "cup")
+
+# Q2
+
+### to find dataset
+
+data()
+
+# provides additional information under Help about the data
+
+?Titanic
+
+# gives statistical information in a brief format
+
+summary(Titanic)
+
+### The information provided by Description is brief, yet informative enought to describe the data and how it can be used. Details and Source provide further infoormation about why the information is useful and where it has been collected.
+
+### The summary function states there are four factors, of which would be Class, Sex, Age and Survived. Since all but Class have only two outcomes, it would be easy to use the TRUE/FALSE assignment since there are two outcomes. It is still possible to use TRUE/FALSE for Class, but one of the four classes would need to be selected, making it easier to become confused.
