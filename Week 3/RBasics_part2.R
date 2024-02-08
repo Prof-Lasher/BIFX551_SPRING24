@@ -49,6 +49,11 @@ install.packages("tidyr")   #install tidyr package from CRAN
 
 
 #-------------------------- import/export data ---------------------------------
+# 
+# download.file("http://statmath.wu.ac.at/~wurzer/ADAR/Data/dataceo.txt",
+#               "dataceo.txt",
+#               method = "libcurl")
+
 p <- file.choose()                       # choose a file to import interactively
 p                                        # path to chosen file
 file.show(p)                             # check file structure (header, seperators, row numbers etc.)
@@ -58,15 +63,9 @@ dataceo <- read.table(p, header = TRUE)  # read txt-file
 
 dataceo <- read.table("http://statmath.wu.ac.at/~wurzer/ADAR/Data/dataceo.txt", header = TRUE) #use url to import a table
 
-#read spss files with and without labels
-Cars0 <- read.spss(file = "http://statmath.wu.ac.at/~wurzer/ADAR/Data/Cars.sav")
-Cars1 <- read.spss(file = "http://statmath.wu.ac.at/~wurzer/ADAR/Data/Cars.sav", to.data.frame = TRUE)   
-Cars2 <- read.spss(file = "http://statmath.wu.ac.at/~wurzer/ADAR/Data/Cars.sav", to.data.frame = TRUE, use.value.labels = FALSE)   
-
-head(Cars0)                                  #list
-head(Cars1)                                  #Column names and first 6 rows of the dataset
-head(Cars2, 10)                              #Column names and first 10 rows of the dataset
-tail(Cars1)                                  #Column names and last 6 rows of the dataset
+head(dataceo)                                  #list
+head(dataceo, 10)                              #Column names and first 10 rows of the dataset
+tail(dataceo)                                  #Column names and last 6 rows of the dataset
 
 #excel files should be saved as .csv and read using read.csv(), correspondingly 
 #(recommended because of figures, frames, formattings etc. in excel may cause troubles if the excel file is 
