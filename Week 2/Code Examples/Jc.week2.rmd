@@ -1,0 +1,60 @@
+---
+title: "Jc.week2.rmd Q1"
+output: html_document
+date: "2024-02-06"
+---
+
+## Conversion Function
+
+```{R Assignment 1}
+#Define a function to convert between milliliter and microliter 
+#Number = volume in microliter (ul) or milliliter (ml)
+#Unit = measurement units (ul or ml)
+#1 ml = 1000ul 
+
+convertml_ul <- function(value, unit){
+   if(unit=="ml"){
+    result= round(number*1000,6)
+    return(paste(result,"ul"))
+  }
+  else if(direction=="ul"){
+    result=round(number/1000,5)
+    return(paste(result,"ml"))
+  }
+  else{
+    return("Error:please input unit")
+  }
+  return(result)
+}
+
+convertml_ul(100, "ml")#expected result is 0.1
+convertml_ul(100, "ul")#expected result is 100,000
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+title: "Jc.week2.rmd Q2"
+output: html_document
+date: "2024-02-06"
+---
+
+## Data Frame
+
+```{R Assignment 2 Emeralds}
+library(ggplot2)
+library(dplyr)
+
+Large <- Emeralds %,%
+  filter(carat <=[between(x,100,500)]
+```
+
+## Including Plots
+
+```{R Assignment 2 Emeralds }
+large %>%
+  ggplot(aes(carat))+ Frequence(binwidth = 100)
+plot(large)
+```
+
+#Summary 'EMERALD' data sets measures large carat sizes between 100 and 500 at a frequency carat values in increments of 100 in the plot.
