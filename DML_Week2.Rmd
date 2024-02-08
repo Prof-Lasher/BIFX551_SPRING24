@@ -1,0 +1,71 @@
+---
+title: "DML_Week2"
+output: html_document
+date: "2024-02-07"
+---
+
+# ```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = TRUE)
+# ```
+
+## My Functions
+
+### This function converts US gallons to liters and displays to 3 significant digits:
+```{r}
+# Convert gallons to liters
+# x is the number of gallons to convert to liters
+# conv is the conversion factor
+liters <- function(x, conv){
+  # Conversion factor
+  conv <- 3.78541
+  y <- x * conv
+  # Display to 3 significant digits
+  signif(y, digits=3)
+}
+liters(25)
+
+```
+
+### This function converts US gallons to liters or liters to gallons:
+
+```{r}
+gallons_or_liters_conversion <- function(value, direction) {
+  
+  if (direction == "liters") {
+    # Convert gallons to liters
+    liters <- value * 3.78541
+    return(liters)
+    
+  } else if (direction == "gallons") {
+    # Convert liters to gallons
+    gallons <- value / 3.78541
+    return(gallons)
+  }
+}
+
+# Gallons to liters
+to_liters <- gallons_or_liters_conversion(25, "liters")
+cat("25 gallons is equal to", to_liters, "liters.\n")
+
+# Liters to gallons
+to_gallons <- gallons_or_liters_conversion(30, "gallons")
+cat("30 liters is equal to", to_gallons, "gallons.\n")
+```
+
+
+
+## Loading a dataframe
+
+### This is the Orange tree dataset. It consists of 35 rows and 3 columns of Tree, age, and circumference. The age is calulated as days since 1968/12/31. Circumference is in mm. The first measurement was taken after about a third of a year, while the last measurement was taken at 4 and a third years. The minimum circumference was 30mm or 3cm. The maximum circumference was 214mm or 21.4cm. The mean age was 922 days and median age was 1004 days. The mean circumference was 115.9mm and the median was 115.0
+
+```{r}
+data("Orange")
+
+head(Orange)
+
+nrow(Orange)
+
+ncol(Orange)
+
+summary(Orange)
+```
