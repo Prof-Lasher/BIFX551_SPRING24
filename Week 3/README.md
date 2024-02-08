@@ -58,9 +58,9 @@ boxplot(iris$Sepal.Length ~ iris$Species,
 - Go through the vignette for readr.
 - Find a csv or txt file, download it, read it into a dataframe, use summary() to describe it, and create a labeled graph. Submit as an .R file. It should run and produce your graph.
 - Reading 
-	-[R Markdown - Chapter 2] (https://bookdown.org/yihui/rmarkdown/basics.html)
+	- [R Markdown - Chapter 2](https://bookdown.org/yihui/rmarkdown/basics.html)
 		- Please watch the videos too
-	-[R For Data Science - Chapter 9] -https://r4ds.hadley.nz/layers
+	- [R For Data Science - Chapter 9](https://r4ds.hadley.nz/layers)
 		- This will introduce ggplot2
 
 # Submission
