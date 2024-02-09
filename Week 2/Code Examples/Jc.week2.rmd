@@ -14,11 +14,11 @@ date: "2024-02-06"
 
 convertml_ul <- function(value, unit){
    if(unit=="ml"){
-    result= round(number*1000,6)
+    result= round(value*1000,6)
     return(paste(result,"ul"))
   }
-  else if(direction=="ul"){
-    result=round(number/1000,5)
+  else if(unit=="ul"){
+    result=round(value/1000,5)
     return(paste(result,"ml"))
   }
   else{
