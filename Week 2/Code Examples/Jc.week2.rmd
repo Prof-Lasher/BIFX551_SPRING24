@@ -41,20 +41,20 @@ date: "2024-02-06"
 
 ## Data Frame
 
-```{R Assignment 2 Emeralds}
+```{R Assignment 2 Cars}
 library(ggplot2)
 library(dplyr)
+str( cars)
+summary(cars)
 
-Large <- Emeralds %,%
-  filter(carat <=[between(x,100,500)]
+speed <- cars %>%
+  filter(speed <=100)
 ```
 
 ## Including Plots
 
-```{R Assignment 2 Emeralds }
-large %>%
-  ggplot(aes(carat))+ Frequence(binwidth = 100)
-plot(large)
+```{R Assignment 2 Car Speed }
+plot(speed)
 ```
 
-#Summary 'EMERALD' data sets measures large carat sizes between 100 and 500 at a frequency carat values in increments of 100 in the plot.
+#Summary 'CAR Speed' data sets measures 100 cars between the speed 5-25 miles per hours within 60 miles distance. Majority of the cars speeds falls between 15-20 miles per hours.
