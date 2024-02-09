@@ -1,0 +1,135 @@
+------------------------------------------------------------------------
+
+# Part 1
+
+------------------------------------------------------------------------
+
+## Defining the function:
+
+```         
+convert_currency <- function(amt, dir = "USD_to_MXN") {
+# Function to convert between USD and MXN
+```
+
+### Arguments:
+
+-   amt: Numeric value representing the amount of money to be converted.
+
+-   dir: Character string specifying the dir of the conversion.
+
+-   Possible values are "USD_to_MXN" (default) or "MXN_to_USD".
+
+## Returns:
+
+-   Numeric value representing the converted amount.
+
+------------------------------------------------------------------------
+
+#### [**RELEVANT INFO**]{.underline}
+
+#### Current exchange rate as of January 2022 `usd_to_mxn_rate <- 20.25`.
+
+------------------------------------------------------------------------
+
+## `if else` Statement:
+
+```         
+  if (dir == "USD_to_MXN") {
+    converted_amt <- amt * usd_to_mxn_rate
+    return(converted_amt)
+  } else if (dir == "MXN_to_USD") {
+    converted_amt <- amt / usd_to_mxn_rate
+    return(converted_amt)
+  } else {
+    stop("Invalid dir. Please specify either 'USD_to_MXN' or 'MXN_to_USD'.")
+  }
+}
+```
+
+## How It Works
+
+1.  Creates a function that requires amount and direction of conversion.
+
+2.  With the amount and direction, there is an if else statement that first tests USD_to_MXN and if not satisfied MXN_to_USD.
+
+3.  When satisfied, the statement returns the converted value (output) based off of an equation that uses input value amount and current conversion rate.
+
+4.  The if statement can also give an error statement if USD or MXN are not in the conversion direction value.
+
+## Examples
+
+```         
+usd_amt <- 50
+mxn_amt <- convert_currency(usd_amt, dir = "USD_to_MXN")
+print(paste("$", usd_amt, "USD is equivalent to", round(mxn_amt), "MXN"))
+
+mxn_amt <- 1000
+usd_amt <- convert_currency(mxn_amt, dir = "MXN_to_USD")
+print(paste(mxn_amt, "MXN is equivalent to $", round(usd_amt), "USD"))
+```
+
+------------------------------------------------------------------------
+
+# Part 2 - Introduction to Dataframes
+
+------------------------------------------------------------------------
+
+### 1.) Introduce Dataframe:
+
+```         
+data(cars)
+
+cars
+```
+
+#### Gather information about the data using `str()` and `summary()` functions.
+
+```         
+> str(cars)
+
+> summary(cars)
+```
+
+### 2.) Summarize Dataframe:
+
+```         
+> str(cars)
+'data.frame':   50 obs. of  2 variables:
+ $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
+ $ dist : num  2 10 4 22 16 10 18 26 34 17 ...
+
+> summary(cars)
+     speed           dist       
+ Min.   : 4.0   Min.   :  2.00  
+ 1st Qu.:12.0   1st Qu.: 26.00  
+ Median :15.0   Median : 36.00  
+ Mean   :15.4   Mean   : 42.98  
+ 3rd Qu.:19.0   3rd Qu.: 56.00  
+ Max.   :25.0   Max.   :120.00 
+```
+
+### Summary / Data Structure Description:
+
+#### [Data Summary:]{.underline}
+
+#### Speed:
+
+-   Slowest recorded speed was 4.0 and the fastest speed was 25.0
+
+-   Average speed was 15.4
+
+#### Distance:
+
+-   Shortest distance recorded was 2.0, while the furthest distance recorded was 120.00
+
+-   The average distance was 42.98
+
+#### [Data Structure:]{.underline}
+
+-   The observations are all in the form of numbers.
+
+-   There are a total of 50 observations for each variable.
+
+-   For each observation there were two variables recorded, speed and distance.
+
+    ### 
