@@ -1,3 +1,7 @@
+#Ignore All hidden files ( for mac users )
+.*
+!/.gitignore
+
 # History files
 .Rhistory
 .Rapp.history
