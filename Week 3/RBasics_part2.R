@@ -8,7 +8,7 @@ e <- letters
 f <- rainbow(26)
 
 #look for help
-?df 
+??data.frame 
 
 #Create a dataframe
 df = data.frame( "numbers"=d, "letters"=e, "colors"=f )
@@ -149,7 +149,7 @@ plot(x =d, y = d^2,
 points(x =d, y = d, pch=19, col="green")
 points(x =d, y = d^3, pch=19, col="red")
 
-legend( "topleft", lwd = 1, legend=c("x", "x^2","x^3"), col=c("blue","green", "red") )
+legend( "topleft", lwd = 1, legend=c("x", "x^2","x^3"), col=c("green","blue", "red") )
 
 
 #create a 2x2 graph grid
@@ -179,7 +179,7 @@ barplot(Sepal.Length ~ Species     ,
 # create dice roll
 roll <- function( nDice=2, diceSides=6){
   dice <- sample( diceSides, size = nDice, replace=TRUE)
-  return sum(dice)
+  return (sum(dice))
 }
 
 nRolls <- replicate(100000, roll(nDice=2))
@@ -188,7 +188,7 @@ nRolls <- replicate(100000, roll(nDice=2))
 hist(nRolls)
 
 par(mfrow = c(2, 2))
-hist(nRolls, breaks = 13 )
+hist(breaks = 13, x=nRolls )
 hist(nRolls, breaks = 7 )
 hist(nRolls, breaks = 13, freq = FALSE )
 hist(nRolls, breaks = seq(2,12, length.out=5 ) )
@@ -218,8 +218,8 @@ boxplot(iris$Sepal.Length ~ iris$Species,
 
 #------------------------ pie chart ---------------------------------
 mytable <- table(iris$Species)
-lbls <- paste(names(mytable), "\n", mytable, sep="")
-pie(mytable, labels = lbls,col = rainbow(length(lbls)),
+lbls <- paste(names(mytable), "\n", round(mytable/sum(mytable) * 100), "%", sep="")
+pie(mytable, labels = lbls, col = rainbow(length(lbls)),
     main="Pie Chart of Species\n (with sample sizes)")
 
 
@@ -228,16 +228,16 @@ pie(mytable, labels = lbls,col = rainbow(length(lbls)),
 coplot(long ~ lat | depth, data = quakes)
 coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks, col = 'red')
 
-
-coplot(Life.Exp ~ Income | Illiteracy * state.region, number = 3,
-       panel=function(x,y,...) panel.smooth(x,y, span= .8, ...))
-
-
 #
 #Class example
 #
-#boulder_precip$TEMP = na_if(boulder_precip$TEMP, -999 )
-#boulder_precip2 <- boulder_precip[complete.cases(boulder_precip),]
-3plot( boulder_precip2$TEMP ~ as.Date(boulder_precip2$DATE,  tryFormats = c("%m/%d/%y")), pch=19, type="b" )
+
+
+
+
+
+boulder_precip$TEMP = na_if(boulder_precip$TEMP, -999 )
+boulder_precip2 <- boulder_precip[complete.cases(boulder_precip),]
+plot( boulder_precip2$TEMP ~ as.Date(boulder_precip2$DATE,  tryFormats = c("%m/%d/%y")), pch=19, type="b" )
 
       
