@@ -172,7 +172,15 @@ roll(diceSides=100:200)
 nRolls <- replicate(10000, roll(nDice=2))
 
 #Plot the output
-hist(nRolls)
+h = hist(nRolls)
+
+
+#Plot normal distro on top of histo
+xfit <- seq(min(nRolls), max(nRolls), length = 40) 
+yfit <- dnorm(xfit, mean = mean(nRolls), sd = sd(nRolls)) 
+yfit <- yfit * diff(h$mids[1:2]) * length(nRolls) 
+
+lines(xfit, yfit, col = "black", lwd = 2)
 
 #--------------------------------- end Functions  ---------------------------------
 

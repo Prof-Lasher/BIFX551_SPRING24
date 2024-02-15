@@ -7,7 +7,7 @@
 
 #### Hobbies and Interests
 -*I am a big fan of Marvel Movies.*
--*I enjoy reading Fictions and dab in Photography from time to time ![cloud](file:///Users/hamogus/Pictures/Photos%20Library.photoslibrary/private/com.apple.Photos/ExternalEditSessions/4A234A8C-25F6-4C31-A24B-2D12FF04C668/EFE68500-1094-473E-B54E-2389A27A03C8%20copy.jpeg)
+-*I enjoy reading Fictions and dab in Photography from time to time ![cloud](cloud.jpg)
 
 ##### Class Schedule
 | Date         | Reading List                   |

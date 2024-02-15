@@ -1,0 +1,25 @@
+---
+title: "JMU_week2"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##Converting Fahrenheit to Celsius
+
+C<-function(x){
+  x<-(x-32)*(5/9) #The conversion formula
+  return(x)
+}
+print(C(100))
+
+##Loading a built-in dataframe
+data("Orange")
+head(Orange)
+summary(Orange$circumference)
+#An interesting aspect of the dataframe, which is data about orange tree growth, is that the largest circumference a tree got to was 214.0
+
+
+
