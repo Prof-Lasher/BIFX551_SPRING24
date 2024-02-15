@@ -47,6 +47,11 @@ iris_bySepalLengthAndSpecies <- iris %>% group_by(Species) %>% arrange(Sepal.Len
 #summarize performs aggregating functions on groups of data. It most often must be paired with group_by to reach
 #its full potential.
 ```
+
+# Submission
+Please make your own folder under the week 4 folder with your initials ( this will help to keep individual files seperate) <br>
+and then create a file called INTIALS_week4.Rmd <br>
+
 # Assignment
 
 Find **Three** biological data sources that you can use for your first project. 
