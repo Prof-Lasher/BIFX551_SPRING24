@@ -1,0 +1,23 @@
+---
+title: "Orange Tree Growth"
+author: "Isabella Czernia"
+date: 2/08/2024
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Summary
+
+`r summary(Orange)`
+
+It seems that age of a tree correlates to a larger trunk circumference.
+
+## Plots
+
+
+```{r Orange, echo=FALSE, eval=TRUE}
+plot(Orange)
+```
+

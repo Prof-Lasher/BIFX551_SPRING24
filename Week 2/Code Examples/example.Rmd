@@ -1,7 +1,12 @@
 ---
+
+
+---
 title: "Diamond sizes"
-date: 2016-08-25
-output: html_document
+date: "2016-08-25"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include = FALSE}
