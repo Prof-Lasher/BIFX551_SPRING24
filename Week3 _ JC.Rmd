@@ -1,0 +1,53 @@
+---
+title: "Hurricane and Threath  "
+output: html_document
+date: "2024-02-13"
+---
+## Hurricane and Threath 
+
+Hurricane and Treat Level : Analysis of the deaths throughout the years. Does the category level impact damage ?
+```{r}
+#https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/Hurricanes.csv
+
+file <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/Hurricanes.csv","file.csv")
+
+library(readr)
+file_df <-read_csv2("file.csv")
+
+ggplot(data=file_df, mapping=aes(x=deaths, y=year, color=name))+geom_point(mapping= aes(color=name, shape=name))+labs (title="Category Threath and Deaths Throughout the Years ", subtitle="Hurricanes Levels Impact", x="Death Counts ", y="Years")
+```
+
+## Summary
+
+The date appers to show a higher Death count as the Time increases. All of the Hurricanes are not plotted. 
+
+---
+title: "Cars data library "
+output: html_document
+date: "2024-02-13"
+---
+
+### Efficient Cars
+
+Comparison of car types and its fuel efficiency. Which car has the best miles per gallon based on its engine size?
+
+### Date Frame
+
+```{r,echo=TRUE}
+library(tidyverse)
+
+mpg
+
+glimpse(mpg)
+```
+
+### Plot Graph
+
+```{r, echo=TRUE}
+
+ggplot(data =mpg, mapping = aes (x= displ, y=hwy, color= class))+ geom_point(mapping= aes(color= class, shape= class )) + labs( title = " Car Engine and Fuel efficiency on Highway", subtitle= "cross referencing car models", x = "Car Engine Size (liters)", y= "Car fuel efficiency (miles per gallon)")
+```
+
+### Summary
+
+There is a negative correlation to large engine size and car fuel efficiency. The larger the engine is per liters the less miles per gallon the car is able to drive for. Luckily, it appears that the market sells more models that has better efficiency in car fuel, since the smaller the engine there more miles per gallons the car can hold.
