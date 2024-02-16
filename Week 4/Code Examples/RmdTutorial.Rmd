@@ -103,7 +103,7 @@ print(x)
 1.  Bold\
     Normal text\
     **Bold** text\
-    **Bold** text
+    __Bold__ text
 
 2.  Italics\
     Normal text\
@@ -132,14 +132,12 @@ print(x)
 This is how you link an image:\
 ![](./Picture.jpg)
 
-
 ```{r, echo = TRUE, fig.align='center'}
 # This is another way!
 knitr::include_graphics("./Picture.jpg")
 ```
 
-
-7.  Linebreaks (double space or a \\ after each sentance will move sentance to next line.)\
+7.  Linebreaks (double space or a \\ after each sentence will move sentence to next line.)\
     This will generate\
     a linebreak.
 
@@ -160,24 +158,25 @@ knitr::include_graphics("./Picture.jpg")
 
 10. Tables\
 
-| Col1 | Col2 | Col3 |
-|------|------|------|
+| Col1  | Col2  | Col3  |
+|-------|-------|-------|
 | Cell1 | Cell2 | Cell3 |
 | Cell4 | Cell4 | Cell6 |
 
-11.  R Code Chunks\
-https://bookdown.org/yihui/rmarkdown/r-code.html
+11. R Code Chunks\
+    <https://bookdown.org/yihui/rmarkdown/r-code.html>
 
 12. R Plot Output\
+
 ```{r out.width='50%', fig.align='center', fig.cap='Example Plot'}
 plot( 1:10,  (1:10+rnorm(10) ) )
 ```
-13. Math expressions\
-Inline LaTeX equations can be written in a pair of dollar signs using the LaTeX syntax\
-For inline &dollar; or &dollar;&dollar; for block \
 
-$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$
-$$\begin{array}{ccc}
+13. Math expressions\
+    Inline LaTeX equations can be written in a pair of dollar signs using the LaTeX syntax\
+    For inline \$ or \$\$ for block\
+
+$$f(k) = {n \choose k} p^{k} (1-p)^{n-k}$$ $$\begin{array}{ccc}
 x_{11} & x_{12} & x_{13}\\
 x_{21} & x_{22} & x_{23}
 \end{array}$$
@@ -195,7 +194,6 @@ $$\begin{vmatrix}a & b\\
 c & d
 \end{vmatrix}=ad-bc$$
 
-
 14. YMAL Headers\
-https://zsmith27.github.io/rmarkdown_crash-course/lesson-4-yaml-headers.html 
-------------------------------------------------------------------------
+    <https://zsmith27.github.io/rmarkdown_crash-course/lesson-4-yaml-headers.html> ------------------------------------------------------------------------
+
