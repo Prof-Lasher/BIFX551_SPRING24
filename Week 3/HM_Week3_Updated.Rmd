@@ -1,0 +1,64 @@
+---
+title: "HM_Week3_Updated"
+author: "Hamere Mogus"
+date: "2024-02-17"
+output: html_document
+---
+
+loading packages and downloading data
+```{r}
+if (!require("tidyverse")) install.packages("tidyverse")
+if (!require("readr")) install.packages("readr")
+library(tidyverse)
+library(readr)
+url <- "https://api.coronavirus.data.gov.uk/v2/data?areaType=overview&metric=hospitalCases&format=csv"
+Corona_data <- read.csv(url)
+```
+
+Data structure 
+```{r}
+nrow(Corona_data)
+ncol(Corona_data)
+str(Corona_data)
+```
+
+Summary statistics
+```{r}
+summary(Corona_data)
+```
+
+Basic Plotting-Scatter Plot
+```{r}
+plot(as.Date(Corona_data$date),
+     Corona_data$hospitalCases,
+     col= "darkblue",
+     xlab="Year",
+     ylab = "Hospital Cases",
+     main=" Corona Hospital Cases Over Time")
+```
+
+Basic Plotting-Histogram
+```{r}
+hist(Corona_data$hospitalCases,
+main='Histogram of Corona Cases',
+xlab = 'Hospital Cases',
+ylab = 'Frequency',
+breaks=5,
+col="lightblue",
+border="red")
+```
+
+Basic Plotting-Box Plot
+```{r}
+Corona_data$year <- format(as.Date(Corona_data$date), "%Y")
+boxplot(Corona_data$hospitalCases ~ Corona_data$year,
+xlab="Month",
+ylab="Hospital Cases",
+main="Hospital Cases by Year",
+col=c("green","lightgreen","blue","lightblue"))
+```
+
+ggplot
+```{r}
+ggplot(Corona_data, aes(x=date, y=hospitalCases, group=1)) + geom_line(color="red")
+```
