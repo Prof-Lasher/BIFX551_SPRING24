@@ -1,0 +1,69 @@
+---
+title: "Tidyr Examples"
+output: 
+  html_notebook: default
+  html_document:
+    df_print: paged
+  pdf_document: default
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+Tidyr is great for tidy data and making tables longer and wider with pivot_longer and pivot_wider.
+```{r}
+#pivot_wider takes a pair of columns that are acting as 'labels' and 'values' and turns them into
+#a tidy dataframe with named columns and rows that represent the same type of data
+pop.csv <- download.file(url = 'https://raw.githubusercontent.com/Prof-Lasher/BIFX551_SPRING24/main/Week%204/Code%20Examples/SYB62_1_201907_Population%2C%20Surface%20Area%20and%20Density.csv','pop.csv')
+
+```
+
+```{r}
+library(readr)
+library(tidyr)
+pop_df <- read_csv('pop.csv',skip=1)  #skip the headers
+```
+
+```{r}
+wide_pop_df <- pivot_wider(data = pop_df, names_from = 'Series', values_from = 'Value')
+
+#pivot_longer collapses several columns into two containing the column names as well as the values in those columns.
+#This is typically used to make the data more presentable.
+original_pop_df <-  wide_pop_df %>% pivot_longer( 
+                                cols = c('Population mid-year estimates (millions)':'Surface area (thousand km2)'),
+                                names_to = 'Series',
+                                values_to = 'Value')
+```
+
+
+
+```{r}
+#Clean up the NAs created
+# Move columns back to orignal position
+clean_original_pop_df <- original_pop_df %>%
+                         filter( !(is.na(Value) ) ) %>% 
+                         relocate( Series:Value, .before=Footnotes )
+                         
+clean_original_pop_df
+```
+
+```{r}
+if (!require(janitor)) install.packages("janitor"); require(janitor)
+janitor::compare_df_cols(pop_df, clean_original_pop_df)
+
+
+new_df <- clean_original_pop_df %>%
+          group_by(Series) %>%
+          mutate( rank = min_rank(desc(Value) ) )
+
+new_df %>% 
+  filter( Series == "Population mid-year estimates (millions)" ) %>%
+  arrange(  rank )
+
+
+new_df %>% 
+  filter( Series == "Population density" ) %>%
+  arrange(  rank )
+
+
+```
