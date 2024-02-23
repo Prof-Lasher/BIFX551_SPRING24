@@ -1,0 +1,65 @@
+---
+title: "Reproducible Data"
+author: "Jamilet Cordon"
+date: "2024-02-22"
+output: html_document
+---
+
+## Foxes Consumption
+
+Foxes are scavengers that either travel alone or in groups. Hunting and scavenging for food are two separate techniques that animals use to survive, which can either be completed in a group or alone. This data set we will [estimate the group-size and average food consume within foxes.]{.underline}
+
+I am interested to see if group size affects the average amount of food these foxes are able to eat. I think I will have difficulties in defining the variables to fit onto the plot, specifically in being able to produce a trend.
+
+### DATA SET: Foxes Consumption
+
+```{r setup}
+
+file <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/foxes.csv", "file.csv")
+
+library(readr)
+file_df <-read_csv2("file.csv")
+as.numeric(groupsize)
+as.numeric(avgfood)
+as.numeric(grou)
+
+ggplot(data=file_df,mapping = aes(x=groupsize, y=avgfood) + geom_point(mapping= aes(color=group, shape=group))+ labs (title="Foxes Average Food Consumption", subtitle="estimating groupsize average consumption of food", x="Groupsize", y"Average Food"))
+       
+
+```
+
+## Elephants Mating Frequencies
+
+Elephants are mammals that are steadily declining in population, due to several factors such as deforestation, urban planning, and climate changes. I am interesting to see if there is a Maternal effect in the elephants mating frequencies. This data set will [estimate the age to mating ratio]{.underline}. I see difficulties in also producing a chart by defining my variables.
+
+### DATA FILE: Elephants
+
+```{r}
+file <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/elephants.csv", "file.csv")
+
+library(readr)
+file_df <-read_csv2("file.csv")
+
+
+ggplot(data=file_df,mapping = aes(x=Age, y=Matings)+ labs (title="Elpehants Age and frequent Mating", subtitle="estimating age and mating ", x="Age", y"Mating"))
+
+geom_point(mapping= aes(color=age, shape=age))
+```
+
+## Salamander Population Coverage
+
+Salamanders are amphibians that are extremely resistant to changes. There are specific species that can only reproduce in certain water temperatures, and water purity but overall extremely resistant. This data set will estimate the population coverage of salamanders in certain areas. I am interested to see which climates consist of higher populations. I will find difficultiess in defining the variable as numeric values. 
+
+### DATE FILE: Salamander
+
+```{r}
+file <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/salamanders.csv", "file.csv")
+
+library(readr)
+file_df <-read_csv2("file.csv")
+
+
+ggplot(data=file_df,mapping = aes(x=SALAMAN, y=PCTCOVER)+geom_point(mapping= aes(color=site, shape=site)) labs (title="Percentage cover of Salamander year 2010", subtitle="estimating salamander population ", x="Salamander Count", y="Percent cover in Landscape-Data"))
+
+
+```
