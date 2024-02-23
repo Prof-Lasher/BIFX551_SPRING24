@@ -1,0 +1,210 @@
+---
+title: "JCS_Week4"
+author: "Josie Sdhultz"
+date: "2024-02-22"
+output: html_document
+---
+
+## Sea Otter Diet
+Link: https://alaska.usgs.gov/data/nearshoreMonitoring/gulfWatch_seaotterSpraint/gulfWatch_seaotterSpraint.zip
+File name: KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint.csv
+Location: D:\PersonalFiles\-0722\Hood\551\BIFX551_SPRING24\Week 4
+
+  The diets of sea otters are studied over an extended period of time (26 years), which should make the data reliable. The sea otters reside in the Gulf of Alaska and the diets are studied via fecal samples. There is a lot of nomenclature that requires the use of reading the summary repeatedly, which may become confusing and mixed up. I am not very familiar with longitude and latitude, which may make the data even more confusing to work with or can be left out altogether depending on the desired interpretation. I would like to understand whether the sea otters diet changes by region based upon abundance of the species present or sea otters seek these species. 
+  
+Helpful link to identify attributes; https://alaska.usgs.gov/data/metadata/ecosystems/nearshoreMonitoring/gulfWatch_seaotterSpraint/KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint_metadata.html#1
+
+Regions are as follows; Kachemak Bay (KBAY), Kenai Peninsula (KEP; Kenai Fjords National Park (KEFJ)), Alaska Peninsula (AKP; Katmai National Park and Preserve (KATM)), and Prince William Sound (PWS; northern [NPWS] and western Prince William Sound).
+
+Fecal matter collected has presence of the species listed as follows;
+A-absent
+P-present
+PR-predominant
+
+
+
+Download the file, unzip and read in a dataframe below. Use the summary function to look for abnormalities that stand out. 
+```{r}
+download.file(url = 'https://alaska.usgs.gov/data/nearshoreMonitoring/gulfWatch_seaotterSpraint/gulfWatch_seaotterSpraint.zip', destfile = 'otter.zip', mode = 'wb')
+
+unzip('otter.zip')
+
+library(readr)
+otter_df <- read_csv(('KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint.csv'),
+  col_types = cols(
+    Region = col_factor(levels = c("KBAY", "KEP", "KEFJ", "AKP", "KATM", "PWS")), 
+    BlockNumber = col_skip(),
+    BlockName = col_skip(),
+    SiteID = col_skip(),
+    SiteName = col_skip(),
+    SamplingDate = col_skip(),
+    Year = col_integer(), 
+    Haulout = col_skip(),
+    Latitude = col_double(),
+    Longitude = col_double(), 
+    SpraintNum = col_skip(),
+    Clam = col_factor(levels = c("A", "P", "PR")),
+    Crab = col_factor(levels = c("A", "P", "PR")),
+    Mussel = col_factor(levels = c("A", "P", "PR")),
+    Urchin = col_factor(levels = c("A", "P", "PR")),
+    Other = col_factor(levels = c("A", "P", "PR")), 
+    OtherSpecies = col_logical(),
+    Notes = col_character()
+    )
+  )
+summary(otter_df)
+```
+Found the species listed could be confusing without further context, so renamed it. Viewed the summary to ensure it is sensible. 
+
+```{r}
+library(dplyr)
+new_otter_df <- otter_df %>%
+  rename(Crab_Ingestion = Crab, Mussel_Ingestion = Mussel, Urchin_Ingestion = Urchin, Other_Ingestion = Other, OtherSpecies_Ingestion = OtherSpecies)
+summary(new_otter_df)
+```
+Create a new table to focus in on Urchin_Ingestion. Will use barplot to provide a visual on the Regions consumption of Urchins.
+
+```{r}
+library(tidyr)
+urchin_counts <- new_otter_df %>%
+  count(Region, Urchin_Ingestion) %>%
+  pivot_wider(names_from = Urchin_Ingestion, values_from = n, values_fill = 0)
+
+print(urchin_counts)
+
+barplot(PR ~ Region, data = urchin_counts, xlab = "Region", ylab = "Predominant Urchin count", main = "Urchin Ingestion by Region")
+```
+
+## Drosophila melanogaster gravity study
+Link: https://osdr.nasa.gov/bio/repo/data/studies/OSD-85
+File name: GLDS-85_rna_seq_differential_expression.csv
+
+To find file enter URL; https://osdr.nasa.gov/bio/repo/data/studies/OSD-85 --> Select file OSD-85 --> Select GeneLab Processed RNA-Seq Files --> Select Differential expression analysis data --> Select file GLDS-85_rna_seq_differential_expression.csv --> Select Download (only the last file is required for this study)
+Location: D:\PersonalFiles\-0722\Hood\551\BIFX551_SPRING24\Week 4
+
+  Developmental biology is interesting alone, but in this case, the development of Drosophila melanogaster have been used to study changes in gene expression, with gravity being the variable. Axes of the body, such as anteroposterior (A-P), dorsoventral (D-V), and left-right (L-R), are created during development through expression, though seeing how it changes with stronger gravity could teach a lot. Four pupae were developed in 3 g and the four others with the standard 1 g as expected on Earth. The general format is good, especially with the addition of NA for blank answers, though GeneName seems to have variation which could pose a problem. The names to a few of the columns can be lengthy and confusing because of that, but overall make sense. I would like to understand which genes present significant differences in gene expression, which can be done filtering for p-values of less than 0.05. Adjusted is likely more beneficial than unadjusted, though this can also be looked at further when viewing the results. 
+  
+
+Find the file through the link and download as described above. Change the directory as necessary when reading the file. 
+
+```{r}
+download.file("https://osdr.nasa.gov/bio/repo/data/studies/OSD-85", "GLDS-85_rna_seq_differential_expression.csv")
+
+import <- read_csv("D:/PersonalFiles/-0722/Hood/551/BIFX551_SPRING24/Week 4/GLDS-85_rna_seq_differential_expression.csv")
+
+library(readr)
+fly_df <- read_csv(("D:/PersonalFiles/-0722/Hood/551/BIFX551_SPRING24/Week 4/GLDS-85_rna_seq_differential_expression.csv"),
+  col_types = cols(
+    ENSEMBL = col_character(), 
+    SYMBOL = col_character(), 
+    GENENAME = col_character(), 
+    REFSEQ = col_character(), 
+    ENTREZID = col_integer(),
+    STRING_id = col_skip(),
+    GOSLIM_IDS = col_character(),
+    Dmel_Can-S_wo_1G_Rep1_G1R1 = col_double(),
+    Dmel_Can-S_wo_1G_Rep2_G1R2 = col_double(),
+    Dmel_Can-S_wo_1G_Rep3_G1R3 = col_double(),
+    Dmel_Can-S_wo_1G_Rep4_G1R4 = col_double(),
+    Dmel_Can-S_wo_3G_Rep1_G3R1 = col_double(),
+    Dmel_Can-S_wo_3G_Rep2_G3R2 = col_double(),
+    Dmel_Can-S_wo_3G_Rep3_G3R3 = col_double(),
+    Dmel_Can-S_wo_3G_Rep4_G3R4 = col_double(),
+    All.mean = col_double(), 
+    All.stdev = col_double(),
+    LRT.p.value = col_double(), 
+    Group.Mean_(Dmel_1G) = col_double(), 
+    Group.Mean_(Dmel_3G) = col_double(), 
+    Group.Stdev_(Dmel_1G) = col_double(), 
+    Group.Stdev_(Dmel_3G) = col_double(), 
+    )
+)
+
+Log2fc_(Dmel_1G)v(Dmel_3G) = col_double(),
+    Stat_(Dmel_1G)v(Dmel_3G) = col_double(),
+    P.value_(Dmel_1G)v(Dmel_3G) = col_double(), 
+    Adj.p.value_(Dmel_1G)v(Dmel_3G) = col_double(),
+    Log2fc_(Dmel_3G)v(Dmel_1G) = col_double(),
+    Stat_(Dmel_3G)v(Dmel_1G) = col_double(),
+    P.value_(Dmel_3G)v(Dmel_1G) = col_double(),
+    Adj.p.value_(Dmel_3G)v(Dmel_1G) = col_double(),
+
+
+
+summary(fly_df)
+```
+## Youth risk behavior
+Link: https://data.cdc.gov/api/views/vba9-s8jp/rows.csv?accessType=DOWNLOAD 
+File name: Nutrition__Physical_Activity__and_Obesity_-_Youth_Risk_Behavior_Surveillance_System.csv
+Location: D:\PersonalFiles\-0722\Hood\551\BIFX551_SPRING24\Week 4
+
+  Diet has an impact on everybody whether it is conscious or not. Being able to compare the diet and activity level of adolescents to understand disparities makes it interesting and necessary. Applying attention to such details could drive change in the way this age group is addressed and bring awareness. The layout of the table could use a lot of work with dplyr to make it functional depending on the study. Hopefully the descriptive columns are written to categorize easily. The columns are not adequately labeled to use fully and data to describe it could not be found. I would like to observe the largest QuestionID counts (potentially top 10) within the study and observe the most common --- 
+
+https://www.cdc.gov/healthyyouth/data/yrbs/overview.htm
+```{r}
+download.file(url = 'https://data.cdc.gov/api/views/vba9-s8jp/rows.csv?accessType=DOWNLOAD', destfile = 'disease', mode = 'wb')
+
+library(readr)
+disease_df <- read_csv(('Nutrition__Physical_Activity__and_Obesity_-_Youth_Risk_Behavior_Surveillance_System.csv'),
+col_types = cols(
+    YearStart = col_integer(), 
+    YearEnd = col_integer(),
+    LocationAbbr = col_character(),
+    LocationDesc = col_skip(),
+    Datasource = col_skip(),
+    Class = col_factor(levels = c("Physical Activity", "Obesity / Weight Status", "Sugar Drinks", "Fruits and Vegetables", "Television Viewing")),
+    Topic = col_character(), 
+    Question = col_character(),
+    Data_Value_Unit = col_skip(),
+    Data_Value_Type = col_skip(), 
+    Data_Value = col_integer(),
+    Data_Value_Alt = col_integer(),
+    Data_Value_Footnote_Symbol = col_skip(),
+    Data_Value_Footnote = col_skip(),
+    Low_Confidence_Limit = col_double(),
+    High_Confidence_Limit  = col_double(), 
+    Sample_Size = col_integer(),
+    Total = col_skip(), 
+    Gender = col_factor(levels = c("Male", "Female")),
+    Grade = col_factor(levels = c("10th", "11th", "12th", "9th")),
+    Race_Ethnicity = col_character(), 
+    GeoLocation = col_double(),
+    ClassID = col_character(),
+    TopicID = col_character(), 
+    QuestionID = col_character(),
+    DataValueTypeID = col_skip(),
+    Race_LocationID = col_integer(), 
+    StratificationCategory1 = col_factor(levels = c("Total", "Grade", "Race_Ethnicity", "Gender")), 
+    Stratification1 = col_character(), 
+    StratificationCategoryId1 = col_character(), 
+    StratificationID1 = col_character()
+  )
+)
+
+summary(disease_df)
+
+```
+
+Using a boxplot to view the class can give insight about what the focus of the study was and if the topic was consistent throughout the years. 
+```{r}
+library(dplyr)
+library(tidyr)
+
+disease_df_new <- disease_df %>%
+  count(LocationAbbr, Class)
+
+summary(disease_df_new)
+
+print(disease_df_new)
+
+plot(location_counts$LocationAbbr, location_counts$Count, 
+     xlab = "LocationAbbr", ylab = "Count", 
+     main = "Count of LocationAbbr",
+     col = "blue", pch = 19)
+
+plot_disease <- plot(class_counts$LocationAbbr, class_counts$Class, xlab = "State", ylab = "Class", main = "Count of Class by State", pch = 19)
+
+boxplot_disease <- boxplot(disease_df$YearStart ~ disease_df$Class, xlab="Class", ylab="YearStart", main="Distribution of question focus")
+
+
+  ```
