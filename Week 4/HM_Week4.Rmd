@@ -1,0 +1,178 @@
+---
+title: "HM_Week4"
+author: "Hamere Mogus"
+date: "2024-02-18"
+output: html_document
+---
+Loading Necessary Libraries 
+```{r}
+library("tidyr")
+library("dplyr")
+library("ggplot2")
+```
+
+Loading Dataset-1
+```{r}
+Breast_C<- read.csv("https://query.data.world/s/uwoxma5cvr2gqrzlhafwwpc5tietdh?dws=00000", header=TRUE, stringsAsFactors=FALSE);
+View(Breast_C)
+```
+
+Data Structure 
+```{r}
+Breast_C<- Breast_C[-1]
+drop_na(Breast_C)
+str(Breast_C)
+dim(Breast_C)
+head(Breast_C)
+tail(Breast_C)
+summary(Breast_C)
+```
+
+grouping by diagnosis and counting the number 
+```{r}
+Breast_C %>%
+  group_by(diagnosis) %>%
+  summarise(count = n())
+```
+
+Calculating the Frequency of cases for each diagnosis
+```{r}
+table(Breast_C$diagnosis)
+round(prop.table(table(Breast_C$diagnosis)) * 100, digits = 1)
+```
+
+Histogram of Diagnosis with two levels 
+```{r}
+ggplot(Breast_C, aes(x = diagnosis)) +
+  geom_bar(fill = "lightgreen", color = "darkblue") +
+  labs(title = "Histogram of Diagnosis",
+       x = "Diagnosis", y = "Frequency") +
+  theme_minimal()
+```
+
+Summary Statistics of Numerical Variables
+```{r}
+Numerical_Variables <- select_if(Breast_C, is.numeric)
+Summary_NV <- Numerical_Variables %>%
+  summarise_all(list(mean = mean, sd = sd))
+print(Summary_NV)
+```
+The dataset is interesting due to its significant medical relevance, offering detailed measurements important for early detection and diagnosis. It contains a wide range of features, including compactness and smoothness, providing a large view of breast cancer characteristics. Anticipated challenges include biased performance and issues related to data quality and consistency. One question I would like addressed would be how to ensure consistent predictive accuracy in modeling efforts.
+
+
+
+Loading Dataset-2
+```{r}
+download.file("https://storage.googleapis.com/kagglesdsdata/datasets/1120859/1882037/healthcare-dataset-stroke-data.csv?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20240222%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240222T040154Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=6d7c887aec30168a1b3e4a2f510983591c7ca207dcb5748e4269f95ee1839c94420d4ea4f7ee773703931b78b2fd0ba2af96229e653ba055b17e37bd32405d10096a62bb4eb46faf2376c1b80cbe32a8e03b9c403e1b79eda1790518124f1654e91c05d7236906ced514157f43015d37482294e39507ec64131f17c0c157cc13bc30de0ba7ef388194d064a3cbcbecd2565fc9bd3bdadf96652991ddd6bf9c2ffa20f45844dd9e2eb1611d913d10acdf8095661fbe732c0143a2d93770d6a28d7ad86d50d8bbcf2bc7768068d931b98448cb43f5e8620bd917d1d7dafac3f55cfba620028103b51f9d5ca83cdad0c511a5febb12f7bfdf70e8c2759a7be72b54", "healthcare-dataset.csv")
+Stroke_df <- read.csv(file = "healthcare-dataset.csv")
+```
+
+Data Structure
+```{r}
+Stroke_df <- Stroke_df[-1]
+sapply(Stroke_df, function(x) sum(is.na(x)))
+View(Stroke_df)
+str(Stroke_df)
+dim(Stroke_df)
+summary(Stroke_df)
+```
+
+Frequency table for the Categorical Variables
+```{r}
+table(Stroke_df$gender)
+table(Stroke_df$ever_married)
+table(Stroke_df$work_type)
+table(Stroke_df$Residence_type)
+table(Stroke_df$smoking_status)
+table(Stroke_df$stroke)
+```
+
+
+Converting Stroke_df$stroke to a factor with two levels
+```{r}
+Stroke_df$stroke <- factor(Stroke_df$stroke, levels = c("0", "1"), labels = c("Stroke Not Detected", "Stroke Detected"))
+print(Stroke_df$stroke)
+```
+
+Data Visulization for Categorical Variables 
+```{r}
+ggplot(Stroke_df, aes(x = gender, fill = stroke)) +
+  geom_bar() +
+  labs(title = "Stroke by Gender", x = "Gender", y = "Count", fill = "Stroke") +
+  theme_minimal()
+
+ggplot(Stroke_df, aes(x = ever_married, fill = stroke)) +
+  geom_bar() +
+  labs(title = "Stroke by EverMariied", x = "Ever Married", y = "Count", fill = "Stroke") +
+  theme_minimal()
+
+ggplot(Stroke_df, aes(x = work_type, fill = stroke)) +
+  geom_bar() +
+  labs(title = "Stroke by Work Type", x = "Work Type", y = "Count", fill = "Stroke") +
+  theme_minimal()
+
+ggplot(Stroke_df, aes(x = Residence_type, fill = stroke)) +
+  geom_bar() +
+  labs(title = "Stroke by Residence Type", x = "Residence Type", y = "Count", fill = "Stroke") +
+  theme_minimal()
+
+ggplot(Stroke_df, aes(x = smoking_status, fill = stroke)) +
+  geom_bar() +
+  labs(title = "Stroke by Smoking Status", x = "Smoking Status", y = "Count", fill = "Stroke") +
+  theme_minimal()
+```
+
+
+Select Numerical Variables
+```{r}
+Stroke_df %>% 
+  select(age,hypertension, heart_disease,avg_glucose_level,bmi)
+```
+
+Summary Statistics for the Numerical Variables 
+```{r}
+summary(Stroke_df$age)
+summary(Stroke_df$hypertension)
+summary(Stroke_df$heart_disease)
+summary(Stroke_df$avg_glucose_level)
+summary(Stroke_df$bmi)
+```
+This dataset is interesting as it has valuable insights into the relationship between different kinds of health factors and the occurrence of strokes.Anticipated difficulties can come from handling numerical variables and ensuring the data's reliability.A question i would like to explore would be on the average glucose level variation between individuals who have experienced stroke and those who have not. 
+
+
+
+Loading Dataset-3
+```{r}
+Cardiovascular <- read.csv("https://query.data.world/s/w27qapzm473j5ky4xh2sq4krl7vaga?dws=00000", header=TRUE, stringsAsFactors=FALSE);
+```
+
+Data Structure
+```{r}
+drop_na(Cardiovascular)
+View(Cardiovascular)
+str(Cardiovascular)
+dim(Cardiovascular)
+summary(Cardiovascular)
+```
+
+Filtering data for a specific year
+```{r}
+Cardiovascular_2007 <- Cardiovascular %>% 
+  filter(Year == 2007)
+
+Cardiovascular_2013 <- Cardiovascular %>% 
+  filter(Year == 2013)
+```
+
+
+Data Visualization-Plot for Coronary Heart Disease Over Time
+```{r}
+ggplot(Cardiovascular, aes(x = Year, y = Data_Value)) +
+  geom_bar(stat = "identity", fill = "lightgreen") +
+  labs(title = "Prevalence of Coronary Heart Disease Over Time",
+       x = "Year",
+       y = "Prevalence") +
+  theme_minimal()
+```
+This dataset is interesting because it provides different demographic groups, national, state, county, and selected sites regions across the United States over time. The anticipated difficulties could be handling discrepancies and complexity in the data. A question i would like answered in this dataset is if there are any disparities. 
+
