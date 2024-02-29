@@ -1,3 +1,8 @@
+# Project 1 - Mid-term Assignment
+  * *This will be turned in via blackboard*
+  * *See blackboard for rubric*
+  * *Due March 18, 2024* 
+
 # T Tests
 
 A t-test is used to decide if the means of two groups are the same or different. The farther the t-value is from 0, the more likely it is that the difference in the means is not due to chance.
@@ -35,5 +40,3 @@ ggsave('my_plot.png', plot = last_plot(), device = 'png')
 ```
 
 
-#Check Blackboard for Project 1 Assignment
-*IMPORTANT!!! - This will be turned in via blackboard*
