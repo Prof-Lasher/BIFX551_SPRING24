@@ -1,0 +1,1612 @@
+<?xml version="1.0"?>
+<metadata>
+  <idinfo>
+    <citation>
+      <citeinfo>
+        <origin>U.S. Geological Survey - Alaska Science Center</origin>
+        <origin>National Park Service - Southwest Alaska Inventory and Monitoring Network</origin>
+        <origin>University of Alaska Fairbanks - College of Fisheries and Ocean Sciences</origin>
+        <pubdate>20220714</pubdate>
+        <title>Sea Otter Spraint Data from Kachemak Bay, Katmai National Park and Preserve, Kenai Fjords National Park and Prince William Sound</title>
+        <geoform>tabular digital data</geoform>
+        <serinfo>
+          <sername>Sea Otter Spraint Data from Kachemak Bay, Katmai National Park and Preserve, Kenai Fjords National Park and Prince William Sound</sername>
+          <issue>ver 3.0, November 2023</issue>
+        </serinfo>
+        <pubinfo>
+          <pubplace>Anchorage, Alaska</pubplace>
+          <publish>U.S. Geological Survey, Alaska Science Center</publish>
+        </pubinfo>
+        <othercit>Suggested Citation: U.S. Geological Survey - Alaska Science Center, National Park Service - Southwest Alaska Inventory and Monitoring Network, University of Alaska Fairbanks - College of Fisheries and Ocean Sciences, 2022. Sea otter spraint data from Kachemak Bay, Katmai National Park and Preserve, Kenai Fjords National Park and Prince William Sound (ver 3.0, November 2023): U.S. Geological Survey data release, https://doi.org/10.5066/P9EDM6NL</othercit>
+        <onlink>https://doi.org/10.5066/P9EDM6NL</onlink>
+        <lworkcit>
+          <citeinfo>
+            <origin>U.S. Geological Survey, Alaska Science Center</origin>
+            <pubdate>2005</pubdate>
+            <title>Nearshore Marine Ecosystem Research Program</title>
+            <geoform>website</geoform>
+            <serinfo>
+              <sername>Alaska Science Portal</sername>
+              <issue>99</issue>
+            </serinfo>
+            <pubinfo>
+              <pubplace>Anchorage, Alaska</pubplace>
+              <publish>U.S. Geological Survey, Alaska Science Center</publish>
+            </pubinfo>
+            <othercit>This is a link to the broader USGS Alaska Science Center research project supported by these data. Users will find a description of the research project and links to associated reports, publications, and data products.</othercit>
+            <onlink>https://alaska.usgs.gov/portal/project.php?project_id=99</onlink>
+          </citeinfo>
+        </lworkcit>
+      </citeinfo>
+    </citation>
+    <descript>
+      <abstract>These data are part of the Gulf Watch Alaska (GWA) long-term monitoring program. This dataset consists of observations of sea otter (Enhydra lutris) fecal samples (spraint). Observers examined fresh spraint piles to identify major prey classes in the samples and to determine sea otter diets in the Gulf of Alaska region.</abstract>
+      <purpose>The purpose of this dataset is to allow comparisons of sea otter spraint data metrics across time and geographic location. Metrics include: predominance and presence/absence of major prey categories. Comparisons also include metrics from one location over time or from one time across locations. Sampling was conducted within regions of Alaska including: Kachemak Bay (KBAY), Kenai Peninsula (KEP; Kenai Fjords National Park (KEFJ)), Alaska Peninsula (AKP; Katmai National Park and Preserve (KATM)), and Prince William Sound (PWS; northern [NPWS] and western Prince William Sound).</purpose>
+    </descript>
+    <timeperd>
+      <timeinfo>
+        <rngdates>
+          <begdate>1997</begdate>
+          <enddate>2023</enddate>
+        </rngdates>
+      </timeinfo>
+      <current>observed</current>
+    </timeperd>
+    <status>
+      <progress>In work</progress>
+      <update>Annually</update>
+    </status>
+    <spdom>
+      <descgeog>Katmai National Park and Preserve, Kachemak Bay, Kenai Fjords National Park, Prince William Sound</descgeog>
+      <bounding>
+        <westbc>-156.64</westbc>
+        <eastbc>-145.41</eastbc>
+        <northbc>61.12</northbc>
+        <southbc>57.93</southbc>
+      </bounding>
+    </spdom>
+    <keywords>
+      <theme>
+        <themekt>USGS Metadata Identifier</themekt>
+        <themekey>USGS:ASC464</themekey>
+      </theme>
+      <theme>
+        <themekt>ISO 19115 Topic Category</themekt>
+        <themekey>Biota</themekey>
+        <themekey>Environment</themekey>
+      </theme>
+      <theme>
+        <themekt>NASA GCMD Earth Science Keyword Thesaurus</themekt>
+        <themekey>Animals/Vertebrates</themekey>
+        <themekey>Otters</themekey>
+        <themekey>Aquatic ecosystems</themekey>
+        <themekey>Benthic habitat</themekey>
+        <themekey>Coastal habitat</themekey>
+        <themekey>Marine environment monitoring</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS CSA Biocomplexity Thesaurus</themekt>
+        <themekey>Intertidal environments</themekey>
+        <themekey>Ecology</themekey>
+        <themekey>Marine mammals</themekey>
+      </theme>
+      <theme>
+        <themekt>USGS Thesaurus</themekt>
+        <themekey>Wildlife</themekey>
+        <themekey>Benthic ecosystems</themekey>
+        <themekey>Coastal ecosystems</themekey>
+        <themekey>Marine ecosystems</themekey>
+        <themekey>Field sampling</themekey>
+        <themekey>Aquatic biology</themekey>
+      </theme>
+      <theme>
+        <themekt>None</themekt>
+        <themekey>Foraging behavior</themekey>
+        <themekey>Prey consumption</themekey>
+      </theme>
+      <place>
+        <placekt>USGS Geographic Names Information System (GNIS)</placekt>
+        <placekey>Alaska</placekey>
+        <placekey>Gulf of Alaska</placekey>
+        <placekey>Prince William Sound</placekey>
+        <placekey>Kachemak Bay</placekey>
+      </place>
+      <place>
+        <placekt>None</placekt>
+        <placekey>Katmai National Park and Preserve</placekey>
+        <placekey>Kenai Fjords National Park</placekey>
+      </place>
+    </keywords>
+    <taxonomy>
+      <keywtax>
+        <taxonkt>None</taxonkt>
+        <taxonkey>Northern Sea Otter</taxonkey>
+        <taxonkey>Enhydra lutris kenyoni</taxonkey>
+      </keywtax>
+      <taxonsys>
+        <classsys>
+          <classcit>
+            <citeinfo>
+              <origin>ITIS Integrated Taxonomic Information System</origin>
+              <pubdate>Unknown</pubdate>
+              <title>ITIS Integrated Taxonomic Information System</title>
+              <geoform>online database</geoform>
+              <pubinfo>
+                <pubplace>online</pubplace>
+                <publish>ITIS-North America</publish>
+              </pubinfo>
+              <othercit>Taxonomic details retrieved December 27, 2022 from the Integrated Taxonomic Information System online database https://www.itis.gov</othercit>
+              <onlink>https://doi.org/10.5066/F7KH0KBK</onlink>
+            </citeinfo>
+          </classcit>
+        </classsys>
+        <taxonpro>Animal genera and/or species are identified by trained observers in the field using physical characteristics.</taxonpro>
+        <taxoncom>Taxonomy is complete for all samples. No vouchers were collected.</taxoncom>
+      </taxonsys>
+      <taxoncl>
+        <taxonrn>Kingdom</taxonrn>
+        <taxonrv>Animalia</taxonrv>
+        <taxoncl>
+          <taxonrn>Subkingdom</taxonrn>
+          <taxonrv>Bilateria</taxonrv>
+          <taxoncl>
+            <taxonrn>Infrakingdom</taxonrn>
+            <taxonrv>Deuterostomia</taxonrv>
+            <taxoncl>
+              <taxonrn>Phylum</taxonrn>
+              <taxonrv>Chordata</taxonrv>
+              <taxoncl>
+                <taxonrn>Subphylum</taxonrn>
+                <taxonrv>Vertebrata</taxonrv>
+                <taxoncl>
+                  <taxonrn>Infraphylum</taxonrn>
+                  <taxonrv>Gnathostomata</taxonrv>
+                  <taxoncl>
+                    <taxonrn>Superclass</taxonrn>
+                    <taxonrv>Tetrapoda</taxonrv>
+                    <taxoncl>
+                      <taxonrn>Class</taxonrn>
+                      <taxonrv>Mammalia</taxonrv>
+                      <taxoncl>
+                        <taxonrn>Subclass</taxonrn>
+                        <taxonrv>Theria</taxonrv>
+                        <taxoncl>
+                          <taxonrn>Infraclass</taxonrn>
+                          <taxonrv>Eutheria</taxonrv>
+                          <taxoncl>
+                            <taxonrn>Order</taxonrn>
+                            <taxonrv>Carnivora</taxonrv>
+                            <taxoncl>
+                              <taxonrn>Suborder</taxonrn>
+                              <taxonrv>Caniformia</taxonrv>
+                              <taxoncl>
+                                <taxonrn>Family</taxonrn>
+                                <taxonrv>Mustelidae</taxonrv>
+                                <taxoncl>
+                                  <taxonrn>Subfamily</taxonrn>
+                                  <taxonrv>Lutrinae</taxonrv>
+                                  <taxoncl>
+                                    <taxonrn>Genus</taxonrn>
+                                    <taxonrv>Enhydra</taxonrv>
+                                    <taxoncl>
+                                      <taxonrn>Species</taxonrn>
+                                      <taxonrv>Enhydra lutris</taxonrv>
+                                      <common>Sea Otter</common>
+                                      <common>TSN: 180547</common>
+                                      <taxoncl>
+                                        <taxonrn>Subspecies</taxonrn>
+                                        <taxonrv>Enhydra lutris kenyoni</taxonrv>
+                                        <common>Northern Sea Otter</common>
+                                        <common>TSN: 622038</common>
+                                      </taxoncl>
+                                    </taxoncl>
+                                  </taxoncl>
+                                </taxoncl>
+                              </taxoncl>
+                            </taxoncl>
+                          </taxoncl>
+                        </taxoncl>
+                      </taxoncl>
+                    </taxoncl>
+                  </taxoncl>
+                </taxoncl>
+              </taxoncl>
+            </taxoncl>
+          </taxoncl>
+        </taxoncl>
+      </taxoncl>
+    </taxonomy>
+    <accconst>None</accconst>
+    <useconst>It is requested that the authors and the USGS Alaska Science Center be cited for any subsequent publications that reference this dataset.</useconst>
+    <ptcontac>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>U.S. Geological Survey, Alaska Science Center</cntorg>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>Mailing and Physical</addrtype>
+          <address>4210 University Drive</address>
+          <city>Anchorage</city>
+          <state>Alaska</state>
+          <postal>99508</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>907-786-7000</cntvoice>
+        <cntemail>ascweb@usgs.gov</cntemail>
+      </cntinfo>
+    </ptcontac>
+    <datacred>Many people (USGS staff, contractors, and volunteers, NPS staff and volunteers, and NOAA staff) contributed to collection of the spraint observations contained in this data set. The Nearshore Component Principal Investigators involved in this effort include: Brenda Ballachey, James Bodkin, Heather Coletti, Tom Dean, Dan Esler, George Esslinger, Kim Kloecker, Mandy Lindeberg, Dan Monson, Brian Robinson, Sarah Traiger, and Ben Weitzman.</datacred>
+    <native>The original data are stored as a Microsoft Access database in a Windows operating environment but have been exported as comma separated text files (.csv) for dissemination.</native>
+    <crossref>
+      <citeinfo>
+        <origin>Traiger, S.B.</origin>
+        <origin>Bodkin, J.L.</origin>
+        <origin>Coletti, H.A.</origin>
+        <origin>Ballachey, B.</origin>
+        <origin>Dean, T.</origin>
+        <origin>Esler, D.</origin>
+        <origin>Iken, K.</origin>
+        <origin>Konar, B.</origin>
+        <origin>Lindeberg, M.R.</origin>
+        <origin>Monson, D.</origin>
+        <origin>Robinson, B.</origin>
+        <origin>Suryan, R.M.</origin>
+        <origin>Weitzman, B.P.</origin>
+        <pubdate>2022</pubdate>
+        <title>Evidence of Increased Mussel Abundance Related to the Pacific Marine Heatwave and Sea Star Wasting</title>
+        <geoform>journal article</geoform>
+        <serinfo>
+          <sername>Marine Ecology</sername>
+          <issue>e12715</issue>
+        </serinfo>
+        <pubinfo>
+          <pubplace>online</pubplace>
+          <publish>Wiley</publish>
+        </pubinfo>
+        <othercit>Traiger, S.B, Bodkin, J.L., Coletti, H.A., Ballachey, B., Dean, T., Esler, D., Iken, K., Konar, B., Lindeberg, M.R., Monson, D., Robinson, B., Suryan, R.M., Weitzman, B.P., 2022. Evidence of increased mussel abundance related to the Pacific marine heatwave and sea star wasting. Marine Ecology e12715.  doi:10.1111/maec.12715</othercit>
+        <onlink>https://doi.org/10.1111/maec.12715</onlink>
+      </citeinfo>
+    </crossref>
+  </idinfo>
+  <dataqual>
+    <attracc>
+      <attraccr>These data are presence and absence information based on visual examination of spraint (fecal) samples. Only fresh, intact samples were examined. Predominant designation (greater than 50 percent of the sample) was also based on visual examination of each sample after they were spread out by the observer. After returning from the field, all data was entered in the Microsoft Access database and rows were checked against field data sheets for missing values, outliers, and inconsistencies.</attraccr>
+    </attracc>
+    <logic>All attribute values fall within expected ranges and duplicate data does not exist in the dataset.</logic>
+    <complete>The dataset is complete and no data were omitted.</complete>
+    <posacc>
+      <horizpa>
+        <horizpar>Spraint sampling locations were collected using hand-held GPS (3-m accuracy; WGS84).</horizpar>
+      </horizpa>
+    </posacc>
+    <lineage>
+      <method>
+        <methtype>Field</methtype>
+        <methdesc>Sea otter spraint (scat) was examined to determine the relative proportion of prey items and to provide supplemental information on the diet of sea otters. Spraint is generally found above the high tide line in areas where sea otters haul out, especially during winter. Observers recorded the relative abundance of various prey items within ten haphazardly selected spraint per site. Only spraint that was relatively fresh (with some organic material still present) was examined. Observers also noted the predominant prey item as well as the presence and approximate proportion of any other identifiable prey in each spraint sample.</methdesc>
+      </method>
+      <srcinfo>
+        <srccite>
+          <citeinfo>
+            <origin>Dean, T.A.</origin>
+            <origin>Bodkin, J.L. </origin>
+            <pubdate>2011</pubdate>
+            <title>SOP for Conducting Coastline Surveys of Birds and Mammals, Animal Carcasses, Debris and Other Resources – Version 1.1</title>
+            <geoform>document</geoform>
+            <serinfo>
+              <sername>National Resource Report Series</sername>
+              <issue>NPS/SWAN/NRR—2011/396</issue>
+            </serinfo>
+            <pubinfo>
+              <pubplace>Fort Collins, Colorado</pubplace>
+              <publish>National Park Service, Natural Resource Stewardship and Science</publish>
+            </pubinfo>
+            <othercit>Dean, T.A., Bodkin, J.L., 2011. SOP for conducting coastline surveys of birds and mammals, animal carcasses, debris and other resources – Version 1.1, Southwest Alaska Network. Natural Resource Report NPS/SWAN/NRR—2011/396. National Park Service, Fort Collins, Colorado. 
+			
+			Published report archived by U.S. National Park Service Catalog (IRMA Data Store) https://irma.nps.gov/DataStore [reference code: 2170947]</othercit>
+            <onlink>https://irma.nps.gov/DataStore/Reference/Profile/2170947</onlink>
+          </citeinfo>
+        </srccite>
+        <typesrc>Digital Report</typesrc>
+        <srctime>
+          <timeinfo>
+            <sngdate>
+              <caldate>2011</caldate>
+            </sngdate>
+          </timeinfo>
+          <srccurr>publication date</srccurr>
+        </srctime>
+        <srccitea>Dean and Bodkin 2011</srccitea>
+        <srccontr>Describes sampling methods for identifying predominant prey items in sea otter spraint.</srccontr>
+      </srcinfo>
+      <srcinfo>
+        <srccite>
+          <citeinfo>
+            <origin>Dean, T.A.</origin>
+            <origin>Bodkin, J.L.</origin>
+            <origin>Coletti, H.A.</origin>
+            <pubdate>2014</pubdate>
+            <title>Protocol Narrative for Marine Nearshore Ecosystem Monitoring in the Gulf of Alaska - Version 1.1.</title>
+            <geoform>document</geoform>
+            <serinfo>
+              <sername>NPS/SWAN/NRR</sername>
+              <issue>2014/756</issue>
+            </serinfo>
+            <pubinfo>
+              <pubplace>Fort Collins, Colorado</pubplace>
+              <publish>National Park Service, Southwest Alaska Network, Inventory and Monitoring Program</publish>
+            </pubinfo>
+            <othercit>Dean, T.A., Bodkin, J.L., Coletti, H.A., 2014. Protocol narrative for marine nearshore ecosystem monitoring in the Gulf of Alaska - Version 1.1. Southwest Alaska Inventory and Monitoring Network. Natural Resource Report NPS/SWAN/NRR - 2014/756. National Park Service, Fort Collins, Colorado.
+
+            Published report archived by U.S. National Park Service Catalog (IRMA Data Store) https://irma.nps.gov/DataStore [reference code: 2206501]</othercit>
+            <onlink>https://irma.nps.gov/DataStore/Reference/Profile/2206501</onlink>
+          </citeinfo>
+        </srccite>
+        <typesrc>report</typesrc>
+        <srctime>
+          <timeinfo>
+            <sngdate>
+              <caldate>2014</caldate>
+            </sngdate>
+          </timeinfo>
+          <srccurr>publication date</srccurr>
+        </srctime>
+        <srccitea>Dean et al. 2014</srccitea>
+        <srccontr>Protocol for monitoring marine nearshore ecosystems in the Gulf of Alaska.</srccontr>
+      </srcinfo>
+      <srcinfo>
+        <srccite>
+          <citeinfo>
+            <origin>Coletti, H.A.</origin>
+            <origin>Kloecker, K.A.</origin>
+            <origin>Bodkin, J.L.</origin>
+            <origin>Dean, T.A.</origin>
+            <pubdate>2017</pubdate>
+            <title>Gulf Watch Alaska Nearshore Component: Monitoring Site Locations from Prince William Sound, Katmai National Park and Preserve, and Kenai Fjords National Park</title>
+            <geoform>tabular digital data</geoform>
+            <serinfo>
+              <sername>U.S. Geological Survey Data Release</sername>
+              <issue>10.5066/F78S4N3R</issue>
+            </serinfo>
+            <pubinfo>
+              <pubplace>Anchorage, Alaska</pubplace>
+              <publish>U.S. Geological Survey, Alaska Science Center</publish>
+            </pubinfo>
+            <othercit>Coletti, H.A., Kloecker, K.A., Bodkin, J.L., Dean, T.A. 2017. Gulf Watch Alaska nearshore component: monitoring site locations from Prince William Sound, Katmai National Park and Preserve, and Kenai Fjords National Park: U.S. Geological Survey data release. doi:10.5066/F78S4N3R</othercit>
+            <onlink>https://doi.org/10.5066/F78S4N3R</onlink>
+          </citeinfo>
+        </srccite>
+        <typesrc>document</typesrc>
+        <srctime>
+          <timeinfo>
+            <sngdate>
+              <caldate>2017</caldate>
+            </sngdate>
+          </timeinfo>
+          <srccurr>publication date</srccurr>
+        </srctime>
+        <srccitea>Coletti et al. 2017</srccitea>
+        <srccontr>Geographic coordinates of sampling sites</srccontr>
+      </srcinfo>
+      <procstep>
+        <procdesc>Field data recorded on paper field data sheets and then entered into a Microsoft Access database. This was usually completed while still in the field or back at the support vessel. Data are .csv outputs from the database.</procdesc>
+        <procdate>Unknown</procdate>
+      </procstep>
+      <procstep>
+        <procdesc>Field data sheet QAQC: the field crew and the field data manager review the data sheets for missing, illegible, or confusing entries and correct any issues.</procdesc>
+        <procdate>Unknown</procdate>
+      </procstep>
+      <procstep>
+        <procdesc>Spreadsheet QAQC: overall site level data and prey species data are checked against the field data sheets and also checked row by row and cell by cell for accuracy and completeness.</procdesc>
+        <procdate>Unknown</procdate>
+      </procstep>
+      <procstep>
+        <procdesc>Lab data sheet QAQC: the lab crew and then a data manager review the data sheets for missing, illegible, or confusing entries and correct any issues.</procdesc>
+        <procdate>Unknown</procdate>
+      </procstep>
+      <procstep>
+        <procdesc>Spreadsheet QAQC: Prey species presence and absence datasets are checked against the field data sheets and lab data sheets for completeness and logical consistency.</procdesc>
+        <procdate>Unknown</procdate>
+      </procstep>
+    </lineage>
+  </dataqual>
+  <spdoinfo>
+    <indspref>Spatial information in this data set include named locations and geographic coordinates in decimal degrees.</indspref>
+    <direct>Point</direct>
+  </spdoinfo>
+  <spref>
+    <horizsys>
+      <geograph>
+        <latres>0.00000001</latres>
+        <longres>0.00000001</longres>
+        <geogunit>Decimal degrees</geogunit>
+      </geograph>
+      <geodetic>
+        <horizdn>World Geodetic System of 1984</horizdn>
+        <ellips>World Geodetic System of 1984</ellips>
+        <semiaxis>6378137</semiaxis>
+        <denflat>298.257223563</denflat>
+      </geodetic>
+    </horizsys>
+  </spref>
+  <eainfo>
+    <detailed>
+      <enttyp>
+        <enttypl>KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint.csv</enttypl>
+        <enttypd>Table with sea otter spraint sampling data for Kachemak Bay, Prince William Sound, Katmai National Park and Preserve, and Kenai Fjords National Park. Presented in a Comma Separated Value (CSV) formatted table.</enttypd>
+        <enttypds>Author defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Region</attrlabl>
+        <attrdef>Largest spatial unit of the Gulf Watch Alaska Nearshore Monitoring component.</attrdef>
+        <attrdefs>Dean et al. 2014</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>AKP</edomv>
+            <edomvd>Alaska Peninsula</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>KEP</edomv>
+            <edomvd>Kenai Peninsula</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>PWS</edomv>
+            <edomvd>Prince William Sound</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>KBAY</edomv>
+            <edomvd>Kachemak Bay</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>BlockNumber</attrlabl>
+        <attrdef>Two-digit unit number for each block within each sampling region.</attrdef>
+        <attrdefs>Dean et al. 2014</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>04</edomv>
+            <edomvd>Kachemak Bay</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>05</edomv>
+            <edomvd>Kenai Fjords National Park</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>07</edomv>
+            <edomvd>Northern Prince William Sound</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>08</edomv>
+            <edomvd>Western Prince William Sound</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>10</edomv>
+            <edomvd>Katmai National Park and Preserve</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>BlockName</attrlabl>
+        <attrdef>Name of sampling block within each sampling region, as defined in Coletti et al. 2017, https://doi.org/10.5066/F78S4N3R.</attrdef>
+        <attrdefs>Coletti et al. 2017</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>KATM</edomv>
+            <edomvd>Katmai National Park and Preserve (Block 10, Region = Alaska Peninsula)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>KBAY</edomv>
+            <edomvd>Kachemak Bay (Block = undefined, Region = Kachemak Bay)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>KEFJ</edomv>
+            <edomvd>Kenai Fjords National Park (Block 05, Region = Kenai Peninsula)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>NPWS</edomv>
+            <edomvd>Northern Prince William Sound (Block 07, Region = Prince William Sound)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>WPWS</edomv>
+            <edomvd>Western Prince William Sound (Block 08, Region = Prince William Sound)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>SiteID</attrlabl>
+        <attrdef>Identification code of the nearest sampling site within each sampling block, as defined in Coletti et al. 2017, https://doi.org/10.5066/F78S4N3R, and Dean et al. 2014. The 'SiteID' is comprised of 4 parts, 1) the region (AKP, KBAY, KEP, PWS), 2) the block number (04, 05, 07, 08, or 10), 3) the sampling type (described below), and 4) the sample type number (01-05). Spraint data collection sometimes occurs well outside the geographic proximity of sites relative to other metrics.</attrdef>
+        <attrdefs>Coletti et al. 2017 and Dean et al. 2014</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>RI</edomv>
+            <edomvd>Sampling type = Rocky Intertidal Intensive Block</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>RE</edomv>
+            <edomvd>Sampling type = Rocky Intertidal Extensive Block</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>SiteName</attrlabl>
+        <attrdef>A general name indicating the area of sampling within each sampling block. Due to the different sampling regime, these do not follow site names defined in Coletti et al. 2017. In some instances, a 'SiteName' may have multiple haulout locations.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>Aialik</edomv>
+            <edomvd>Haulout = Pederson Bay (KEFJ); approximately (59.87N 149.74W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Bay of Isles</edomv>
+            <edomvd>Haulout = Bay of Isles (WPWS); approximately (60.38N 147.67W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Bay of Isles</edomv>
+            <edomvd>Haulout = Marsha Bay (WPWS); approximately (60.33N 147.68W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Bettles Bay</edomv>
+            <edomvd>Haulout = Bettles Bay (NPWS); approximately (60.95N 148.31W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Channel Is</edomv>
+            <edomvd>Haulout = Channel Is (WPWS); approximately (60.24N 147.37W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Cohen Is</edomv>
+            <edomvd>Haulout = Cohen Is (KBAY); approximately (59.54N 151.47W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Danger Is</edomv>
+            <edomvd>Haulout = Danger Is (WPWS); approximately (59.92N 148.08W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Douglas Reef</edomv>
+            <edomvd>Haulout = Douglas Reef (KATM); approximately (58.76N 153.27W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Elrington Is</edomv>
+            <edomvd>Haulout = Fox Farm (WPWS); approximately (59.97N 148.17W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Green Is</edomv>
+            <edomvd>Haulout = Barrier (WPWS); approximately (60.29N 147.41W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Green Is</edomv>
+            <edomvd>Haulout = Gibbon (WPWS); approximately (60.28N 147.42W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Green Is</edomv>
+            <edomvd>Haulout = Green Is (WPWS); approximately (60.25N 147.41W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Green Is</edomv>
+            <edomvd>Haulout = Little Green (WPWS); approximately (60.20N 147.51W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Harris Bay</edomv>
+            <edomvd>Haulout = Harris Bay (KEFJ); approximately (59.73N 149.94W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Herriman</edomv>
+            <edomvd>Haulout = Herriman (WPWS); approximately (61.11N 148.12W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Herring Is</edomv>
+            <edomvd>Haulout = Cronin Is (KBAY); approximately (59.49N 151.49W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Herring Is</edomv>
+            <edomvd>Haulout = Herring Is (KBAY); approximately (59.48N 151.50W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Iktua Bay</edomv>
+            <edomvd>Haulout = Iktua Bay (WPWS); approximately (60.11N 148.01W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kaflia</edomv>
+            <edomvd>Haulout = Kaflia Is (KATM); approximately (58.26N 154.20W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kinak</edomv>
+            <edomvd>Haulout = Kinak (KATM); approximately (58.16N 154.44W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Block (WPWS); approximately (60.53N 147.61W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Eleanor (WPWS); approximately (60.57N 147.56W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Herring (WPWS); approximately (60.44N 147.76W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Johnson (WPWS); approximately (60.34N 147.84W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Lower Herring (WPWS); approximately (60.38N 147.83W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Lower Pass (WPWS); approximately (60.50N 147.63W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = NW Bay (WPWS); approximately (60.56N 147.59W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Smith (WPWS); approximately (60.52N 147.37W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Knight</edomv>
+            <edomvd>Haulout = Upper Pass (WPWS); approximately (60.53N 147.61W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kukak</edomv>
+            <edomvd>Haulout = Devil's Cove (KATM); approximately (58.34N 154.12W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kukak</edomv>
+            <edomvd>Haulout = Kukak (KATM); approximately (58.30N 154.20W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kukak</edomv>
+            <edomvd>Haulout = Kukak Cannery (KATM); approximately (58.32N 154.19W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kukak</edomv>
+            <edomvd>Haulout = Kukak Mussel Site (KATM); approximately (58.31N 154.19W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Latouche Is</edomv>
+            <edomvd>Haulout = Latouche Is (WPWS); approximately (60.01N 147.99W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>McCarty Fjord</edomv>
+            <edomvd>Haulout = James Bay (KEFJ); approximately (59.56N 150.41W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>McCarty Fjord</edomv>
+            <edomvd>Haulout = McCarty Fjord (KEFJ); approximately (59.56N 150.40W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Montague</edomv>
+            <edomvd>Haulout = Chalmers (WPWS); approximately (60.25N 147.24W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Montague</edomv>
+            <edomvd>Haulout = Stockdale (WPWS); approximately (60.31N 147.20W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Naked Is</edomv>
+            <edomvd>Haulout = Naked Is (WPWS); approximately (60.67N 147.39W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Ninagiak</edomv>
+            <edomvd>Haulout = East Nina (KATM); approximately (58.46N 153.98W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Ninagiak</edomv>
+            <edomvd>Haulout = Ninagiak (KATM); approximately (58.45N 154.01W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Ninagiak</edomv>
+            <edomvd>Haulout = West Nina (KATM); approximately (58.44N 154.03W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Nuka Bay</edomv>
+            <edomvd>Haulout = Beautiful Is (KEFJ); approximately (59.51N 150.56W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Nuka Bay</edomv>
+            <edomvd>Haulout = Quartz Bay (KEFJ); approximately (59.42N 150.64W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Nuka Pass</edomv>
+            <edomvd>Haulout = Division Is (KEFJ); approximately (59.42N 150.70W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Nuka Pass</edomv>
+            <edomvd>Haulout = Tonsina (KEFJ); approximately (59.31N 150.89W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Shakun</edomv>
+            <edomvd>Haulout = Shakun (KATM); approximately (58.57N 153.72W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Takli</edomv>
+            <edomvd>Haulout = BLOY rock (KATM); approximately (58.07N 154.48W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Takli</edomv>
+            <edomvd>Haulout = Ilktugidak (KATM); approximately (58.03N 154.53W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Whale Bay</edomv>
+            <edomvd>Haulout = Whale Bay (WPWS); approximately (60.28N 147.42W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>SampleDate</attrlabl>
+        <attrdef>Date the spraint sample was collected. A null value "." indicated that the sampling date was not recorded.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>1997-04-14</rdommin>
+            <rdommax>2023-07-08</rdommax>
+            <attrunit>Date (YYYY-MM-DD)</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>SampleYear</attrlabl>
+        <attrdef>Year the spraint sample was collected.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>1997</rdommin>
+            <rdommax>2023</rdommax>
+            <attrunit>Year (YYYY)</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Haulout</attrlabl>
+        <attrdef>The name given to the location within each 'SiteName' where the sea otter spraint was sampled. When different from 'SiteName', 'Haulout' indicates are more specific geography.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>Barrier</edomv>
+            <edomvd>SiteName = Green Is (WPWS); approximately (60.29N 147.41W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Bay of Isles</edomv>
+            <edomvd>SiteName = Bay of Isles (WPWS); approximately (60.39N 147.67W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Beautiful Is</edomv>
+            <edomvd>SiteName = Nuka Bay (KEFJ); approximately (59.51N 150.56W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Bettles Bay</edomv>
+            <edomvd>SiteName = Bettles Bay (NPWS); approximately (60.95N 148.31W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Block</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.53N 147.61W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>BLOY rock</edomv>
+            <edomvd>SiteName = Takli (KATM); approximately (58.07N 154.48W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Chalmers</edomv>
+            <edomvd>SiteName = Montague (WPWS); approximately (60.25N 147.24W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Channel Is</edomv>
+            <edomvd>SiteName = Channel Is (WPWS); approximately (60.24N 147.38W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Cohen Is</edomv>
+            <edomvd>SiteName = Cohen Is (KBAY); approximately (59.54N 151.48W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Cronin Is</edomv>
+            <edomvd>SiteName = Herring Is (KBAY); approximately (59.49N 151.49W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Danger Is</edomv>
+            <edomvd>SiteName = Danger Is (WPWS); approximately (59.93N 148.08W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Devils Cove</edomv>
+            <edomvd>SiteName = Kukak (KATM); approximately (58.34N 154.12W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Division Is</edomv>
+            <edomvd>SiteName = Nuka Pass (KEFJ); approximately (59.42N 150.70W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Douglas Reef</edomv>
+            <edomvd>SiteName = Douglas Reef (KATM); approximately (58.76N 153.27W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>East Nina</edomv>
+            <edomvd>SiteName = Ninagiak (KATM); approximately (58.46N 153.98W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Eleanor</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.57N 147.56W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Fox Farm</edomv>
+            <edomvd>SiteName = Elrington Is (WPWS); approximately (59.97N 148.17W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Gibbon</edomv>
+            <edomvd>SiteName = Green Is (WPWS); approximately (60.28N 147.42W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Green Is</edomv>
+            <edomvd>SiteName = Green Is (WPWS); approximately (60.25N 147.41W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Harris Bay</edomv>
+            <edomvd>SiteName = Harris Bay (KEFJ); approximately (59.72N 149.94W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Herriman</edomv>
+            <edomvd>SiteName = Herriman (WPWS); approximately (61.02N 148.12W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Herring</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.44N 147.77W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Herring Is</edomv>
+            <edomvd>SiteName = Herring Is (KBAY); approximately (59.48N 151.50W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Iktua Bay</edomv>
+            <edomvd>SiteName = Iktua Bay (WPWS); approximately (60.11N 148.01W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Ilktugidak</edomv>
+            <edomvd>SiteName = Takli (KATM); approximately (58.03N 154.52W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>James Bay</edomv>
+            <edomvd>SiteName = McCarty Fjord (KEFJ); approximately (59.62N 150.28W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Johnson</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.34N 147.84W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kaflia Is</edomv>
+            <edomvd>SiteName = Kaflia (KATM); approximately (58.26N 154.20W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kinak</edomv>
+            <edomvd>SiteName = Kinak (KATM); approximately (58.16N 154.44W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kukak</edomv>
+            <edomvd>SiteName = Kukak (KATM); approximately (58.30N 154.20W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kukak Cannery</edomv>
+            <edomvd>SiteName = Kukak (KATM); approximately (58.32N 154.19W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Kukak Mussel Site</edomv>
+            <edomvd>SiteName = Kukak (KATM); approximately (58.31N 154.19W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Latouche Is</edomv>
+            <edomvd>SiteName = Latouche Is (WPWS); approximately (60.01N 147.99W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Little Green</edomv>
+            <edomvd>SiteName = Green Is (WPWS); approximately (60.20N 147.51W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Lower Herring</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.38N 147.84W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Lower Pass</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.50N 147.63W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Marsha Bay</edomv>
+            <edomvd>SiteName = Bay of Isles (WPWS); approximately (60.33N 147.68W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>McCarty Fjord</edomv>
+            <edomvd>SiteName = McCarty Fjord (KEFJ); approximately (59.56N 150.41W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Naked Is</edomv>
+            <edomvd>SiteName = Naked Is (WPWS); approximately (60.67N 147.39W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Ninagiak</edomv>
+            <edomvd>SiteName = Ninagiak (KATM); approximately (58.46N 154.01W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>NW Bay</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.56N 147.59W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Pederson</edomv>
+            <edomvd>SiteName = Aialik (KEFJ); approximately (59.88N 149.74W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Quartz Bay</edomv>
+            <edomvd>SiteName = Nuka Bay (KEFJ); approximately (59.42N 150.64W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Shakun</edomv>
+            <edomvd>SiteName = Shakun (KATM); approximately (58.57N 153.71W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Smith</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.52N 147.37W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Stockdale</edomv>
+            <edomvd>SiteName = Montague (WPWS); approximately (60.31N 147.20W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Tonsina</edomv>
+            <edomvd>SiteName = Nuka Pass (KEFJ); approximately (59.31N 150.89W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Upper Pass</edomv>
+            <edomvd>SiteName = Knight (WPWS); approximately (60.53N 147.61W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>West Nina</edomv>
+            <edomvd>SiteName = Ninagiak (KATM); approximately (58.44N 154.03W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>Whale Bay</edomv>
+            <edomvd>SiteName = Whale Bay (WPWS); approximately (60.28N 147.42W)</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Latitude</attrlabl>
+        <attrdef>Latitude (decimal degrees) of the sample location. This is a general location of an area and not the individual spraint sample location.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>58.028158</rdommin>
+            <rdommax>61.019386</rdommax>
+            <attrunit>Decimal Degrees</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Longitude</attrlabl>
+        <attrdef>Longitude (decimal degrees) of the sample location. This is a general location of an area and not the individual spraint sample location.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>-154.526694</rdommin>
+            <rdommax>-147.076217</rdommax>
+            <attrunit>Decimal Degrees</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>SpraintNum</attrlabl>
+        <attrdef>Number of spraint observations at a given location. A null value "." indicates that the number of spraint observations was not recorded.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <rdom>
+            <rdommin>1</rdommin>
+            <rdommax>100</rdommax>
+            <attrunit>Count</attrunit>
+          </rdom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Clam</attrlabl>
+        <attrdef>A code that signifies the amount of clam species observed in a sea otter spraint sample. A null value "." indicates that the amount of clam species observed in the spraint was not recorded.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>A</edomv>
+            <edomvd>Clam species absent from spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>P</edomv>
+            <edomvd>Clam species present in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>PR</edomv>
+            <edomvd>Clam species are predominant in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Crab</attrlabl>
+        <attrdef>A code that signifies the amount of crab species observed in a sea otter spraint sample. A null value "." indicates that the amount of crab species observed in the spraint was not recorded.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>A</edomv>
+            <edomvd>Crab species absent from spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>P</edomv>
+            <edomvd>Crab species present in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>PR</edomv>
+            <edomvd>Crab species are predominant in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Mussel</attrlabl>
+        <attrdef>A code that signifies the amount of mussel species observed in a sea otter spraint sample. A null value "." indicates that the amount of mussel species observed in the spraint was not recorded.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>A</edomv>
+            <edomvd>Mussel species absent from spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>P</edomv>
+            <edomvd>Mussel species present in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>PR</edomv>
+            <edomvd>Mussel species are predominant in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Urchin</attrlabl>
+        <attrdef>A code that signifies the amount of urchin species observed in a sea otter spraint sample. A null value "." indicates that the amount of urchin species observed in the spraint was not recorded.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>A</edomv>
+            <edomvd>Urchin species absent from spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>P</edomv>
+            <edomvd>Urchin species present in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>PR</edomv>
+            <edomvd>Urchin species are predominant in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Other</attrlabl>
+        <attrdef>A code that signifies the amount of other species (not listed in the previous attributes) observed in a sea otter spraint sample. A null value "." indicates that the amount of other species observed in the spraint was not recorded or other species were not observed.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <edom>
+            <edomv>A</edomv>
+            <edomvd>Other species absent from spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>P</edomv>
+            <edomvd>Other species present in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>PR</edomv>
+            <edomvd>Other species are predominant in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>OtherSpecies</attrlabl>
+        <attrdef>Identification of the species type in the 'Other' attribute. A null value "." indicate that other species were not recorded or other species were not present in the spraint sample.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>Common name for the species type(s) in the 'Other' attribute.</udom>
+        </attrdomv>
+        <attrdomv>
+          <edom>
+            <edomv>UNK</edomv>
+            <edomvd>Unknown species type present in the spraint sample.</edomvd>
+            <edomvds>Author defined</edomvds>
+          </edom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Notes</attrlabl>
+        <attrdef>Comments referring to spraint samples. Blank cells indicate that notes were not recorded.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>Comments referring to spraint samples.</udom>
+        </attrdomv>
+      </attr>
+    </detailed>
+    <detailed>
+      <enttyp>
+        <enttypl>KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint_Contributors.csv</enttypl>
+        <enttypd>Table with a list of principle investigators and contributors to the sea otter spraint sampling component of Gulf Watch Alaska. Comma Separated Value (CSV) file containing data.</enttypd>
+        <enttypds>Author defined</enttypds>
+      </enttyp>
+      <attr>
+        <attrlabl>Last_Name</attrlabl>
+        <attrdef>The last name of a Gulf Watch Alaska contributor.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>The last name of a Gulf Watch Alaska contributor.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>First_Name</attrlabl>
+        <attrdef>The first name of a Gulf Watch Alaska contributor.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>The first name of a Gulf Watch Alaska contributor.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>ORCID</attrlabl>
+        <attrdef>The ORCID (Open Researcher and Contributor ID) for each collaborator. Blank cells indicate that the contributor does not have an ORCID or the ID is unknown.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>The ORCID (Open Researcher and Contributor ID) for each collaborator.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Position</attrlabl>
+        <attrdef>The position title of the Gulf Watch Alaska contributor.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>The position title of the Gulf Watch Alaska contributor.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Agency</attrlabl>
+        <attrdef>The agency who the Gulf Watch Alaska contributor is associated with.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>The agency who the Gulf Watch Alaska contributor is associated with.</udom>
+        </attrdomv>
+      </attr>
+      <attr>
+        <attrlabl>Program</attrlabl>
+        <attrdef>The program within the agency who the Gulf Watch Alaska contributor is associated with. Blank cells indicate that the contributor is not associated with a program.</attrdef>
+        <attrdefs>Author defined</attrdefs>
+        <attrdomv>
+          <udom>The program within the agency who the Gulf Watch Alaska contributor is associated with.</udom>
+        </attrdomv>
+      </attr>
+    </detailed>
+  </eainfo>
+  <distinfo>
+    <distrib>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>U.S. Geological Survey, Alaska Science Center</cntorg>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>Mailing and Physical</addrtype>
+          <address>4210 University Drive</address>
+          <city>Anchorage</city>
+          <state>Alaska</state>
+          <postal>99508</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>907-786-7000</cntvoice>
+        <cntemail>ascweb@usgs.gov</cntemail>
+      </cntinfo>
+    </distrib>
+    <resdesc>The U.S. Geological Survey, Alaska Science Center is the authoritative source and distributor of these data.</resdesc>
+    <distliab>Unless otherwise stated, all data, metadata and related materials are considered to satisfy the quality standards relative to the purpose for which the data were collected. Although these data and associated metadata have been reviewed for accuracy and completeness and approved for release by the U.S. Geological Survey, no warranty expressed or implied is made regarding the display or utility of the data for other purposes or on all computer systems, nor shall the act of distribution constitute any such warranty. Any use of trade, firm, or product names is for descriptive purposes only and does not imply endorsement by the U.S. Government.</distliab>
+    <stdorder>
+      <digform>
+        <digtinfo>
+          <formname>CSV</formname>
+          <formcont>Data are distributed in a Zip package containing data in CSV format and FGDC metadata in XML and HTML formats.</formcont>
+          <filedec>Compression applied by the 7-Zip utility using the default compression level [5]. The Zip package can be decompressed and unpacked by open source or commercially available unzip tools.</filedec>
+        </digtinfo>
+        <digtopt>
+          <onlinopt>
+            <computer>
+              <networka>
+                <networkr>https://doi.org/10.5066/P9EDM6NL</networkr>
+              </networka>
+            </computer>
+          </onlinopt>
+        </digtopt>
+      </digform>
+      <fees>None</fees>
+    </stdorder>
+  </distinfo>
+  <metainfo>
+    <metd>20231115</metd>
+    <metc>
+      <cntinfo>
+        <cntorgp>
+          <cntorg>U.S. Geological Survey, Alaska Science Center</cntorg>
+        </cntorgp>
+        <cntaddr>
+          <addrtype>Mailing and Physical</addrtype>
+          <address>4210 University Drive</address>
+          <city>Anchorage</city>
+          <state>Alaska</state>
+          <postal>99508</postal>
+          <country>USA</country>
+        </cntaddr>
+        <cntvoice>907-786-7000</cntvoice>
+        <cntemail>ascweb@usgs.gov</cntemail>
+      </cntinfo>
+    </metc>
+    <metstdn>FGDC Biological Data Profile of the Content Standard for Digital Geospatial Metadata (CSDGM)</metstdn>
+    <metstdv>FGDC-STD-001.1-1999</metstdv>
+  </metainfo>
+</metadata>
