@@ -1,0 +1,105 @@
+---
+title: "Reproducible Data"
+author: "Jamilet Cordon"
+date: "2024-02-22"
+output: html_document
+---
+
+## Foxes Consumption
+
+Foxes are scavengers that either travel alone or in groups. Hunting and scavenging for food are two separate techniques that animals use to survive, which can either be completed in a group or alone. This data set we will [estimate the group-size and average food consume within foxes.]{.underline}
+
+I am interested to see if group size affects the average amount of food these foxes are able to eat. I think I will have difficulties in defining the variables to fit onto the plot, specifically in being able to produce a trend.
+
+### DATA SET: Foxes Consumption
+
+```{r, echo=TRUE}
+
+csvfile <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/foxes.csv", "foxes.csv")
+
+library(readr)
+#notes for later
+# file_df <-read_csv2("foxes.csv",
+#                     col_types = cols(
+#                       groupsize= col_double(locale=locale( "us", decimal_mark=".") ), 
+#                       avgfood=col_double(locale=locale( "us", decimal_mark=".") ), 
+#                       group=col_double(locale=locale( "us", decimal_mark=".") )
+#                       )
+#                     )
+
+
+file_df <-read_delim("foxes.csv", delim = ";",
+                    col_types = cols(
+                      groupsize= col_double( ), 
+                      avgfood=col_double( ), 
+                      group=col_double()
+                      )
+                    )
+
+               
+library("ggplot2")    
+foxPlot <- ggplot(data=file_df,mapping = aes(x=groupsize, y=avgfood)) + geom_point( aes(color=factor(group))) + geom_smooth(method="lm", se=TRUE)+ labs(title="Foxes Avereage Food Consumption", subittle="estimating groupsize average average consumption of food", x="Groupsize", y="Average Food")
+
+```
+
+## Elephants Mating Frequencies
+
+Elephants are mammals that are steadily declining in population, due to several factors such as deforestation, urban planning, and climate changes. I am interesting to see if there is a Maternal effect in the elephants mating frequencies. This data set will [estimate the age to mating ratio]{.underline}. I see difficulties in also producing a chart by defining my variables.
+
+### DATA FILE: Elephants
+
+```{r, echo=TRUE}
+
+csvfile <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/elephants.csv", "elephants.csv")
+
+library(readr)
+file_df <-read_delim("elephants.csv", delim = ";",
+                    col_types = cols(
+                      AGE= col_integer( ), 
+                      MATINGS=col_integer( ) 
+                   
+                      )
+                    )
+
+
+library("ggplot2")    
+elephantPlot <- ggplot(data=file_df,mapping = aes(x=age, y=matings))+ geom_point( aes(color=factor(Age)))+labs(title="Elephant Mating Age", subittle="Elephant frequent Mating Age", x="Age", y="Mating")
+
+
+```
+
+```{r}
+file <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/elephants.csv", "file.csv")
+
+library(readr)
+file_df <-read_csv2("file.csv")
+
+
+ggplot(data=file_df,mapping = aes(x=Age, y=Matings)+ labs (title="Elpehants Age and frequent Mating", subtitle="estimating age and mating ", x="Age", y="MatingS"))
+
+geom_point(mapping= aes(color=age, shape=age))
+```
+
+## Salamander Population Coverage
+
+Salamanders are amphibians that are extremely resistant to changes. There are specific species that can only reproduce in certain water temperatures, and water purity but overall extremely resistant. This data set will estimate the population coverage of salamanders in certain areas. I am interested to see which climates consist of higher populations. I will find difficulties in defining the variable as numeric values.
+
+### DATE FILE: Salamander
+```{r, echo=TRUE}
+
+csvfile <-download.file(url="https://raw.githubusercontent.com/rmcelreath/rethinking/master/data/salamanders.csv", "salamanders.csv")
+
+library(readr)
+file_df <-read_delim("salamanders.csv", delim = ";",
+                    col_types = cols(
+                      SALAMAN= col_integer( ), 
+                      PCTCOVER=col_integer( ) 
+                   
+                      )
+                    )
+
+
+library("ggplot2")    
+salamanderPlot <- ggplot(data=file_df,mapping = aes(x=SALAMAN, y=PCTCOVER))+ geom_point( aes(color=factor(SALAMAN)))+labs(title="Salamander Population via Percent coverage", x="Salamander", y="Population Coverage (%)")
+```
+

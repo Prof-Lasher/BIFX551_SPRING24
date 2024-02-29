@@ -1,0 +1,124 @@
+---
+title: "JCS_Week5"
+author: "Josie Sdhultz"
+date: "2024-02-28"
+output: html_document
+---
+
+## Sea Otter Diet
+Link: https://alaska.usgs.gov/data/nearshoreMonitoring/gulfWatch_seaotterSpraint/gulfWatch_seaotterSpraint.zip
+File name: KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint.csv
+Location: D:\PersonalFiles\-0722\Hood\551\BIFX551_SPRING24\Week 5\JCS
+
+  The diets of sea otters are studied over an extended period of time (26 years), which should make the data reliable. The sea otters reside in the Gulf of Alaska and the diets are studied via fecal samples. There is a lot of nomenclature that requires the use of reading the summary repeatedly, which may become confusing and mixed up. I am not very familiar with longitude and latitude, which may make the data even more confusing to work with or can be left out altogether depending on the desired interpretation. I would like to understand whether the sea otters diet changes by region based upon abundance of the species present or sea otters seek these species. 
+  
+Helpful link to identify attributes; https://alaska.usgs.gov/data/metadata/ecosystems/nearshoreMonitoring/gulfWatch_seaotterSpraint/KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint_metadata.html#1
+
+Regions are as follows; Kachemak Bay (KBAY), Kenai Peninsula (KEP; Kenai Fjords National Park (KEFJ)), Alaska Peninsula (AKP; Katmai National Park and Preserve (KATM)), and Prince William Sound (PWS; northern [NPWS] and western Prince William Sound).
+
+Fecal matter collected has presence of the species listed as follows;
+A-absent
+P-present
+PR-predominant
+
+
+
+Download the file, unzip and read in a dataframe below. Use the summary function to look for abnormalities that stand out. 
+```{r}
+download.file(url = 'https://alaska.usgs.gov/data/nearshoreMonitoring/gulfWatch_seaotterSpraint/gulfWatch_seaotterSpraint.zip', destfile = 'otter.zip', mode = 'wb')
+
+unzip('otter.zip')
+
+library(readr)
+otter_df <- read_csv(('KBAYKATMKEFJWPWS_1997-2023_Sea_Otter_Spraint.csv'),
+  col_types = cols(
+    Region = col_factor(levels = c("KBAY", "KEP", "KEFJ", "AKP", "KATM", "PWS")), 
+    BlockNumber = col_skip(),
+    BlockName = col_skip(),
+    SiteID = col_skip(),
+    SiteName = col_skip(),
+    SamplingDate = col_skip(),
+    Year = col_integer(), 
+    Haulout = col_skip(),
+    Latitude = col_double(),
+    Longitude = col_double(), 
+    SpraintNum = col_skip(),
+    Clam = col_factor(levels = c("A", "P", "PR")),
+    Crab = col_factor(levels = c("A", "P", "PR")),
+    Mussel = col_factor(levels = c("A", "P", "PR")),
+    Urchin = col_factor(levels = c("A", "P", "PR")),
+    Other = col_factor(levels = c("A", "P", "PR")), 
+    OtherSpecies = col_logical(),
+    Notes = col_character()
+    )
+  )
+summary(otter_df)
+```
+Found the species listed could be confusing without further context, so renamed it. Viewed the summary to ensure it is sensible. 
+
+```{r}
+library(dplyr)
+new_otter_df <- otter_df %>%
+  rename(Clam_Ingestion = Clam, Crab_Ingestion = Crab, Mussel_Ingestion = Mussel, Urchin_Ingestion = Urchin, Other_Ingestion = Other, OtherSpecies_Ingestion = OtherSpecies)
+summary(new_otter_df)
+```
+Create new tables to observe ingestion of all species.
+
+```{r}
+library(tidyr)
+urchin_counts <- new_otter_df %>%
+  count(Region, Urchin_Ingestion) %>%
+  pivot_wider(names_from = Urchin_Ingestion, values_from = n, values_fill = 0)
+
+print(urchin_counts)
+
+clam_counts <- new_otter_df %>%
+  count(Region, Clam_Ingestion) %>%
+  pivot_wider(names_from = Clam_Ingestion, values_from = n, values_fill = 0)
+
+print(clam_counts)
+
+crab_counts <- new_otter_df %>%
+  count(Region, Crab_Ingestion) %>%
+  pivot_wider(names_from = Crab_Ingestion, values_from = n, values_fill = 0)
+
+print(crab_counts)
+
+mussel_counts <- new_otter_df %>%
+  count(Region, Mussel_Ingestion) %>%
+  pivot_wider(names_from = Mussel_Ingestion, values_from = n, values_fill = 0)
+
+print(mussel_counts)
+
+```
+
+Will create a continuous plot of Longitdude and Latitude to provide a visual of locations the data was collected from using geom_point. 
+```{r}
+library(ggplot2)
+continuous <- ggplot(data = otter_df, aes(Latitude, Longitude))
+continuous + geom_point(color = "blue", shape = 2)
+
+```
+
+Will create a discrete plot to understand the consistency of the data collected over the years using geom_bar.  
+```{r}
+discrete <- ggplot(data = otter_df, aes(Year))
+discrete + geom_bar()
+```
+The count of Clam_Ingestion and the Region the data comes from is provided in the plot below. This makes for a quick visual on the abundance of the species in spraint found for a given region. 
+
+The size of the data points on the plot indicate the number of counts, as can be compared with the legend to the right of the plot. 
+```{r}
+shape <- ggplot(data = new_otter_df, aes(Region, Clam_Ingestion)) + geom_count(color = "maroon")
+
+shape 
+
+```
+
+
+Through the use of geom_count, the size of the data points on the plot indicate the number of counts, as can be compared with the legend to the right of the plot. The amount of Clams found in the spraint over the years collected can be found in the plot thanks to facet_wrap. 
+```{r}
+shape <- ggplot(data = new_otter_df, aes(Year, Clam_Ingestion)) +geom_count()
+shape + facet_wrap(~Region)
+
+```

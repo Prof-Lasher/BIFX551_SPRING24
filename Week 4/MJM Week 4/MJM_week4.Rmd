@@ -1,0 +1,143 @@
+---
+title: "MJM_week4"
+author: "Mike Murphy"
+date: "`r Sys.Date()`"
+output: html_document
+---
+# Conditions Contributing to COVID-19 Deaths, by State and Age, Provisional 2020-2023
+## This dataset is interesting as it explores comorbidities with COVID-19 over three years. I want to see if specific conditions correleate to more deaths amongst certain age groups. 
+
+```{r Import COVID Data, results='hide'}
+download.file(url = "https://data.cdc.gov/api/views/hk9y-quqm/rows.csv?accessType=DOWNLOAD", "covid.csv")
+covid_data <- read.csv("covid.csv")
+```
+
+```{r COVID Data analysis}
+library("ggplot2")
+library("dplyr")
+
+covid_data$Condition.Group <- gsub("Intentional and unintentional injury, poisoning, and other adverse events", "Adverse Events", covid_data$Condition.Group)
+
+covid_data %>%
+  filter(covid_data$Age.Group != "All Ages" & covid_data$Age.Group != "Not stated" & covid_data$Condition.Group != "COVID-19") %>%
+  ggplot(aes(x = `Condition.Group`, y = `COVID.19.Deaths`, color = `Age.Group`)) + 
+  geom_point() +
+  theme_bw() +
+  xlab("Condition Groups") +
+  ylab("COVID-19 Deaths") +
+  ggtitle("COVID-19 Deaths by Comorbidities") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+\
+# Heart Disease Mortality Data Among US Adults (35+) by State/Territory and County
+## This dataset is interesting as it explores heart disease based on location. I want to group the deaths by state and see if specific regions have higher heart disease mortality rates. 
+
+```{r Import Heart Data, results='hide'}
+download.file(url = "https://data.cdc.gov/api/views/i2vk-mgdh/rows.csv?accessType=DOWNLOAD", "heart_disease.csv")
+heart_data <- read.csv("heart_disease.csv")
+```
+
+```{r Heart Data Analysis}
+library("ggplot2")
+library("dplyr")
+
+heart_data %>%
+  # theres gotta be a better way to do this...maybe if else statement next time.
+  mutate(Region = case_when(LocationAbbr == "WA"| LocationAbbr == "OR"| LocationAbbr == "CA"| LocationAbbr == "AK"| LocationAbbr == "ID"
+                            | LocationAbbr == "MT"| LocationAbbr == "WY"| LocationAbbr == "NV"| LocationAbbr == "UT"| LocationAbbr == "CO"
+                            | LocationAbbr == "AZ"| LocationAbbr == "NM"| LocationAbbr == "HI" ~ "West",
+                            
+                            LocationAbbr == "ND"| LocationAbbr == "SD"| LocationAbbr == "NE"| LocationAbbr == "KS"| LocationAbbr == "MN"|
+                              LocationAbbr == "IA"| LocationAbbr == "MO"| LocationAbbr == "WI"| LocationAbbr == "IL"| LocationAbbr == "MI"|
+                              LocationAbbr == "IN"| LocationAbbr == "OH" ~ "Midwest",
+                            
+                            LocationAbbr == "ME"| LocationAbbr == "VT"| LocationAbbr == "NH"| LocationAbbr == "MA"| LocationAbbr == "CT"|
+                              LocationAbbr == "RI"| LocationAbbr == "NY"| LocationAbbr == "NJ"| LocationAbbr == "PA" ~ "Northeast",
+                            
+                            LocationAbbr == "DE"| LocationAbbr == "MD"| LocationAbbr == "VA"| LocationAbbr == "WV"| LocationAbbr == "NC"|
+                              LocationAbbr == "SC"| LocationAbbr == "KY"| LocationAbbr == "TN"| LocationAbbr == "GA"| LocationAbbr == "FL"|
+                              LocationAbbr == "AL"| LocationAbbr == "MS"| LocationAbbr == "LA"| LocationAbbr == "AR"| LocationAbbr == "OK"|
+                              LocationAbbr == "TX" ~ "South")) %>%
+  na.exclude() %>%
+  ggplot(aes(x = `Region`, y = `Data_Value`)) +
+  geom_boxplot() +
+  theme_bw() +
+  xlab("Regions") +
+  ylab("Heart Disease Mortality per 100,000") +
+  ggtitle("Heart Disease Mortaility by US Region") +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+\
+# Alzheimer's Disease and Healthy Aging Data
+## One of my biggest interests is aging, and this dataset explores Alheimer's Disease and healthy aging data. I think one of the biggest challenges of this dataset is there is only one real variable in "Data Value". I am not completely sure what that is measuring, but I am assuming it is a normalized value of some kind that indiicates overall health. 
+
+```{r Import Alzheimers Data, results='hide'}
+download.file(url = "https://data.cdc.gov/api/views/hfr9-rurv/rows.csv?accessType=DOWNLOAD", "alz_disease.csv")
+alz_data <- read.csv("alz_disease.csv")
+```
+
+```{r Alzheimers Data Analysis}
+library("ggplot2")
+library("dplyr")
+library("ggpmisc")
+
+# Wanted to quickly look how many/what the classes were in the dataset
+#print(unique(alz_data$Class))
+
+alz_data %>%
+  ggplot(aes(x = `Class`, y = `Data_Value`)) +
+  geom_boxplot() +
+  theme_bw() +
+  xlab("Study") +
+  ylab("Data Value") +
+  ggtitle("Data Value by Class") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+#Although we see some differences in the studies, this doesn't give enough information to discern anything of value. I.E. 'Mental Health' is a very general term and we do not know what about mental health was studied based on this graph. I will have to break the data down by topic or question.
+
+print(unique(alz_data$Question))
+
+alz_data %>%
+  ggplot(aes(x = `Question`, y = `Data_Value`)) +
+  geom_boxplot() +
+  theme_bw() +
+  xlab("Question") +
+  ylab("Data Value") +
+  ggtitle("Data Value by Question") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+#Although the xlabel on this is unreadable, it shows the variety in the data is tied strongly to the questions. Most of the questions are 'percentage of' some variable. This makes me think the data value is not a normalized value as I initially thought but a percentage relating back to the question. We will need to select a specific question or group of questions to compare.
+
+alz_data_depression <- filter(alz_data, alz_data$Question == "Percentage of older adults with a lifetime diagnosis of depression")
+
+#We can look at the dataset for older adults with lifetime depression
+
+#Added trendline. Shows very weak R2 value, but the slope is negative so there are slightly less depressed adults every year, fingers crossed. 
+alz_data_depression %>%
+  ggplot(aes(x = `YearEnd` , y = `Data_Value`)) +
+  geom_point() +
+  stat_poly_line() +
+  stat_poly_eq(use_label(c("eq", "R2"))) +
+  theme_bw() +
+  xlab("Year") +
+  ylab("Percent of Older Adults with Lifetime Depression") +
+  ggtitle("Older Adults with Depression By Year") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#Factored the xaxis to see each year on the graph. Trendline won't work with factored xaxis.
+alz_data_depression$YearEnd <- factor(alz_data_depression$YearEnd)
+
+alz_data_depression %>%
+  ggplot(aes(x = `YearEnd` , y = `Data_Value`)) +
+  geom_boxplot() + 
+  theme_bw() +
+  xlab("Year") +
+  ylab("Percent of Older Adults with Lifetime Depression") +
+  ggtitle("Older Adults with Depression By Year") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
