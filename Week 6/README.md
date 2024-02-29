@@ -29,7 +29,9 @@ round_date(dt, unit = "minute") #rounds date-time to nearest minute
 ds(dt) #Returns TRUE if it is daylight savings time
 ```
 
-Plotting with date-times isn't always straightforward, sometimes the best thing to do is to convert the date-time into days or seconds from a starting point.
+Plotting with date-times isn't always straightforward, sometimes the best thing to do is to convert the date-time into days or seconds from a starting point.  
+  
+[Lubridate Cheatsheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf])
 
 # Saving plots
 It's important sometimes to save your plots as files, especially when making slides. Here's how you do it.
