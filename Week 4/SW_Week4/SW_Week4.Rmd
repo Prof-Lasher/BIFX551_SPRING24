@@ -1,0 +1,51 @@
+---
+title: "SW_Week4"
+author: "Spencer Weed"
+date: "2024-02-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+I would like to do a project about eSports. I coach here at Hood for the eSports team and thought it would be something interesting to do a project on. I found a collection of heart rates of players during games that looks interesting. I could do a project taking a look at those compared to traditional sports or other activities to see how similar or different they are. I could also change and just compare the heartrates of all the eSports players as there are a lot of seperate sets of data for the study.
+
+Question: How does the heart rate of a professional eSports athlete compare to that of other athletes?
+Alternate Question using just the eSports data: How much does gameplay affect the physical reactions of eSport athletes?
+
+
+
+
+
+Below is a data set pulled from the collection of the eSports datasets:
+
+The data is interesting because there is not much data on people who play video games as a living. On top of that this data is mostly recording physical reactions the person is having, which is an interesting way to look at the act of playing a game. 
+I can see some problems with the data when it comes to making sure the data is recording what I think it is recording. I have an example below in the dataset, but when the dataset is recording time, is that seconds? 
+
+
+```{r}
+LoLFile <- read.csv("eSportsheart_rate.csv")
+plot(LoLFile)
+#print(LoLFile)
+```
+
+Below is the data set for cycling heart rate:
+
+I like this dataset as it records a lot of different things and I was hoping to use this and the eSports data to have multiple overlaping data being tracked. However, I think this data might only be averages and not over time, which will make comparisons a little difficult. I think it still might be useable as a baseline comparision.My question for this dataset is, is there a way to still draw conclusions from this data even if the interval of time is different compared the the other data. Also, What do some of the other data sets mean, what is power_15sec?
+
+```{r}
+cycling <- read.csv("cycling.csv")
+plot(cycling)
+#print(cycling)
+```
+Below is the data set for the MIT-BIH time series:
+
+This data seemed like a good place to find semi-resting heart rates. This is a data set for sets of series that monitored the heart rate for two different people while they completed the same comparable activities. My worry about this data is that I will need to do a lot of data manipulation for it to work. I think I will need to separate each series (every two columns) to make the graphs look and make more sense. 
+The question I have for this data set, and what would really help with my comparisons, is if I knew what the activities were. Are these simple tasks? Jogging? something in between?
+
+```{r}
+sports <- read.csv("heart_rate.csv")
+plot(sports)
+#print(sports)
+```
