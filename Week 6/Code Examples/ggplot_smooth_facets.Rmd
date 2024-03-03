@@ -1,0 +1,351 @@
+---
+title: "ggplot2 - facets, geom_smooth, geom_smooth_ci"
+author: "Brandon"
+date: "2024-02-28"
+output: html_document
+---
+
+```{r}
+
+library("readr")
+library("dplyr")
+library("tidyr")
+library("lubridate")
+library( "ggplot2" )
+library("scales")
+
+#https://data.cdc.gov/NCHS/Monthly-Provisional-Counts-of-Deaths-by-Select-Cau/9dzk-mvmi/about_data
+df <- read_csv( "Monthly_Provisional_Counts_of_Deaths_by_Select_Causes__2020-2023_20240227.csv" )
+
+str(df)
+
+#Change the columns for the dates to be Dates datetype
+df <- df %>% mutate(across(contains("Date") | contains("Data"), lubridate::mdy ))
+
+```
+
+```{r}
+#Generate basic plot x vs y 
+df %>%
+  ggplot( aes(x = `Start Date`, y =`All Cause`) ) +
+  geom_point()
+
+
+#Look at FLu over time
+df %>%
+  ggplot( aes(x = `Start Date`, y =`Influenza and Pneumonia`) ) +
+  geom_point() +
+  geom_smooth( method="loess", span=.3 )
+
+#Look at Flu over time / Year
+df %>%
+  ggplot( aes(x = `Month`, y =`Influenza and Pneumonia`, color=factor(Year)) ) +
+  geom_point( ) +
+  scale_x_discrete(limits = factor(1:12), labels = month.abb) +
+  geom_line( ) + 
+  labs(color='Year')
+
+
+
+```
+
+
+
+```{r}
+
+# All causes listed
+long_df <- df %>% 
+  mutate( `Covid Total` = `COVID-19 (Multiple Cause of Death)` + `COVID-19 (Underlying Cause of Death)` ) %>%
+  select( `Start Date`, `All Cause`:`Drug Overdose`,  `Covid Total`  ) %>%
+  pivot_longer(-`Start Date`, names_to = "variable", values_to = "value") 
+
+
+long_df %>%  ggplot( aes( x =`Start Date`, y=value, color=variable ) ) +
+  theme_minimal() + theme(legend.position = "none") +
+  geom_point( )
+
+
+long_df %>%  ggplot( aes( x =`Start Date`, y=value, fill=variable ) ) +
+  theme_minimal() + theme(legend.position = "none") +
+  geom_col( )
+
+
+# Covid related 
+# Use span to control the "wiggliness" of the default loess smoother.
+# The span is the fraction of points used to fit each local regression:
+# small numbers make a wigglier curve, larger numbers make a smoother curve.
+
+df %>% 
+  select( `Start Date`, contains("Covid")  ) %>%
+  pivot_longer(-`Start Date`, names_to = "Death Type", values_to = "value") %>%
+  ggplot( aes( x =`Start Date`, y=value, color=`Death Type`, fill=`Death Type`) ) +
+  theme_minimal() +
+  geom_point()+ 
+  geom_smooth(  formula = 'y ~ x', method="loess", se=FALSE, span = .5)
+
+
+```
+
+
+```{r}
+#natural vs all
+# The data is dominated by the All and Natural Cause values 
+df %>%
+  transmute( `Start Date` = `Start Date`, `Natural Cause` = `Natural Cause` , `Non-Natural Cause`= `All Cause` -  `Natural Cause`) %>%
+  pivot_longer(-`Start Date`, names_to = "Death Type", values_to = "value") %>%
+  ggplot( aes( x =`Start Date`, y=value, fill=`Death Type`) ) +
+  theme_minimal() +
+  geom_col()
+
+```
+
+
+```{r}
+# remove dominate data!
+# 
+df %>% 
+  select( `Start Date`, `Septicemia`:`Drug Overdose` ) %>%
+  pivot_longer(-`Start Date`, names_to = "variable", values_to = "value") %>%
+  ggplot( aes( x =`Start Date`, y=value, color=variable ) ) +
+  theme_minimal() + theme(legend.position = "none") +
+  geom_point( )
+
+
+df %>% 
+  select( `Start Date`, `Septicemia`:`Drug Overdose`, -`Diseases of Heart`, -contains("Neopl")  ) %>%
+  pivot_longer(-`Start Date`, names_to = "variable", values_to = "value") %>%
+  ggplot( aes( x =`Start Date`, y=value, color=variable ) ) +
+  theme_minimal() + theme(legend.position = "bottom") +
+  geom_point( ) 
+
+
+df %>% 
+  select( `Start Date`, `Septicemia`:`Drug Overdose`, -`Diseases of Heart`, -contains("Neopl")  ) %>%
+  pivot_longer(-`Start Date`, names_to = "variable", values_to = "value") %>%
+  ggplot( aes(x=value, color=variable ) ) +
+  theme_minimal() + theme(legend.position = "bottom") +
+  geom_boxplot( ) 
+
+# There is still way more data here than we can make sense of
+#  How else could be group them?
+
+```
+```{r}
+# Disease related vs non-Disease ?
+  # ..   `All Cause` = col_double(),
+  # ..   `Natural Cause` = col_double(),
+  # ..   Septicemia = col_double(),
+  # ..   `Malignant Neoplasms` = col_double(),
+  # ..   `Diabetes Mellitus` = col_double(),
+  # ..   `Alzheimer Disease` = col_double(),
+  # ..   `Influenza and Pneumonia` = col_double(),
+  # ..   `Chronic Lower Respiratory Diseases` = col_double(),
+  # ..   `Other Diseases of Respiratory System` = col_double(),
+  # ..   `Nephritis, Nephrotic Syndrome and Nephrosis` = col_double(),
+  # ..   `Symptoms, Signs and Abnormal Clinical and Laboratory Findings, Not Elsewhere Classified` = col_double(),
+  # ..   `Diseases of Heart` = col_double(),
+  # ..   `Cerebrovascular Diseases` = col_double(),
+  # ..   `Accidents (Unintentional Injuries)` = col_double(),
+  # ..   `Motor Vehicle Accidents` = col_double(),
+  # ..   `Intentional Self-Harm (Suicide)` = col_double(),
+  # ..   `Assault (Homicide)` = col_double(),
+  # ..   `Drug Overdose` = col_double(),
+  # ..   `COVID-19 (Multiple Cause of Death)` = col_double(),
+  # ..   `COVID-19 (Underlying Cause of Death)` = col_double(),
+
+# `Non-Disease`=,
+
+diseaseVsNonDisease <- df %>%
+  transmute( `Start Date`=`Start Date`,
+             `Disease`= rowSums(select(., `Septicemia`:`Cerebrovascular Diseases`), na.rm=TRUE),
+             `Non-Disease`= rowSums(select(., `Accidents (Unintentional Injuries)`:`Drug Overdose`), na.rm=TRUE) 
+             )
+
+diseaseVsNonDisease %>%
+  pivot_longer(-`Start Date`, names_to = "variable", values_to = "value") %>%
+  ggplot( aes( y=variable, x=value, color=variable ) ) +
+  theme_minimal() + theme(legend.position = "none") +
+  geom_boxplot() 
+
+comparisonPlot <- diseaseVsNonDisease %>%
+  pivot_longer(-`Start Date`, names_to = "Type", values_to = "value") %>%
+  ggplot( aes( y=value, x=`Start Date`, color=Type ) ) +
+  theme_minimal() + theme(legend.position = "bottom") +
+  geom_point() +
+  geom_smooth( span=.2) + 
+  ylab( "Number of cases ") +
+  xlab( "Date" ) +
+  labs( title="Types of Death Comparison")
+
+comparisonPlot
+
+# Adjust the ylim and zoom in
+comparisonPlot + ylim( 1.5e5, 2e5)
+
+comparisonPlot +  ylim( .2e5, .5e5)
+
+```
+
+
+```{r}
+# Looks like disease deaths as a group are cyclic ( like Above! )
+# Lets plot Respiratory diseases and some other to see
+df %>% 
+  select( `Month`, `Year` , `Influenza and Pneumonia`:`Other Diseases of Respiratory System`, `Malignant Neoplasms`:`Alzheimer Disease`    ) %>%
+  pivot_longer(-c(`Month`,`Year`) , names_to = "Type", values_to = "count") 
+
+library(stringr)
+#Function to wrap my graph names ( will also clean up the _ if present) 
+wrap_label <- function(x) str_wrap(str_replace_all(x, "_", " "), width = 20)
+
+df %>% 
+  select( `Month`, `Year` ,`Influenza and Pneumonia`:`Other Diseases of Respiratory System`, `Malignant Neoplasms`:`Alzheimer Disease` ) %>%
+  pivot_longer(-c(`Month`,`Year`) , names_to = "Type", values_to = "count") %>%
+  ggplot( aes( x=Month, y=count, color=factor(Year) )  ) + 
+  scale_x_discrete(limits = factor(1:12), labels = month.abb) +
+  facet_wrap( ~Type, ncol=3, labeller = as_labeller(wrap_label) ) + 
+  theme(
+    strip.clip = "on",
+    plot.margin = margin(0, 0, 0, 0, "cm"),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
+  )+
+  labs(color="Year")+
+  geom_point() + 
+  geom_line()
+
+#Not very useable... How do we fix it?
+
+```
+
+```{r}
+#Two options.
+#1. Process the data to normalize the Y value  ( value / max  )
+#2. free the Y!
+
+# What is happening with 2023?!
+
+df %>% 
+  select( `Month`, `Year` ,`Influenza and Pneumonia`:`Other Diseases of Respiratory System`, `Malignant Neoplasms`:`Alzheimer Disease` ) %>%
+  #filter( `Year`  < 2023 ) %>%
+  pivot_longer(-c(`Month`,`Year`) , names_to = "Type", values_to = "count") %>%
+  ggplot( aes( x=Month, y=count, color=factor(Year) )  ) + 
+  scale_x_discrete(limits = factor(1:12), labels = month.abb) +
+  facet_wrap( ~Type, ncol=3, labeller = as_labeller(wrap_label), scales = "free_y" ) + 
+  theme(
+    strip.clip = "on",
+    plot.margin = margin(0, 0, 0, 0, "cm"),
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)
+  )+
+  labs(color="Year")+
+  geom_point() + 
+  geom_line()
+```
+
+
+```{r}
+#Let's go back and look at the sum of the different death types
+# Remove 2023, due to no data for Non-Disease
+# Using facet_grid vs facet_wrap above
+#
+diseaseVsNonDisease %>% 
+  pivot_longer(-`Start Date`, names_to = "Type", values_to = "value") %>%
+  filter( year(`Start Date`) < 2023 ) %>%
+  ggplot( aes( y=value, x=month(`Start Date`), color=factor(year(`Start Date`)) ) ) +
+  scale_x_discrete(limits = factor(1:12), labels = month.abb) +
+  facet_grid( rows = vars(Type), scales = "free_y" ) +
+  theme(legend.position = "bottom") +
+  geom_point() +
+  geom_line() + 
+  ylab( "Number of cases ") +
+  xlab( "Month" ) +
+  labs( title="Types of Death Comparison", color="Year")
+
+```
+
+
+```{r}
+# Comparison of Data sets
+# https://www.youtube.com/watch?v=I10q6fjPxJ0&t=124s
+
+# Our hypotheses
+#  The number of cases is dependent upon Month, Both Disease and non-Disease
+# What test do we use?
+#  There is a similarity between the given years. I.E 2021 was like 2022
+# What test do we use?
+
+```
+
+```{r}
+#  The number of cases is dependent upon Month, Both Disease and non-Disease
+# 12 Catagoric vs a numeric - ANOVA 
+
+aovDf <- diseaseVsNonDisease %>% 
+  pivot_longer(-`Start Date`, names_to = "Type", values_to = "value") %>%
+  filter( year(`Start Date`) < 2023 );
+
+res_aov <- aov(value ~ factor(month(`Start Date`)),
+  #data = aovDf %>% filter( `Type` == "Non-Disease" )
+  data = aovDf %>% filter( `Type` == "Disease" )
+)
+
+
+summary(res_aov)
+
+#install.packages("remotes")
+#remotes::install_github("easystats/report")
+#library(report)
+#report(res_aov)
+
+```
+
+
+```{r}
+#Lets check the correlation of each year
+# To do this the data needs to be arranged a bit differently
+
+corrDf <- diseaseVsNonDisease %>%
+          select( `Start Date`,`Disease` ) %>%
+          transmute( Year = year(`Start Date`), Month=month(`Start Date`), Count=Disease ) %>%
+          pivot_wider( names_from =Year , values_from = Count  )
+
+corrDf 
+
+# Now I am able to run a correlation between each of the years
+
+corRes <- cor(corrDf[, c("2020","2021","2022") ] )
+
+corRes
+
+#Lets make a heat map from this
+library(ggcorrplot)
+
+ggcorrplot( corRes, lab = TRUE )
+
+
+```
+
+```{r}
+#Lets check the correlation of each month!
+# Again do this the data needs to be arranged a bit differently
+
+corrDf <- diseaseVsNonDisease %>%
+          select( `Start Date`,`Disease` ) %>%
+          transmute( Year = year(`Start Date`), Month=month.abb[month(`Start Date`)], Count=Disease ) %>%
+          filter( Year!=2023 ) %>%
+          pivot_wider( names_from = Month, values_from = Count  )
+
+corrDf 
+
+# Now I am able to run a correlation between each of the years
+
+corRes <- cor(corrDf[, month.abb ] )
+
+corRes
+
+#Lets make a heat map from this
+library(ggcorrplot)
+
+ggcorrplot( corRes, lab = TRUE, type= "upper" )
+
+```
+
