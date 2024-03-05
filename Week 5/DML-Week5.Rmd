@@ -1,0 +1,195 @@
+---
+title: "DML_week5"
+author: "Dina Lauricella"
+date: "`r format(Sys.Date())`"
+output:
+  word_document:
+    toc: yes
+  html_document:
+    toc: yes
+    toc_float: yes
+    codefolding: show
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Import Libraries
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(janitor)
+library(ggplot2)
+```
+
+## Read Opiod Data (1999-2014)
+
+```{r}
+opiod <- read_csv("C:/Users/dlauricella/Documents/GitHub/BIFX551_SPRING24/Week 4/Opiod Death, 1999-2014 v1.1.csv", "opiod.csv")
+
+```
+
+
+
+## Take a look at Opiod data
+
+```{r}
+opiod2 <- janitor::row_to_names(opiod, 1)
+opiod2 <- opiod2 %>% rename("num_Rx_dispensed" = "Prescriptions Dispensed by US Retailers in that year (millions)")
+class(opiod2)
+str(opiod2)
+spec(opiod2)
+spec(opiod)
+summary(opiod2)
+dim(opiod2)
+sum(is.na(opiod2))
+```
+
+```{r}
+west <- c("Washington", "Oregon", "California", "Alaska", "Montana", "Idaho", "Wyoming", "Nevada", "Utah", "Colorado", "Arizona", "New Mexico", "Hawaii")
+midwest <- c("North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri", "Wisconsin", "Illinois", "Michigan", "Indiana", "Ohio")
+south <- c("Texas", "Oklahoma", "Arkansas", "Louisiana", "Kentucky", "Tennesse", "Mississippi", "Alabama", "West Virginia", "Virginia", "North Carolina", "South Carolina", "Georgia", "Florida")
+northeast <- c("New York", "Pennsylvania", "Maine", "Vermont", "New Hampshire", "Massachusetts", "Rhode Island", "Connecticut", "New Jersey", "Delaware", "Maryland")
+
+```
+
+
+## Plot Opiod Data with Contious Variables
+## This shows that deaths increased with increasing prescriptions dispensed.
+
+```{r}
+
+# Remove rows with NA values in the 'Deaths' column
+opiod2 <- opiod2 %>% filter(!is.na(Deaths))
+
+# Convert 'Deaths' and 'num_Rx_dispensed' columns to numeric
+opiod2$Deaths <- as.numeric(opiod2$Deaths)
+opiod2$num_Rx_dispensed <- as.numeric(opiod2$num_Rx_dispensed)
+
+# Group by Year and calculate the sum of Deaths and Prescriptions
+opiod_sum <- opiod2 %>%
+  group_by(Year) %>%
+  summarise(TotalDeaths = sum(Deaths, na.rm = TRUE),
+            Total_num_Rx_dispensed = sum(num_Rx_dispensed, na.rm = TRUE))
+
+# Plot
+ggplot(opiod_sum, aes(x = Total_num_Rx_dispensed, y = TotalDeaths)) +
+  geom_point() +
+  labs(x = "Total Prescriptions Dispensed (Millions)",
+       y = "Total Deaths",
+       title = "Deaths as a Function of Prescriptions by Year (1999-2014)")
+
+```
+
+
+## Plot Opiod Data with Discrete Variables
+## The greater the population size, the greater the deaths.
+
+```{r}
+
+# Convert 'Deaths' and 'Population' columns to numeric
+opiod2$Deaths <- as.numeric(opiod2$Deaths)
+opiod2$Population <- as.numeric(opiod2$Population)
+
+# Group by State and calculate the mean of Population and Deaths
+opiod_mean <- opiod2 %>%
+  group_by(State) %>%
+  summarise(MeanPopulation = mean(Population, na.rm = TRUE),
+            MeanDeaths = mean(Deaths, na.rm = TRUE))
+
+# Plot
+ggplot(opiod_mean, aes(x = MeanPopulation, y = MeanDeaths)) +
+  geom_point() +
+  labs(x = "Mean Population by State",
+       y = "Mean Deaths by State",
+       title = "Mean Deaths as a Function of Mean Population by State")
+
+
+```
+
+
+## Plot Opiod Data with Color/Size to Represent Quantity
+## This shows death by region normalized to the population size. By region is not as dramatic as individual states would have shown.
+
+```{r}
+
+# Convert 'Deaths' column to numeric
+opiod2$Deaths <- as.numeric(opiod2$Deaths)
+
+# Assign states to regions
+opiod2 <- mutate(opiod2,
+                 Region = case_when(
+                   State %in% c("Washington", "Oregon", "California", "Alaska", "Montana", "Idaho", "Wyoming", "Nevada", "Utah", "Colorado", "Arizona", "New Mexico", "Hawaii") ~ "West",
+                   State %in% c("North Dakota", "South Dakota", "Nebraska", "Kansas", "Minnesota", "Iowa", "Missouri", "Wisconsin", "Illinois", "Michigan", "Indiana", "Ohio") ~ "Midwest",
+                   State %in% c("Texas", "Oklahoma", "Arkansas", "Louisiana", "Kentucky", "Tennessee", "Mississippi", "Alabama", "West Virginia", "Virginia", "North Carolina", "South Carolina", "Georgia", "Florida") ~ "South",
+                   State %in% c("New York", "Pennsylvania", "Maine", "Vermont", "New Hampshire", "Massachusetts", "Rhode Island", "Connecticut", "New Jersey", "Delaware", "Maryland") ~ "Northeast",
+                 ))
+
+# Filter out rows with NA in the Region column
+opiod2 <- opiod2 %>% filter(!is.na(Region))
+
+# Group by region and calculate total deaths and total population for each region
+opiod_region <- opiod2 %>%
+  group_by(Region) %>%
+  summarise(TotalDeaths = sum(Deaths, na.rm = TRUE),
+            TotalPopulation = sum(Population, na.rm = TRUE))
+
+# Calculate deaths per 100,000 population
+opiod_region <- mutate(opiod_region, DeathsPer100k = (TotalDeaths / TotalPopulation) * 100000)
+
+# Create a bar plot with deaths per 100,000 population by region
+ggplot(opiod_region, aes(x = Region, y = DeathsPer100k, fill = DeathsPer100k)) +
+  geom_bar(stat = "identity") +
+  scale_fill_viridis_c() +  # You can change the color scale as needed
+  labs(x = "Region",
+       y = "Deaths per 100,000 Population",
+       title = "Opioid Deaths per 100,000 Population by Region") +
+  theme_minimal()
+
+
+```
+
+
+## Plot Opiod Data as Faceted Plot
+## The plot showing the highest deaths/year shows a steeper rise than the lowest deaths/year.
+
+```{r}
+
+# Convert 'Deaths' and 'num_Rx_dispensed' columns to numeric
+opiod2$Deaths <- as.numeric(opiod2$Deaths)
+opiod2$num_Rx_dispensed <- as.numeric(opiod2$num_Rx_dispensed)
+
+# Identify the years with the lowest and highest total deaths
+lowest_death_year <- opiod2 %>%
+  group_by(Year) %>%
+  summarise(TotalDeaths = sum(Deaths, na.rm = TRUE)) %>%
+  slice_min(order_by = TotalDeaths) %>%
+  pull(Year)
+
+highest_death_year <- opiod2 %>%
+  group_by(Year) %>%
+  summarise(TotalDeaths = sum(Deaths, na.rm = TRUE)) %>%
+  slice_max(order_by = TotalDeaths) %>%
+  pull(Year)
+
+# Filter data for the selected years
+opiod2_filtered <- opiod2 %>%
+  filter(Year %in% c(lowest_death_year, highest_death_year))
+
+# Create a faceted plot for the selected years
+ggplot(opiod2_filtered, aes(x = Population, y = Deaths, color = as.factor(Year))) +
+  geom_point(alpha = 0.7) +
+  labs(x = "Population by State",
+       y = "Total Deaths by State",
+       title = "Deaths, Population, and Prescriptions by State (Lowest and Highest Death Years)") +
+  facet_wrap(~ Year, scales = "free_y", ncol = 2) +
+  scale_color_viridis_d() +
+  theme_minimal()
+
+
+```
+
