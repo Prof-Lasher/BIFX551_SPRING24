@@ -1,4 +1,4 @@
-## AJO_Week4 Homework Assignment 
+## AJO_Week4 Homework Assignment
 
 ------------------------------------------------------------------------
 
@@ -23,6 +23,8 @@ temp <- tempfile()
 download.file("https://storage.googleapis.com/kaggle-data-sets/4475593/7672882/bundle/archive.zip?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%2F20240222%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240222T225559Z&X-Goog-Expires=259200&X-Goog-SignedHeaders=host&X-Goog-Signature=88e4aad890aa3bd42cd8c13dd60c532ebf92f12b0add5f8258aa9b3d39a565e603f88c5973c9c576c469cef57982332ba7d5b1c00ca7e88c5f86942f7d2667fe99c06d9ada5ec659379b97492e1a870a81c6ecbe03d8840fdde5873f8da322a184347b91675b3e3d3f39931c950c54f6d2aaaf1277d9b6281a4e422be19ce3925a06d52c6c88d02e126293575aff43beedec6ff123609a5fbd56dce3d675a3eff2c3250094456bb0e84e283299b1b6b2471588afa4bf47966ff11d2bb7e8222dc586bad16a48bed02ede3bfd67263ca846d97bdf8138f4a1ce2f71ae468a7b5c77409dc160e22122015072b43637f597366fcdcc15e613e9d8f9abcc46a25001",temp)
 heart_data <- read.csv(unz(temp, "heart_data.csv"))
 unlink(temp)
+
+heart_data <- read.csv("/Users/olssons/Documents/BIFX551/Week 4/Project Dataset(s)/heart_data.csv")
 
 ```
 
@@ -177,7 +179,7 @@ unlink(temp)
 
 ```
 
-#### b.) Summarize Data Structure 
+#### b.) Summarize Data Structure
 
 This dataset is made up of 16 variables and 1436 observations. Apart from Age, pH, and specific gravity (domain is number) , all the rest of the variables have observations that are stored as strings of characters.
 
