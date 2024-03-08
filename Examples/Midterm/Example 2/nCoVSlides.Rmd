@@ -1,0 +1,90 @@
+---
+title: "Project1 Slides"
+author: "Dan Vogel"
+date: "3/6/2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(lemon)      # Prints dataframes nicely
+library(dplyr)      # used to filter data
+library(magrittr)   # used to pipe data 
+library(lubridate)  # used to reformat character-date-time to data type
+library(tidyverse)  # used to read csv files
+```
+
+## Analysis of Global nCoV Over Time 
+
+ Can We Predict the End of the Pandemic?
+
+This dataset is updated daily with globally reported cases of the nCoV virus.
+We plot this data in various ways to determine if the nCoV spread is following a predictable pattern.  The 2020 Summer Olympics is scheduled to start in Tokyo on
+July 24.  We will develop a simple model to see if the nCoV cases in China will have subsided by then. 
+
+Data Source: https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset
+
+## Assumptions
+
+Note:The original data had multiple observations for some dates.
+In these cases, we will only consider the latest observation for that date.
+This is valid since these are always increasing quantities.
+
+The ncov dataset has 3 columns for observation counts: Confirmed, Recovered, Deaths
+It is not clear from the data if Recovered cases are counted in Confirmed.  It looks like Confirmed cases are ever-increasing so I will assume a "Recovered" patient is also "Confirmed".  This will allow us to see a downward trend in cases in the future.
+
+```{r  data,echo=FALSE,message=FALSE}
+ncov_df<-read_csv("ncov.datasets/covid_19_data.csv")   #new data
+names(ncov_df)[names(ncov_df)=="Country/Region"] <- "Country"
+#rename(ncov_df,"Province/State"="Region")
+names(ncov_df)[names(ncov_df)=="Province/State"] <- "City"
+## add a column called "YEARMD" that is date type
+ncov_df$YEARMD<-date(mdy(ncov_df$ObservationDate))
+# Start date of 2020 Olympics in Japan
+Olympics<-date("2020-07-24")
+# aggregate Country/Region -> inside china , outside china.  Add a bolean column called "inchina" to these datasets
+ncov_df$InChina<-(ncov_df$Country=="China"|ncov_df$Country=="Mainland China")
+# use dplyr summarise to aggregate
+InOut_df<-ncov_df %>% group_by(YEARMD, InChina) %>% summarise(Total=sum(Confirmed))
+# Lets make a Tidy frame with the same data for printing and plots
+Tidy_df<-pivot_wider(InOut_df, names_from=InChina, values_from=Total)
+```
+
+## Confirmed Cases of nCoV
+```{r plot1, echo=FALSE}
+g<-InOut_df %>% 
+  #filter(InChina==TRUE) %>%
+  ggplot(aes(x=YEARMD, y=Total, color=InChina))+geom_point() +
+    labs(x = "Observed Date", y = "Total Confirmed") + 
+    theme(text=element_text(size=5), axis.text.x=element_text(angle=90, hjust=1)) +
+    facet_wrap(. ~ InChina, scales="free_y" )
+
+print(g)
+```
+Shows increase in cases inside China is slowing.  Outside of China, we cannot see this. 
+
+## Recovered Cases of nCoV
+```{r plot2, echo=FALSE}
+g<-ncov_df %>% group_by(YEARMD, InChina) %>% summarise(Recovered=sum(Recovered)) %>%
+  ggplot(aes(x=YEARMD, y=Recovered, color=InChina))+geom_point() +
+    labs(x = "Observed Date", y = "Total Recovered") + 
+    theme(text=element_text(size=5), axis.text.x=element_text(angle=90, hjust=1)) +
+    facet_wrap(. ~ InChina, scales="free_y" )
+print(g)
+```
+Good news here.  The patients are recovering.  This number is increasing exponential, at a similar rate to the original spread.
+
+## R-norm
+<div style= "float:right;position: relative; top: -80px;">
+![Compare China with Rnorm](rnorm.png)
+</div>
+We try to construct an R-normal bell curve that matches the nCoV pattern. Virus such as SARS and the Flu typically follow a bell curve.  
+
+The 0 on our curve represents today, the curve predicts that 40 days from now, the number of cases will decrease greatly in China, followed by the cases outside of China.
+
+## Conclusion
+
+Our plots show that the nCoV virus follows the typical pattern of spread associated with a corona virus such as SARs or MERs.  If we assume that the slowdown in recent cases in China means that a peak is being reached, the virus will subside in about 40 days.  The Olympics are on July 24, 2020, 140 days from now.  With a 100 days to spare, hopefully the rest of the world will be better as well.  
+
+If the peak is further on, by 2 weeks, for example, add 2 weeks to the 40 days to re-calculate the end of nCoV...this year.
+
