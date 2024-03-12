@@ -1,0 +1,118 @@
+---
+title: "Week_5"
+author: "Hamere Mogus"
+date: "2024-02-26"
+output: html_document
+---
+
+```{r}
+library("ggplot2")
+library("dplyr")
+```
+
+```{r}
+#Loading Data
+Stroke <- read.csv("/Users/hamogus/Downloads/healthcare-dataset.csv", stringsAsFactors = FALSE)
+```
+
+```{r}
+#Data Structure 
+View(Stroke)
+dim(Stroke)
+str(Stroke)
+summary(Stroke)
+```
+
+```{r}
+#Aggregating data by gender and ever_married status
+Stroke_aggregated <- Stroke %>%
+  group_by(gender, ever_married) %>%
+  summarise(avg_age = mean(age),
+            avg_glucose = mean(avg_glucose_level),
+            avg_bmi = mean(bmi),
+            stroke_count = sum(stroke))
+```
+
+```{r}
+#Continuous Variables
+#Plotting the relationship between age and glucose level
+#From the plot below, we can see that there is a strong correlation between age and glucose level. 
+ggplot(Stroke, aes(x = age, y = avg_glucose_level)) +
+  geom_point() +
+  labs(title = "Age vs. Average Glucose Level",
+       x = "Age",
+       y = "Average Glucose Level")
+
+#Plotting the relationship between glucose level and bmi
+#Weak correlation between average glucsoe level and bmi
+ggplot(Stroke, aes(x = avg_glucose_level, y = bmi)) +
+  geom_point(aes(color = stroke)) +
+  labs(title = "Relationship between Average Glucose Level and BMI",
+       x = "Average Glucose Level",
+       y = "BMI",
+       color = "Stroke") +
+  theme_minimal()
+```
+
+```{r}
+#Discrete variables
+#Plotting Occurrence of Stroke by Gender
+#From the plot below, we can see that Strokes have occurred more frequently in Females compared to Males.
+ggplot(Stroke, aes(x = gender, fill = factor(stroke))) +
+  geom_bar() +
+  labs(title= "Occurence of Stroke by Gender",
+  x= "Gender", 
+  y = "Count", 
+  fill = "Stroke") 
+
+#Plotting Occurrence of Stroke by Smoking Status
+#The Plot below suggests that smoking could be a significant factor influencing causing stroke.
+ggplot(Stroke, aes(x = smoking_status, fill = factor(stroke))) +
+  geom_bar() +
+  labs(title = "Stroke Occurrence by Smoking Status",
+       x = "Smoking Status",
+       y = "Count",
+       fill = "Stroke") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+#Plotting Hypertension by Work Type
+#The plot below shows how hypertension is distributed among individuals based on their work type.
+#Individuals working in private companies seems to have a higher prevalence compared to individuals with government jobs and those who are self-employed.
+ggplot(Stroke, aes(x = work_type, fill = factor(hypertension))) +
+  geom_bar() +
+  labs(title = "Occurences of Hypertension by Work Type",
+       x = "Work Type",
+       y = "Count",
+       fill = "Hypertension") +
+  theme( axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1) )
+```
+
+```{r}
+#The bar plot below represens stroke status by color
+Stroke$stroke <- factor(Stroke$stroke, levels = c("0", "1"), labels = c("Stroke Not Detected", "Stroke Detected"))
+ggplot(Stroke, aes(x = stroke)) +
+  geom_bar(fill = "lightgreen", color = "red") +
+  labs(title = "Occurrrence of Stroke",
+       x = "Stroke",
+       y = "Count") +
+  scale_x_discrete(labels = c("Stroke Not Detected", "Stroke Detected")) +
+  theme_minimal()
+```
+
+```{r}
+#A faceted plot
+#The Plot below shows the relationship between age, average glucose level, and stroke occurrence 
+#across different genders and marital status
+#Stroke seems to be more prevalent in Males who are married
+ggplot(Stroke, aes(x = age, y = avg_glucose_level)) +
+  geom_point(aes(color = stroke)) +
+  facet_grid(rows = vars(gender), cols = vars(ever_married)) +
+  labs(title = "Relationship between Age, Average Glucose Level, and Stroke",
+       x = "Age",
+       y = "Average Glucose Level",
+       color = "Stroke") +
+  theme_minimal()
+```
+
