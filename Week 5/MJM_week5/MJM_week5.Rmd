@@ -1,0 +1,113 @@
+---
+title: "MJM_week5"
+author: "Mike Murphy"
+date: "2024-02-29"
+output: html_document
+---
+# Conditions Contributing to COVID-19 Deaths, by State and Age, Provisional 2020-2023
+## This dataset is interesting as it explores comorbidities with COVID-19 over three years. 
+
+```{r Import COVID Data, results='hide'}
+#Downloading the CSV dataset and creating the data object
+download.file(url = "https://data.cdc.gov/api/views/hk9y-quqm/rows.csv?accessType=DOWNLOAD", "covid.csv")
+covid_data <- read.csv("covid.csv")
+```
+
+# I want to breakdown the giant dataset into smaller subsets that will be interesting to work with. I chose to group the dataset by deaths by State, and deaths by condition. I also decided to look at deaths in three specific conditions by State to see if certain states would be effected more by a disease traditionally associated with aging (Alzheimers), a disease traditionally associated with poor diet (Diabetes), or Sepsis (I thought of this as a control group).
+```{r Data Wrangling}
+#Loading packages
+library("ggplot2")
+library("dplyr")
+
+#Grouping the data for graphing later
+#Group by age groups
+deaths_by_age <- covid_data %>% 
+  group_by(Age.Group) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE))
+
+#Group by conditions
+deaths_by_condition <- covid_data %>% 
+  group_by(Condition.Group) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE))
+
+#Group by state
+deaths_by_state <- covid_data %>% 
+  group_by(State) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  filter(State != "United States") #United States is listed as a state, filtering it to not skew the rest of the data
+
+deaths_by_state_cond <- covid_data %>% 
+  group_by(State, Condition.Group) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  filter(State != "United States") %>%
+  filter(Condition.Group %in% c("Alzheimer disease", "Diabetes", "Sepsis")) #Looking into 3 conditions not commonly associated with SARS-CoV-2 death
+```
+
+```{r SARS-CoV-2 Deaths by State and either Alzheimer disease, Diabetes, or Sepsis}
+ggplot(deaths_by_state_cond, aes(x = `State`, y = `total_deaths`, color = `Condition.Group`)) + 
+  geom_point()+
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #Adjusted x-axis to better see the State names
+  xlab("State or Territory") + 
+  ylab("Deaths") + 
+  labs(color = "Comorbitity") + 
+  ggtitle("SARS-CoV-2 Deaths by State and Comorbidity") + 
+  theme(plot.title = element_text(hjust = 0.5)) #Centering the title
+```
+
+```{r Normalized SARS-CoV-2 Deaths by State and either Alzheimer disease, Diabetes, or Sepsis}
+#Normalizing the data by using log2
+norm_state_con <- deaths_by_state_cond %>%
+  mutate(log2_deaths = log2(total_deaths))
+
+ggplot(norm_state_con, aes(x = `State`, y = `log2_deaths`)) + 
+  geom_col() + 
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  xlab("State or Territory") + 
+  ylab("Deaths (Log2)") + 
+  ggtitle("Normalized SARS-CoV-2 Deaths by State and Comorbidity") + 
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  facet_wrap(vars(`Condition.Group`), nrow = 3) #Stacking all on top of each other allows for the x-axis to be legible 
+```
+# Lets look at all conditions for each state
+```{r Overview of deaths by all conditions}
+deaths_by_state_ALL_cond <- covid_data %>% 
+  group_by(State, Condition.Group) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  filter(State != "United States")
+
+ggplot(deaths_by_state_ALL_cond, aes(x = `State`, y = `total_deaths`, color = `Condition.Group`)) + 
+  geom_point()+
+  coord_flip() +
+  theme_bw() + 
+  theme(legend.position="bottom") + 
+  theme(legend.key=element_blank(), legend.key.size=unit(1,"point")) +
+  guides(colour=guide_legend(nrow=15)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #Adjusted x-axis to better see the State names
+  xlab("State or Territory") + 
+  ylab("Deaths") + 
+  labs(color = "Comorbitity") + 
+  ggtitle("SARS-CoV-2 Deaths by State and Comorbidity") + 
+  theme(plot.title = element_text(hjust = 0.5)) #Centering the title
+```
+```{r}
+deaths_by_month <- covid_data %>% 
+  group_by(Month, Year, Condition.Group) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  na.omit()
+
+deaths_by_month$Month <- factor(deaths_by_month$Month, levels = c(1:12), labels = month.name)
+
+ggplot(data = deaths_by_month, aes(x = `Month`, y = `total_deaths`, color = `Condition.Group`, size = `Year`)) + 
+  geom_point(alpha = .4) +  
+  scale_color_brewer(palette="Dark2") + 
+  theme_classic() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  theme(legend.position="bottom") + 
+  theme(legend.key=element_blank(), legend.key.size=unit(1,"point")) +
+  guides(color=guide_legend(nrow=15), size = guide_legend(nrow = 5)) + 
+  xlab("Months")
+ 
+```
+

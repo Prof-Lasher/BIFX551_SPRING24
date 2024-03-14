@@ -1,0 +1,73 @@
+---
+title: "Untitled"
+author: "Josie Sdhultz"
+date: "2024-02-15"
+output: html_document
+---
+#Directory
+Change directory as needed with setwd(). 
+
+Data downloaded from URL; https://www.kaggle.com/datasets/imyjoshua/average-time-spent-by-a-user-on-social-media
+
+File name; dummy_data.csv
+
+```{r}
+library(readr)
+download.file("https://www.kaggle.com/datasets/imyjoshua/average-time-spent-by-a-user-on-social-media", "dummy_data.csv")
+```
+
+```{r}
+import <- read_csv("D://PersonalFiles/-0722/Hood/551/Social_Media/dummy_data.csv")
+```
+
+Ensure all rows are accounted for by viewing the last 10 and comparing to the csv file. The cut off by default occurs at row 1000, though the header must not count as a row.
+```{r}
+tail(import, 10) 
+```
+The following code will label columns from the file directly to use the variables in plots.
+
+Lifestyle is spelled incorrectly as "Lifestlye" under the "interests" column.
+
+Could use col_skip() to not use a column.
+```{r}
+df <- read_csv(("D://PersonalFiles/-0722/Hood/551/Social_Media/dummy_data.csv"),
+  col_types = cols(
+    age = col_integer(), 
+    gender = col_factor(levels = c("male", "female", "non-binary")),
+    time_spent = col_integer(),
+    platform = col_factor(levels = c("Instagram", "YouTube", "Facebook")),
+    interests = col_factor(levels = c("Lifestlye", "Sports", "Travel")),
+    location = col_factor(levels = c("United States", "Australia", "United Kingdom")),
+    demographics = col_factor(levels = c("Urban", "Sub_Urban", "Rural")), 
+    profession = col_factor(levels = c("Marketer Manager", "Software Engineer", "Student")),
+    income = col_integer(),
+    indebt = col_logical(), 
+    isHomeOwner = col_logical(),
+    Owns_Car = col_logical()
+    )
+  )
+```
+
+##Scatter
+Wanted to use age vs time spent, though data looked lateral and boring
+```{r}  
+Scatter <- plot(df$age, df$income, xlab="Age(yrs)", ylab="Income", main="Correlation of age to income", pch=20, col="plum3")
+```
+
+##Bar plot
+An average of time spent compared against interest is calculated first.
+```{r}
+mean_df = aggregate(time_spent ~ interests, data=df, mean);
+
+barplot(time_spent ~ interests, data=mean_df, xlab="Interest", ylab="Time spent (hrs)", main="Average time spent by interest", col=c("blue", "yellow", "red"))
+```
+
+#Histogram
+```{r}
+hist(df$age, main="Participants age", xlab ="Age (yrs)", ylab="Amount", col="tan")
+```
+
+#Boxplot
+```{r}
+boxplot(df$time_spent ~ df$demographics, xlab="Demographic", ylab="Hours spent", main="Time spent on social media", col=c("pink", "papayawhip", "orchid"))
+```
