@@ -2,13 +2,13 @@
 ---
 ---
 
-## AJO_Week5 Homework Assignment
+# AJO_Week5 Homework Assignment
 
 ------------------------------------------------------------------------
 
-### Data Citation : Heart Disease Dataset Available on Kaggle.com
+## Data Citation : Heart Disease Dataset Available on Kaggle.com
 
-## URL: <https://www.kaggle.com/datasets/yaminh/heart-disease-dataset/data>
+### URL: <https://www.kaggle.com/datasets/yaminh/heart-disease-dataset/data>
 
 ```{r}
 
@@ -53,6 +53,8 @@ ggplot(age_max_hr_df, aes(x = age, y = max_hr)) +
   
 ```
 
+##### In this figure, we are able to see the over all trend of the data relating to the maximum heart rate of patient's and their age. Both of these variables are continuous. A trend line was added to help show the slope of the data. From this figure we can see that as patients become older their maximum heart rate decreases. Can use t-test to 
+
 #### b.) A plot where you use color or size to represent a quantity
 
 ```{r}
@@ -79,7 +81,7 @@ ggplot(heart_df, aes(x = gender, y = diagnosis)) +
 
 ```
 
-\
+##### In this figure, we are given a visual representation of the number of patients with heart disease or without by their sex. The heat map uses color to represent number of patients (count) in each group. This tells us that more among females more have heart disease than not, and more males do not have heart disease than those that do. It would be difficult to compare males vs females without finding averages first. Can use ANOVA test. 
 
 #### c.) A plot with discrete variables
 
@@ -118,6 +120,8 @@ ggplot(average_chest_pain, aes(x = age_group, y = average_chest_pain)) +
 
 ```
 
+##### In this figure, we can see that on average the level of chest pain reported is greater among the older age group (51+) with the average score of 2.23 out of 3.0. However, the difference is not much greater than the younger age group which has an average of 2.01 out of 3.0. Significance could be determined by t-test.
+
 #### d.) A faceted plot
 
 ```{r}
@@ -150,6 +154,12 @@ ggplot(average_risk_score, aes(x = gender, y = average_risk_score, fill = gender
   theme(plot.caption = element_text(hjust = 0.5)) 
 
 ```
+
+##### In this figure, we are shown a comparison of average risk score, which was a value created using the sum of variables, age, ST depression induced by exercise relative to rest, chest pain score , and cholesterol level. All of these variables are factors that influence diagnosis of heart disease as their values increase. 
+
+##### The faceted plot represents the average risk score between males and females and is split by age group. 
+
+##### This faceted plot tells us that in the age group 51+, males have a higher average risk score for heart disease diagnosis than females. However, an ANOVA test could confirm this.  
 
 ### Data Citation : Heart Disease Dataset Available on Kaggle.com
 
