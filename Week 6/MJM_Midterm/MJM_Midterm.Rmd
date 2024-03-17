@@ -1,0 +1,208 @@
+---
+title: "BIFX551 Midterm - Project 1"
+author: "Mike Murphy"
+date: "2024-03-12"
+output: html_document
+---
+# Conditions Contributing to COVID-19 Deaths, by State and Age, Provisional 2020-2023
+## This dataset is interesting as it explores comorbidities with COVID-19 over three years. 
+
+```{r Import COVID Data, results='hide'}
+#Downloading the CSV dataset and creating the data object
+#https://data.cdc.gov/NCHS/Conditions-Contributing-to-COVID-19-Deaths-by-Stat/hk9y-quqm/about_data
+download.file(url = "https://data.cdc.gov/api/views/hk9y-quqm/rows.csv?accessType=DOWNLOAD", "covid.csv")
+covid_data <- read.csv("covid.csv")
+```
+
+```{r Loading packages, results='hide'}
+#Loading packages
+library("dplyr")
+library("ggplot2")
+library(tidyr)
+```
+
+### Here we look at the summary of the dataset and remove N.A. values to make further analysis easier. 
+
+```{r Data Summary}
+#Viewing summary data
+summary(covid_data)
+
+#Viewing the structure of the dataset
+str(covid_data)
+
+#Further exploring the variables
+#Group variables
+print(unique(covid_data$Group))
+#Condition variables
+print(unique(covid_data$Condition.Group))
+#State variables
+print(unique(covid_data$State))
+
+#Removing NA from the dataset for downstream analysis
+covid_data = na.exclude(covid_data)
+```
+### Investigating "Condition" variables of age, condition, and state. We subset the initial dataset to smaller dataframes based on the variable of interest.
+
+```{r Further Data Exlporation by age, condition, and location}
+#Group by age groups
+deaths_by_age <- covid_data %>% 
+  group_by(Age.Group) %>%
+  filter(Age.Group != "All Ages" & Age.Group != "Not stated") %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE))
+
+#Group by conditions
+deaths_by_condition <- covid_data %>% 
+  group_by(Condition.Group) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  filter(Condition.Group != "COVID-19")
+
+#Group by state
+deaths_by_state <- covid_data %>% 
+  group_by(State) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  filter(State != "United States") #United States is listed as a state, filtering it to not skew the rest of the data
+```
+
+### Graphing the subsets of data to better visualize some of the data contained in these dataframes. 
+
+```{r Exploratory Graph for deaths by age group, fig.width=6, fig.height=6}
+#Graph for deaths by age group
+ggplot(deaths_by_age, aes(x = `Age.Group`, y = `total_deaths`)) + 
+  geom_col(fill = "darkblue") +
+  geom_text(aes(label = `total_deaths`), vjust = -0.5) + 
+  theme_bw() +
+  xlab("Age Groups") + 
+  ylab("Total Deaths") + 
+  ggtitle("SARS-CoV-2 Deaths by Age") +
+  theme(plot.title = element_text(hjust = 0.5)) #Centering the title
+```
+```{r Exploratory graph for deaths by State,fig.width=8, fig.height=6}
+ggplot(deaths_by_state, aes(x = `State`, y = `total_deaths`)) + 
+  geom_col(fill = "darkred") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +  #Adjusted x-axis to better see the State names
+  xlab("States") + 
+  ylab("Total Deaths") + 
+  ggtitle("SARS-CoV-2 Deaths by State") +
+  theme(plot.title = element_text(hjust = 0.5)) #Centering the title
+```
+
+
+```{r Total Deaths by Condition, fig.width=8, fig.height=10}
+ggplot(deaths_by_condition, aes(x = `Condition.Group`, y = `total_deaths`)) + 
+  geom_col(fill = "darkgreen") +
+  geom_text(aes(label = `total_deaths`), vjust = -0.5) + 
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +  #Adjusted x-axis to better see the Condition names
+  xlab("Condition") + 
+  ylab("Total Deaths") + 
+  ggtitle("SARS-CoV-2 Deaths by Condition") +
+  theme(plot.title = element_text(hjust = 0.5)) #Centering the title
+```
+
+### Grouping the data by comorbidity (Alzheimer's disease, renal failure, or sepsis) and by U.S. Region
+#### Regions were identified based on this National Geographic map: https://education.nationalgeographic.org/resource/united-states-regions/
+
+```{r SARS-CoV-2 Deaths by State and either Alzheimer disease, Renal failure, or Sepsis, fig.width=10, fig.height=4}
+#Group by state and by Alzheimers disease, renal failure, and sepsis
+deaths_by_state_cond <- covid_data %>% 
+  group_by(State, Condition.Group) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  filter(State != "United States") %>% #Filter out United States
+  filter(Condition.Group %in% c("Alzheimer disease", "Renal failure", "Sepsis")) %>% #Looking into 3 conditions not commonly associated with SARS-CoV-2 death
+  mutate(Region = case_when(State == "Washington"| State == "Oregon"| State == "California"| State == "Alaska"| State == "Idaho"
+                            | State == "Montana"| State == "Wyoming"| State == "Utah"| State == "Colorado"
+                            | State == "Nevada"| State == "Hawaii" ~ "West",
+                            
+                            State == "Arizona"| State == "New Mexico"|State == "Oklahoma"| State == "Texas" ~ "Southwest",
+                            
+                            State == "North Dakota"| State == "South Dakota"| State == "Nebraska"| State == "Kansas"| State == "Minnesota"|
+                              State == "Iowa"| State == "Missouri"| State == "Wisconsin"| State == "Illinois"| State == "Michigan"|
+                              State == "Indiana"| State == "Ohio" ~ "Midwest",
+                            
+                            State == "Maine"| State == "Vermont"| State == "New Hampshire"| State == "Massachusetts"| State == "Connecticut"|
+                              State == "Rhode Island"| State == "New York"| State == "New Jersey"| State == "Pennsylvania" ~ "Northeast",
+                            
+                            State == "Delaware"| State == "Maryland"| State == "Virginia"| State == "West Virginia"| State == "North Carolina"|
+                              State == "South Carolina"| State == "Kentucky"| State == "Tennessee"| State == "Georgia"| State == "Florida"|
+                              State == "Alabama"| State == "Mississippi"| State == "Louisiana"| State == "Arkansas"  ~ "Southeast")) %>%
+  na.exclude()
+
+ggplot(deaths_by_state_cond, aes(x = `State`, y = `total_deaths`, color = `Condition.Group`)) + 
+  geom_point()+
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + #Adjusted x-axis to better see the State names
+  xlab("State or Territory") + 
+  ylab("Deaths") + 
+  labs(color = "Comorbitity") + 
+  ggtitle("SARS-CoV-2 Deaths by State and Comorbidity") + 
+  theme(plot.title = element_text(hjust = 0.5)) #Centering the title
+```
+```{r Deaths by Region}
+ggplot(deaths_by_state_cond, aes(x = `Region`, y = `total_deaths`, color = `Condition.Group`)) + 
+  geom_boxplot()+
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  xlab("Region") + 
+  ylab("Deaths") + 
+  labs(color = "Comorbitity") + 
+  ggtitle("SARS-CoV-2 Deaths by U.S. Region and Comorbidity") + 
+  theme(plot.title = element_text(hjust = 0.5)) #Centering the title
+
+ggplot(deaths_by_state_cond, aes(x = `Region`, y = `total_deaths`, color = `Condition.Group`)) + 
+  geom_boxplot()+
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) + 
+  xlab("Region") + 
+  ylab("Deaths") + 
+  labs(color = "Comorbitity") + 
+  ggtitle("SARS-CoV-2 Deaths by U.S. Region and Comorbidity") + 
+  theme(plot.title = element_text(hjust = 0.5)) + #Centering the title
+  facet_wrap(vars(Condition.Group)) + 
+  theme(legend.position="none")
+
+```
+```{r}
+#Group by state and by Alzheimers disease, renal failure, and sepsis
+deaths_by_state_cond_time <- covid_data %>% 
+  group_by(State, Condition.Group, Year, Month) %>%
+  summarise(total_deaths = sum(COVID.19.Deaths, na.rm = TRUE)) %>%
+  filter(State != "United States") %>%
+  filter(Condition.Group %in% c("Alzheimer disease", "Renal failure", "Sepsis")) %>% #Looking into 3 conditions not commonly associated with SARS-CoV-2 death
+  mutate(Region = case_when(State == "Washington"| State == "Oregon"| State == "California"| State == "Alaska"| State == "Idaho"
+                            | State == "Montana"| State == "Wyoming"| State == "Utah"| State == "Colorado"
+                            | State == "Nevada"| State == "Hawaii" ~ "West",
+                            
+                            State == "Arizona"| State == "New Mexico"|State == "Oklahoma"| State == "Texas" ~ "Southwest",
+                            
+                            State == "North Dakota"| State == "South Dakota"| State == "Nebraska"| State == "Kansas"| State == "Minnesota"|
+                              State == "Iowa"| State == "Missouri"| State == "Wisconsin"| State == "Illinois"| State == "Michigan"|
+                              State == "Indiana"| State == "Ohio" ~ "Midwest",
+                            
+                            State == "Maine"| State == "Vermont"| State == "New Hampshire"| State == "Massachusetts"| State == "Connecticut"|
+                              State == "Rhode Island"| State == "New York"| State == "New Jersey"| State == "Pennsylvania" ~ "Northeast",
+                            
+                            State == "Delaware"| State == "Maryland"| State == "Virginia"| State == "West Virginia"| State == "North Carolina"|
+                              State == "South Carolina"| State == "Kentucky"| State == "Tennessee"| State == "Georgia"| State == "Florida"|
+                              State == "Alabama"| State == "Mississippi"| State == "Louisiana"| State == "Arkansas"  ~ "Southeast")) %>%
+  na.exclude()
+
+
+```
+
+### We perform three seperate ANOVAs to measure if there is signifcant difference in SARS-CoV-2 comorbidity with either Alzheimer's disease, renal failure, or sepsis based on U.S. Region. 
+```{r Stat tests}
+deaths_region_cond <- deaths_by_state_cond %>%
+  pivot_wider(names_from = Condition.Group, values_from = total_deaths)
+
+#Alzheimers disease
+summary(aov(`Alzheimer disease` ~ Region, deaths_region_cond))
+
+#Renal failure
+summary(aov(`Renal failure` ~ Region, deaths_region_cond))
+
+#Sepsis
+summary(aov(Sepsis ~ Region, deaths_region_cond))
+```
+
+### Based on the p-values from the ANOVAS, there is no significant difference in SARS-CoV-2 comobidity with either Alheimer's disease, renal failure, or sepsis based on U.S. Region.
