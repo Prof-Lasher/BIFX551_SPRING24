@@ -116,7 +116,7 @@ Now that we have an idea about how plotting polygons. Let's take a look at how t
 worldMap <- map_data("world")
 
 #Notice that this contains point vertices for drawing the plygons of your map
-view(worldMap)
+View(worldMap)
 
 #Without Coord set notice the distortion
 ggplot( aes(x = long, y = lat), data = worldMap ) +
@@ -124,17 +124,10 @@ ggplot( aes(x = long, y = lat), data = worldMap ) +
 
 #With coord set for map
 ggplot( aes(x = long, y = lat), data = worldMap ) +
-```
-
-
-```{r FirstMap}
-geom_polygon( aes(group = group), fill=NA, color="black") +
+  geom_polygon( aes(group = group), fill=NA, color="black") +
   coord_quickmap()
 ```
 
-
-```{r FirstMap}
-```
 ## What now?
 Okay, we now have a world map with all the countries outlined. We then can take this and use fill, color or other layers to draw and show infomation
 
@@ -153,7 +146,7 @@ ggplot( aes(x = long, y = lat), data = md_map ) +
 us_cities <- us.cities
 md_cities <- us_cities[us_cities$`country.etc` == "MD", ]
 
-view(md_cities)
+View(md_cities)
 
 
 ggplot( aes(x = long, y = lat), data = md_map ) +
@@ -186,7 +179,7 @@ md_plot
 ```
 ```{r}
 #Lets now limit to the top 4 most populous cities.
-view(md_cities)
+View(md_cities)
 
 #Notice the - to allow the highest pop to be rank 1
 md_cities %>% 
@@ -429,6 +422,7 @@ https://rstudio.github.io/leaflet/
 Below is an example of a Choropleth map. ( The same kind we've been looking ).
 
 ```{r}
+library(leaflet)
 # From http://leafletjs.com/examples/choropleth/us-states.js
 states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-states.geojson", what = "sp")
 
