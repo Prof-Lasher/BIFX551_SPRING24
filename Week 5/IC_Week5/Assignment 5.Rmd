@@ -1,0 +1,55 @@
+---
+title: "Assignment 5"
+author: "Isabella Czernia"
+date: "2024-03-22"
+output: html_document
+---
+
+# Figure 1
+```{r, echo=FALSE, message=TRUE}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+
+speciesdf <- read.csv('listed-species.csv', sep=",", header = TRUE)
+speciesdf <- na.omit(speciesdf)
+speciesdf <- distinct(speciesdf, Scientific, .keep_all = TRUE)
+speciesdf <- speciesdf %>% mutate(Date = lubridate::mdy(Date))
+
+a <- ggplot(speciesdf, aes(Group))
+a + geom_bar(stat = "count") + labs(title = 'Listed Species by Group', x = 'Species Group', y = 'Number of Species') + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+```
+
+This plot tells us that flowering plants have the most species listed in the database out of all the other species groups. The other plant species come nowhere close to amount. Even all the animal species added up wouldn't compare to the flowering plants group.
+
+# Figure 2
+```{r, echo=FALSE, message=TRUE}
+b <- ggplot(speciesdf, aes(Date))
+b + geom_freqpoly(binwidth = 350) + labs(x= 'Date of Listing', y= 'Number of Species', title= 'Number of Species Listed Over Time')
+```
+
+There seems to be no trend to the amount of species listed per year. I thought it would be steadily increasing due to climate change and environmental destruction, but there is no clear pattern. Certain years see a large number of listings while others do not.
+
+# Figure 3
+```{r, echo=FALSE, message=TRUE}
+animals <- speciesdf %>% filter(Group == 'Amphibians' | Group == 'Arachnids' | Group == 'Birds' | Group == 'Clams' | Group == 'Corals' | Group == 'Crustaceans' | Group == 'Fishes' | Group == 'Insects' | Group == 'Mammals' | Group == 'Reptiles' | Group == 'Snails')
+
+
+c <- ggplot(animals, aes(Group, fill = Listing)) #create plot
+c + geom_bar(stat = "count", position = "stack") + labs(title = 'Analysis of Animal Groups', x = 'Species Group', y = 'Number of Species') + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+
+This is a very easy visual to follow that most animal species that are listed are threatened or endangered.
+
+# Figure 4
+```{r, echo=FALSE, message=TRUE}
+floweringplants <- speciesdf %>% filter(Group == 'Flowering Plants')
+
+d <- ggplot(floweringplants, aes(Date)) + geom_point(stat = "count", aes(color = factor(Listing))) + labs(x = 'Date of Listing', y ='Number of Species', title = 'Comparing Flowering Plant Listings Over Time by Listing Type') + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none")
+d + facet_grid(cols = vars(Listing))
+```
+
+Now we have a more in-depth look at the flowering plants group. Despite the high number of listings in the endangered and threatened categories, there are also a few recovered taxons. 
