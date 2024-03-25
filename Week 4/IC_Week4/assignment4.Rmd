@@ -1,0 +1,55 @@
+# Endangered Species
+
+## Dataset 1
+
+The first dataset is interesting because it is a list of all North American animals that are threatened or endangered. Biodiversity is so important, especially in the US, and it's scary to see how many species are at risk of extinction. The hardest thing about this dataset is that there is no time variable, such as year-to-year growth or change within a species. I think that would have been a very important variable for analysis. I want to answer just how many species are endangered within the US. I could also ask silly questions, such as the ratio of each scientific name's first letter. There are 5 variables and all are string data.
+
+```{r Dataset 1, echo=TRUE, message=TRUE}
+
+library(readr)
+library(tidyr)
+library(dplyr)
+
+us_species <- read.csv('~/GitHub/BIFX551_SPRING24/Week 4/IC_Week4/listed-animals-usa.csv',sep = ",", header=TRUE)
+us_species <- na.omit(us_species)
+us_species <- distinct(us_species, Scientific.Name, .keep_all = TRUE)
+
+
+barplot(table(us_species$Group),
+        xlab = 'Species Group',
+        ylab = 'Number of Species Listed',
+        main = 'Number of Listed Species by Species Group')
+```
+
+## Dataset 2
+
+The second dataset is massive and lists all species that are at least threatened, separated by country. The main issue I see with this dataset is that it will need some reworking since some of the values can be put into their own column. A question I can ask is what continent holds the most threatened species. Without cleaning up, there are 20 different variables, 15 of which are string, and the remaining 5 are numeric.
+
+```{r Dataset 2, echo=TRUE, message=TRUE}
+library(readr)
+library(tidyr)
+library(dplyr)
+
+global_species <- read.csv('~/GitHub/BIFX551_SPRING24/Week 4/IC_Week4/global-species.csv',sep = ",", header=TRUE)
+
+pie(table(global_species$SPECIES),
+    main='Listed Species by Species Group')
+
+```
+
+## Dataset 3
+
+The third dataset is just how many species are added to the endangered list in the US per year. I don't see any major issues with this dataset, other than some of the years are out of order which should be an easy fix. I would like to see if there is a way to project an increase for future years of how many species will be added to the list. There are only 2 variables and both are numeric.
+
+```{r Dataset 3 echo=TRUE, message=TRUE}
+library(readr)
+library(tidyr)
+library(dplyr)
+
+species_by_year <- read.csv('~/GitHub/BIFX551_SPRING24/Week 4/IC_Week4/species-by-year.csv',sep = ",", header=TRUE)
+
+hist(species_by_year$Number.of.Species.Listings,
+     xlab = 'Number of Species Listed in a Calendar Year',
+     main = 'Frequency of Annual Species Listings')
+
+```
