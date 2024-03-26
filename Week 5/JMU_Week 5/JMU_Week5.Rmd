@@ -1,0 +1,67 @@
+---
+title: "JMU_Week5"
+author: "Joanne Unite"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Install necessary packages
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+```
+
+## I am choosing to use the "Health test by blood dataset" from Kaggle.
+
+```{r}
+blood_df <- read.csv("/Users/junite/Desktop/BIFX551/BIFX551_SPRING24/Week 4/blood_test.csv")
+```
+
+###Let's see the summary of the data again
+```{r}
+summary(blood_df)
+```
+
+## Creating various plots to explore the data
+###Creating a plot with Discrete variables
+>There were some values in the Gender column that were in lowercase so I needed to make all the values uppercase
+
+```{r}
+blood_df <- blood_df %>%
+  mutate(Gender = toupper(Gender))
+ggplot(blood_df, aes(x =Gender, fill = Gender)) +
+  geom_bar()
+```
+> This plot shows us the disributuion of Males and Females in the data. Previously not all the characters were in uppercase so 3 columns were showing up on the plot so I needed to mutate the Gender column so that all the characters were in uppercase.Through this plot we can see that there is almost double the amount of Male patients tested over females.
+
+### Creating a plot with continuous variables
+> I will create a line graph to explore any patterns between age and LDL
+
+```{r}
+ggplot(blood_df, aes(x = LDL, y = HDL)) + 
+  geom_point()
+```
+This scatter plot shows the outliers of patients with High LDL (bad cholesterol) and low HDL (good cholesterol)
+ 
+### Creating a plot where size represents quantity
+```{r}
+ggplot(blood_df, aes(x = Gender, y = Diagnosis, color = Gender)) +
+  geom_count()
+```
+Based on our first graph, there are more males in this data than females so it is not a complete surprise that more males are diagnosed with a high risk to heart disease/diabetes. To move forward I would conduct some statistics to see if the diagnosed groups are significantly different.
+ 
+### Creating a multifaceted plot of
+Overall Females have a lower BMI than Males. However, the higher end of the BMI data for woman looks slightly higher than for men.
+
+```{r}
+p <- ggplot(blood_df, aes(x = BMI)) + 
+  geom_histogram()
+p + facet_wrap(~Gender, scales = "free_y")
+```
+
