@@ -1,0 +1,166 @@
+---
+title: "Homework_4"
+author: "Dina Lauricella"
+date: "`r format(Sys.Date())`"
+output:
+  word_document:
+    toc: yes
+  html_document:
+    toc: yes
+    toc_float: yes
+    codefolding: show
+    number_sections: yes
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Import libraries
+
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(janitor)
+```
+
+# This is a diabetes dataset I found on Kaggle. I found it interesting because it was about a Native American population and I was wondering about the relationship between age and glucose level. I did not anticipate difficulties with this dataset but I did have some difficulties reading the data directly from the website (which apparently you can't do).
+
+## Read Diabetes Data
+
+```{r}
+
+diabetes_df <- read_csv("C:/Users/dlauricella/Documents/GitHub/BIFX551_SPRING24/Week 4/diabetes.csv")
+                     col_names = c("Pregnancies", "Glucose", "BloodPressure", "SkinThickness", "Insulin", "BMI", "DiabetesPedFxn", "Age", "Outcome")
+
+```
+
+## Take a look at diabetes data
+
+```{r}
+summary(diabetes_df)
+class(diabetes_df)
+spec(diabetes_df)
+```
+
+## Plot Some Data
+
+```{r}
+plot(Glucose ~ Age, diabetes_df,
+     main = "Glucose Levels in Native Americans with Mean",
+     xlab = "Age",
+     ylab = "Glucose",
+     pch = 19,
+     col = "blue"
+      )
+mean_Glu <- mean(diabetes_df$Glucose)
+abline(h=mean_Glu, col = "red", lwd = 2)
+legend("topright", legend=paste("Mean=", round(mean_Glu, 1)), col="red", lwd=2)
+
+Glucose <- diabetes_df$Glucose
+hist(Glucose,
+     main = "Glucose Levels in Native Americans",
+     xlab = "Glucose Levels",
+     col = "seagreen1",
+     
+     )
+
+# my_vec <- sort(unique(diabetes_df$Age))
+# #my_vec <- c(21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 72, 81)
+# diabetes_df["age_group"] = cut(diabetes_df$age, c(21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 72, 81), c("20-29", "30-39", "40-49", "50-59", "60-69", ">70"), include.lowest=TRUE)
+
+# result <- barplot(my_vec,
+#                   main = "Glucose Levels in Native Americans",
+#                   xlab = "Age",
+#                   ylab = "Glucose Levels", 
+#                   names.arg = (age_group),
+#                   col = "olivedrab1",
+#                   )
+```
+
+# This dataset from Data.World is about breast cancer from Wisconsin. I am interested in data as it relates to cancer. I anticipated a difficult time deciding what to plot. The categories are very technical and I wasn't sure if it was possible to show any correlations. I decided on the worst texture and symmetry.
+
+## Read Breast Cancer Data
+
+```{r}
+bc <- read_csv("C:/Users/dlauricella/Documents/GitHub/BIFX551_SPRING24/Week 4/bc_data.csv")
+              col_names = c("id", "diagnosis", "radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean", "compactness_mean", "concavity_mean", "concave.points_mean", "symmetry_mean", "fractal_dimension_mean", "radius_se", "perimeter_se", "area_se", "smoothness_se", "compactness_se", "concavity_se", "symmetry_se", "fractal_dimension_se", "radius_worst", "texture_worst", "perimeter_worst", "area_worst", "smoothness_worst", "compactness_worst", "concavity_worst", "concave.points_worst", "symmetry_worst", "factal_dimension_worst", "...33")
+```
+## Take a look at Breast Cancer data
+
+```{r}
+class(bc)
+spec(bc)
+summary(bc)
+```
+
+## Plot Breast Cancer Data
+
+```{r}
+plot(bc$texture_worst,
+     bc$symmetry_worst,
+     xlab = "Symmetry",
+     ylab = "Texture",
+     main = "Symmetry as a Function of Texture",
+     pch = 23,
+     col = "dodgerblue2",
+     bg = "dodgerblue2",
+     cex = 0.6)
+```
+
+# Another dataset from Data.World listing opiod deaths by state from 1999-2014. I was interested in seeing which states were the highest. I didn't anticipate any problems but ran into a barplot height error. 
+
+## Read Opiod Data
+
+```{r}
+
+opiod <- read_csv("C:/Users/dlauricella/Documents/GitHub/BIFX551_SPRING24/Week 4/Opiod Death, 1999-2014 v1.1.csv", "opiod.csv")
+
+```
+
+## Take a look at Opiod data
+
+```{r}
+opiod2 <- janitor::row_to_names(opiod, 1)
+opiod2 <- opiod2 %>% rename("num_Rx_dispensed" = "Prescriptions Dispensed by US Retailers in that year (millions)")
+class(opiod2)
+str(opiod2)
+spec(opiod2)
+spec(opiod)
+summary(opiod2)
+dim(opiod2)
+sum(is.na(opiod2))
+```
+## Plot Opiod Data
+
+```{r}
+
+# Get data for 2014
+opiod_2014 <- opiod[opiod$Year == "2014", ]
+
+# Set column names from the second row using janitor
+opiod <- janitor::row_to_names(opiod, 1)
+
+# Convert 'Deaths' column to numeric
+opiod_2014$Deaths <- as.numeric(opiod_2014$Deaths)
+
+# Identify states with the lowest and highest deaths
+lowest_death_states <- opiod_2014$State[which.min(opiod_2014$Deaths)]
+highest_death_states <- opiod_2014$State[which.max(opiod_2014$Deaths)]
+
+# Create a subset of data for the selected states
+selected_states <- opiod_2014[opiod_2014$State %in% c(lowest_death_states, highest_death_states), ]
+
+# Create a barplot using Deaths as the height and State as the names
+barplot(height = selected_states$Deaths,
+        names.arg = selected_states$State,
+        xlab = "State",
+        ylab = "Deaths",
+        ylim = c(0, 2500),
+        col = "orangered1",
+        main = "Opioid Deaths by State (2014)"
+)
+
+```
+

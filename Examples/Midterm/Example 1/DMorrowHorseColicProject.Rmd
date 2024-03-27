@@ -1,0 +1,156 @@
+---
+title: "Horse Colic Project"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Destinee Morrow
+BIFX 551 Spring 2020
+
+# Background:
+
+Colic simply put means pain in the abdomen of the horse.
+There are various types of horse colic that include but are not limited to, impaction colic due to the type of feed and the eating process and gas colic that is built up over time, but can lead to more serve colic, like abdomen dystension and colon shift. All of these, can potentially lead to death if the horse if not treated. Horse colic is very common and understanding the severity and needed procedures is important.
+
+Link to website where this information can be found is [here](https://extension.umn.edu/horse-health/colic-your-horse#types-of-colic--71561). 
+
+# Data:
+The data I used to explore horse colic can be found at the link below.
+
+Accessed from [kaggle](https://www.kaggle.com/uciml/horse-colic/download) on Feb 25 2020 @ 6:28pm. All column meanings in the data frame have been explicited stated.
+
+
+```{r Horse Colic, echo=TRUE}
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+#setwd("/Users/destinee/Documents/Programming")
+horsecolic <- read.csv("horse.csv")
+```
+
+```{r colic table}
+head(horsecolic)
+```
+
+```{r summary table}
+summary(horsecolic)
+```
+
+# Exploritory Analysis
+Lets begin by looking at some sample graphs to get a feel for the data set.
+
+### Temperature
+Below is a bar chart showing the mean rectal temperatures of horses in comparison to the temperature of the of extremities to the touch. 
+
+```{r horse temp, echo=TRUE}
+temp <- horsecolic %>% group_by(temp_of_extremities) %>% drop_na(temp_of_extremities) %>% summarize(mean = mean(rectal_temp, na.rm = TRUE))
+temp <- as.data.frame(temp)
+ggplot(temp, aes(temp_of_extremities,mean)) +geom_col(aes(fill=temp_of_extremities)) + xlab("Temperature of Extremities (Touch)") + ylab("Mean Rectal Temperature (Celsius)") + ggtitle("Internal Temperature as a function of External Temperature in Colic Horses")
+```
+
+As you can see, there is barely any difference in the internal temperatures. Thus meaning, one should not rely on just feeling the outside of the horse to determine temperature or potential severity of colic. 
+
+
+### Pulse and Respitory Rate
+
+Is there a correlation between the respitory rate and the pulse?
+
+```{r horse pulse, echo=TRUE}
+ggplot(horsecolic %>% drop_na(c(respiratory_rate, pulse)), aes(respiratory_rate, pulse)) +geom_point(alpha=0.4, color="deepskyblue4") + xlab("Respiratory Rate") + ylab("Pulse") + ggtitle("Pulse as a function of Respiratory Rate in Colic Horses")
+```
+
+The majority of the horses have a respiratory rate under 50, with a pulse under 100. However, this is still a clear indicater that the horse is in some sort of distress, as the normal RR is about 10 breaths per minute with a pulse of about 35 beats per minute. Meaning the average respiratory rate and pulse is way above average. This is verified by performing t-tests.
+
+Additionally, various outliers can be seen where a horse had a lower RR and very high pulse, or vice versa, meaning that respitory rate would not be effective at predicting pulse.
+
+
+
+# Hypothesis:
+My hypothesis for this data has two separate aims. 
+The first aim is that PCV can tell us whether or not the horse needs to have surgery. The second aim is that surgery has the desired outcome of "fixing" the colic and allowing the horse to survive. 
+
+
+### Packed Cell Volume
+
+This first graph below looks at packed cell volume. This is a quick blood test that could be used to then give further assesment of the horse. 
+
+```{r horse PCV, echo=TRUE}
+ggplot(horsecolic %>% drop_na(packed_cell_volume), aes(packed_cell_volume)) + geom_density( aes(fill = packed_cell_volume < 40), alpha=0.5) + scale_fill_manual(values = c("blue","red"), 0.2) + xlab("Packed Cell Volume") +ylab("Number of Horses") +ggtitle("Number of Colic Horses as a function of PCV")
+```
+
+It appears that more than half of the sample size has a healthy PCV count, which is normally 33% to 50%. 
+This to me, initially says it would not be a good indicater of the severity of colic in horses.
+
+However, further exploration using a t-test can tell us whether or not PCV is correlated to the horse having surgery.
+
+##### T-Test
+
+```{r ttest, echo=TRUE}
+t.test(horsecolic$packed_cell_volume ~ horsecolic$surgery)
+```
+
+With a p value 0.4901, we fail to reject the null hypothesis, that PCV is the same for both horses that received surgery and those that did not. The 95% confidence interval says that there is a 95% chance that the mean will fall between -3.4361 and 1.6512
+Thus meaning, that my original hypothesis was incorrect and PCV is not a good indicator, and should not determine whether or not the horse will have to go through surgery. 
+
+So... If PCV cant tell us whether or not the horse will have to have surgery.
+The question is...
+Should the horse ultimately have surgery or not?
+
+
+### Surgery?
+
+The final two graphs are used to compare whether or not the horse received surgery for the colic and then how many of those horses ended up surviving. 
+
+```{r horse facet, echo=TRUE}
+horsecolic[horsecolic$outcome=='euthanized', "outcome2"] <- "died"
+horsecolic[horsecolic$outcome=='lived', "outcome2"] <- "lived"
+horsecolic[horsecolic$outcome=='died', "outcome2"] <- "died" 
+hoc <- horsecolic %>% group_by(surgery) %>% count(outcome)
+hoc <- as.data.frame(hoc)
+ggplot(hoc, aes(outcome, n)) + geom_col(aes(fill=outcome)) +ylim(0,110) + facet_grid(. ~ surgery) +xlab("Outcome/Survival of Horses") + ylab("Number of Horses") + ggtitle("Outcome of Colic Horses as a function of Receiving Surgery")
+```
+
+This graph is very intuative, in that, there is almost an even number of horses that lived on after having colic whether or not they had surgery. However, more horses died or had to be euthanized after they received surgery for the colic. 
+This to me says that horses should receive supplemental medicine and care to help releave the distress instead of surgery. In order to confidently say this, below, a chi-squared test is used.
+
+Now lets look at a graph where we combine both horses that died during sugery and horses that had to be euthanized.
+
+```{r, echo=TRUE}
+hoc <- horsecolic %>% group_by(surgery) %>% count(outcome2)
+hoc <- as.data.frame(hoc)
+ggplot(hoc, aes(outcome2, n), na.rm=TRUE) + geom_col(aes(fill=outcome2)) +ylim(0,130) + facet_grid(. ~ surgery) +xlab("Outcome/Survival of Horses") + ylab("Number of Horses") + ggtitle("Outcome of Colic Horses as a function of Receiving Surgery")
+```
+
+This graph shows us that the number of horses who underwent surgery, was almost the same for dying vs. living.
+Additionally, the number of horses that lived was nearly the same for both groups.
+
+So should we have a horse undergo surgery to fix the colic?
+We will use a Chi-squared Test to determine that answer.
+
+##### Chi-Squared
+
+First, this test looks at two random variables. x and y are called independent if the probability distribution of one variable is not affected by the presence of another.
+This test allows me to look at the dependences of two variables that are categorical.
+
+```{r chisq, echo=TRUE}
+tbl <- table(horsecolic$surgery, horsecolic$outcome)
+tbl
+chisq.test(tbl)
+```
+
+```{r chisqlive, echo=TRUE}
+tbl2 <- table(horsecolic$surgery, horsecolic$outcome2)
+tbl2
+chisq.test(tbl2)
+```
+
+
+## Conclusion:
+
+The Chi-Squared tests are based on a null hypothesis of surgery and survival being independent. 
+The p values of 0.004424 and 0.005016 are significantly smaller than that of the 0.05 alpha. Thus meaning, that we reject the null hypothesis that whether a horse has surgery or not is independent of whether the horse survives from colic. 
+
+These two variables are dependent and so, no, we should not perform surgery on a horse that is experiencing colic because it is more likely to die than survive.

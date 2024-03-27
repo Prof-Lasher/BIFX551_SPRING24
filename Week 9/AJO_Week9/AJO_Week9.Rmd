@@ -1,0 +1,136 @@
+---
+title: "AJO Week 9 HW"
+author: "Abe Olsson"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.align='center')
+```
+
+# Zip Codes of the United States
+
+Data retrieved from [SimpleMaps.com](https://simplemaps.com/data/us-zips){.uri}
+
+```{r}
+library(maps)
+library(leaflet)
+library(dplyr)
+library(ggplot2)
+# read in us census document with zipcodes and coordinates
+
+zip_data <- read.csv("uszips.csv")
+
+# fix the unintended removal of 0s infront of zipcodes
+zip_data$zip <- sprintf("%05d", as.numeric(zip_data$zip))
+
+# remove unnecessary columns from imported zipcodes df make subset
+
+zip_df_subset <- subset(zip_data, select = c(zip, lat, lng, city, state_name)) 
+
+# rename lng to long in zip_df_subset
+
+zip_df_subset <- zip_df_subset %>% rename(long = lng, region = state_name)
+
+# convert region all lower case in zip df
+
+zip_df_subset <- zip_df_subset %>%
+  mutate(region = tolower(region))
+
+#Get a map of the US and color by state  
+ 
+usa_map <- map_data("state") #get a map of the US states
+
+ 
+# create the continental usa limits
+bbox <- list(
+  xmin = -125,  # Minimum longitude
+  xmax = -65,   # Maximum longitude
+  ymin = 25,    # Minimum latitude
+  ymax = 50     # Maximum latitude 
+  )
+
+# Filter usa_map data within the bounds box
+usa_map_continent <- usa_map %>%
+  filter(long >= bbox$xmin & long <= bbox$xmax &
+           lat >= bbox$ymin & lat <= bbox$ymax)
+
+# Filter zipcode_data within the bounds box
+zipcode_data_continent <- zip_df_subset %>%
+  filter(long >= bbox$xmin & long <= bbox$xmax &
+           lat >= bbox$ymin & lat <= bbox$ymax)
+
+# Plotting the map
+ggplot(aes(x=long, y=lat), data = usa_map_continent) +  
+  geom_polygon(aes(group = group, fill = group), show.legend = FALSE, color = "grey50", alpha = 1.0 ) +  
+  geom_point(data = zipcode_data_continent, aes(x = long, y = lat), color = "red", size = 5.0e-25, alpha = 0.35) +
+  theme_void() +
+  labs(title = "Postal Zip-codes Across the United States") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  coord_quickmap()
+
+
+
+
+```
+
+# Answer Question(s)
+
+## \~What can you infer from this plot?
+
+Based off of this plot, you can tell that there are more zip codes on the eastern side of the United States all the way until about the middle of the U.S. On the east coast, there are a great deal of zip codes in the New England area, New York, Connecticut, New Jersey, New Hampshire, Rhode Island, Southern Maine, Eastern and Southern Pennsylvania, Maryland, D.C, Northern Virginia.
+
+You can infer that population of an area determines the number of zip codes within that area. Zip codes are used by the postal service to help distinguish post offices and to aid in the delivery of mail. To properly serve customers in a timely and orderly fashion, one could infer that the number of zip codes in an area is relative to the population.
+
+## \~Does the concentration of zip codes in a given area tell you anything about that area?
+
+It can potentially tell us the population of that area.
+
+## \~What would be the next steps to test your hypothesis?
+
+Restate hypothesis, use the data to support the hypothesis. If population data is available for each zip code, a map could be made that shows the population size based off of different colors. Also, we could determine the number of zip codes in each state, and get that states population, plot the data and see if there is a trend.
+
+See example below.
+
+# Adding Population
+
+```{r}
+zip_pop <- select(zip_data, c(zip, population))
+zip_code_pop <- left_join(zipcode_data_continent,zip_pop, "zip")
+
+
+
+# Plotting the map
+# ggplot(aes(x=long, y=lat), data = usa_map_continent) +  
+#   geom_polygon(aes(group = group), show.legend = FALSE, color = "black", alpha = 1.0 ) +  
+#   geom_point(data = zip_code_pop, aes(x = long, y = lat, fill = population), color = "grey50", size = 5.0e-25, alpha = 0.35) +
+#   #scale_fill_manual(values = c("red", "blue", "green")) +
+#   theme_void() +
+#   labs(title = "Postal Zip-codes Across the United States") +
+#   theme(plot.title = element_text(hjust = 0.5)) +
+#   coord_quickmap()
+
+library(ggplot2)
+
+
+# Create groups based on population values
+zip_code_pop$group <- cut(zip_code_pop$population, 
+                                    breaks = c(0, 1000, 10000, 50000, Inf),
+                                    labels = c("Group 1", "Group 2", "Group 3", "Group 4"))
+
+# Define colors for each group
+group_colors <- c("Group 1" = "green", "Group 2" = "yellow", "Group 3" = "orange", "Group 4" = "red")
+
+ggplot() +
+  geom_polygon(data = usa_map_continent, aes(x = long, y = lat, group = group, fill = group), show.legend = FALSE, color = "black", alpha = 1.0) +
+  geom_point(data = zip_code_pop, aes(x = long, y = lat, color = group ), show.legend = FALSE, size = 5.0e-20, alpha = 0.5) +
+  scale_color_manual(values = group_colors) +  # Use the defined colors for the groups
+  theme_void() +
+  labs(title = "Population Size of Zip-codes Across the United States") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  coord_quickmap()
+
+
+```

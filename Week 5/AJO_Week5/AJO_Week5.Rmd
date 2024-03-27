@@ -1,0 +1,166 @@
+# AJO_Week5 Homework Assignment
+
+------------------------------------------------------------------------
+
+##### Abe Olsson - 3/16/2024
+
+------------------------------------------------------------------------
+
+## Data Citation : Heart Disease Dataset Available on Kaggle.com
+
+### URL: <https://www.kaggle.com/datasets/yaminh/heart-disease-dataset/data>
+
+```{r}
+
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+```
+
+### Loading packages and reading data frame + summary
+
+[STEPS]{.underline}
+
+1.) Find the dataset you want to use for midterm and this assignment.
+
+2.) Make folder with the assignment in it and save the .csv to that folder.
+
+3.) Read the dataset into R studio and begin working on assignment
+
+```{r}
+# Bring in the heart data
+
+heart_df <- read.csv("heart_data.csv")
+
+```
+
+#### a.) A plot with continuous variables
+
+```{r}
+# Continuous Variables - age and maximum heart rate
+# Make df for age and max_hr
+age_max_hr_df <- select(heart_df, age, max_hr)
+
+# Create the plot with trend line
+ggplot(age_max_hr_df, aes(x = age, y = max_hr)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = 'y ~ x', se = FALSE) +  
+  labs(x = "Age", y = "Max Heart Rate", caption = "Figure 1: This scatter plot shows the patient's age and maxiumum heart rate recorded.\n The trend line shows the relationship between age and maximum heart rate.") +
+  ggtitle("Max Heart Rate of Patients by Age") +
+  theme(plot.caption = element_text(hjust = 0.75)) +
+  theme(plot.title = element_text(hjust = 0.5)) 
+  
+```
+
+##### In this figure, we are able to see the over all trend of the data relating to the maximum heart rate of patient's and their age. Both of these variables are continuous. A trend line was added to help show the slope of the data. From this figure we can see that as patients become older their maximum heart rate decreases. Can use t-test to 
+
+#### b.) A plot where you use color or size to represent a quantity
+
+```{r}
+# Discrete Variables - Diagnosis and Gender
+
+#Factor variables 
+
+# Convert diagnosis to factor variable
+heart_df$diagnosis <- factor(heart_df$diagnosis, levels = c(0, 1), labels = c("No Heart Disease", "Diagnosed with Heart Disease"))
+
+# Convert Gender to factor variable
+heart_df$gender <- factor(heart_df$gender, levels = c(0, 1), labels = c("Male", "Female"))
+
+
+ggplot(heart_df, aes(x = gender, y = diagnosis)) +
+  geom_bin_2d() +
+  labs(x = "Sex", y = "Diagnosis", size = "Number of Patients" ) +
+  labs(caption = "Figure 2: This heatmap shows the number of patients (count)\n with or without a heart disease diagnosis by their sex.") +
+  ggtitle("Diagnosis of Heart Disease by Patient Sex") +
+  theme(plot.caption = element_text(hjust = 0.75)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_fill_gradient(low = "yellow", high = "red")
+
+
+```
+
+##### In this figure, we are given a visual representation of the number of patients with heart disease or without by their sex. The heat map uses color to represent number of patients (count) in each group. This tells us that more among females more have heart disease than not, and more males do not have heart disease than those that do. It would be difficult to compare males vs females without finding averages first. Can use ANOVA test. 
+
+#### c.) A plot with discrete variables
+
+```{r}
+
+# Create age groups
+
+# Define the breaks for age groups
+breaks1 <- c(0, 50, max(heart_df$age))
+
+# Define labels for the age groups
+labels1 <- c("0-50","51+")
+
+# Create the age_groups column
+heart_df$age_group <- cut(heart_df$age, breaks = breaks1, labels = labels1, right = TRUE)
+ 
+# factor age group
+
+heart_df$age_group <- factor(heart_df$age_group)
+
+
+# Calculate the average chest_pain score for each age_group
+average_chest_pain <- heart_df %>%
+  group_by(age_group) %>%
+  summarize(average_chest_pain = mean(chest_pain))
+
+  
+# Create the col bar plot
+ggplot(average_chest_pain, aes(x = age_group, y = average_chest_pain)) +
+  geom_col(fill = "blue") +
+  labs(x = "Age Group", y = "Average Chest Pain", caption = 
+"Figure 3: This bar graph shows the average result from heart pain scale reports from adult patients within various age groups.\n The chest pain scale cosists of 0 (no pain) to 3 (intolerable). ") +
+  ggtitle("Average Chest Pain Reported by Adult Patients") +
+  theme(plot.caption = element_text(hjust = 0.5)) + 
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+```
+
+##### In this figure, we can see that on average the level of chest pain reported is greater among the older age group (51+) with the average score of 2.23 out of 3.0. However, the difference is not much greater than the younger age group which has an average of 2.01 out of 3.0. Significance could be determined by t-test.
+
+#### d.) A faceted plot
+
+```{r}
+
+
+
+# Create the age_groups column
+heart_df$age_group <- cut(heart_df$age, breaks = breaks1, labels = labels1, right = TRUE)
+ 
+# factor age group
+
+heart_df$age_group <- factor(heart_df$age_group)
+
+
+#make new column
+heart_df <- heart_df %>% mutate(risk_score = age + chest_pain + cholesterol + st_depression)
+
+# Calculate the average risk_score for each gender and age_group
+average_risk_score <- heart_df %>%
+  group_by(gender, age_group) %>%
+  summarize(average_risk_score = mean(risk_score))
+
+# Create the faceted bar plot
+ggplot(average_risk_score, aes(x = gender, y = average_risk_score, fill = gender)) +
+  geom_col() +
+  facet_wrap(~ age_group, scales = "free") +
+  labs(x = "Gender", y = "Average Risk Score", fill = "Gender", caption = "Figure 4: This faceted column bar plot compares the average calculated risk score\n between males and females within two age groups,\n 0-50 years of age, and 51+ years of age.") +
+  ggtitle("Average Risk Score by Gender and Age Group") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(plot.caption = element_text(hjust = 0.5)) 
+
+```
+
+##### In this figure, we are shown a comparison of average risk score, which was a value created using the sum of variables, age, ST depression induced by exercise relative to rest, chest pain score , and cholesterol level. All of these variables are factors that influence diagnosis of heart disease as their values increase. 
+
+##### The faceted plot represents the average risk score between males and females and is split by age group. 
+
+##### This faceted plot tells us that in the age group 51+, males have a higher average risk score for heart disease diagnosis than females. However, an ANOVA test could confirm this.  
+
+### Data Citation : Heart Disease Dataset Available on Kaggle.com
+
+## URL: <https://www.kaggle.com/datasets/yaminh/heart-disease-dataset/data>
