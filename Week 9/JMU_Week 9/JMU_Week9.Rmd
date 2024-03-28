@@ -20,7 +20,7 @@ library(tidyr)
 
 # Uploading Data
 
-I retrieved the data from Kaggle: https://www.kaggle.com/datasets/danofer/zipcodes-county-fips-crosswalk 
+I retrieved the data from Kaggle: https://www.kaggle.com/datasets/pavansanagapati/us-wages-via-zipcode
 
 ```{r}
 zips <- read.csv("/Users/junite/Desktop/BIFX551/BIFX551_SPRING24/Week 9/JMU_Week 9/zipcode-database.csv")
