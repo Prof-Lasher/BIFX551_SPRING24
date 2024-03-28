@@ -7,4 +7,4 @@ R has a lot of packages, and odds are, if you stick around in bioinformatics lon
 
 2) Look at one of the packages in the Tidyverse on github, [like tidyr](https://github.com/tidyverse/tidyr). Open the test folder and find the test for a function you are familiar with, what is one test that seems obvious, what is one that seems less obvious. Also look at one vignette, how is this similar to reports you have written in R-markdown. Is the data used in the vignette available in the same folder?
 
-3) Hand in you package as a repo on the **homework** branch of week10. It should have a .R and a man folder. Include a .md file with your repsonse to question 2.
+3) Hand in you package as a repo under the week10 folder, using your initals/PackageName. It should have a .R and a man folder. Include a .md file with your repsonse to question 2. For Example the full repo path would be "Week 10/BPL/MyFirstPackage/".
