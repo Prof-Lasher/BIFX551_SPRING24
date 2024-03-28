@@ -1,0 +1,93 @@
+---
+title: "Map With cluster on zips"
+output: html_notebook
+---
+
+# Load Setting up the Data 
+First load the maps library to get the US map and the zip code CSV
+```{r}
+library(ggplot2)
+library(maps)
+library(readr)
+
+uszips <- read_csv("uszips.csv", show_col_types = FALSE)
+
+```
+
+
+Check out the zipcode data
+```{r}
+View(uszips)
+```
+
+plot the US map
+```{r}
+usa_map <- map_data("state") #get a map of the US states  
+usPlt <- ggplot( aes(x=long, y=lat ), data = usa_map ) +  
+   geom_polygon( aes(group = group), fill=NA, show.legend = FALSE, color="grey75") +  
+  coord_quickmap() +
+  theme_minimal()
+
+usPlt
+```
+Add Zip codes to plot
+```{r}
+#Limit the lat and long
+uszipsContin <- uszips %>% 
+  filter( between( lat, 25, 50 ) & between( lng, -127, -65 ) )
+
+#Lets look at the plot with the alpha turned down
+usPlt + geom_point( aes( x=lng, y=lat ), shape=20, data = uszipsContin, alpha=.1 )
+```
+
+It looks like map that has the major population centers.
+Let's take this a step further and do a clutering and color the clusters
+```{r}
+#Lets narrow the data to just the lat and long 
+uszipsContin_lat_lng <- uszipsContin %>% select(lat,lng)
+k2 <- kmeans( uszipsContin_lat_lng, centers = 20, nstart=100, iter.max= 1000 )
+```
+Plot on map with clusters!
+```{r}
+usPlt + 
+  geom_point( aes( x=lng, y=lat, color = as.factor(k2$cluster) ), shape=20, data = uszipsContin, alpha=.5 ) +
+  theme_minimal() + 
+  theme(legend.position = "none")
+
+```
+Whoops wrong kind of clusters! Need to use DBscan
+```{r}
+#I need to use DB scan ( Density- based clustering! )
+library(dbscan)
+
+db <- dbscan(uszipsContin_lat_lng, eps = .15, minPts = 45)
+
+
+uszipsContin_db <- uszipsContin %>% 
+  mutate( cluster = db$cluster ) %>%
+  filter( cluster > 0 )
+
+
+usPlt + geom_point( aes( x=lng, y=lat, color = as.factor(cluster) ), shape=20, data = uszipsContin_db, alpha=.5 ) + 
+  theme_minimal() + 
+  theme(legend.position = "none")
+
+#Lets add the top n cities
+nCities <- length( unique(uszipsContin_db$cluster ) )
+
+topNCities <- us.cities %>% 
+  mutate( rank = min_rank(-pop) ) %>%
+  filter( rank <= nCities) 
+
+usPlt + 
+  geom_point( aes( x=lng, y=lat, color = as.factor(cluster) ), shape=20, data = uszipsContin_db, alpha=1 ) + 
+  geom_point( aes( x=long, y=lat), shape=4, data = topNCities, alpha=1 ) + 
+  #geom_text( aes( x=long, y=lat, label = name ),size=2, position = position_nudge(y = -0.5), data = topNCities ) + 
+  theme_minimal() + 
+  theme(legend.position = "none") +
+  labs( title = paste( "Top", nCities , "Cites"), subtitle = "Population vs zip code Density" )
+
+
+
+```
+
