@@ -11,10 +11,10 @@ fibonacci(n)
 }
 \description{
 This function allows you to generate N numbers of the
-Fibonacci Sequnce
+Fibonacci Sequence
 }
 \examples{
 fibonacci( 5 )
-[1] 0 1 1 2 3
+
 }
 \keyword{fibonacci}

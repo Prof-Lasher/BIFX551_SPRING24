@@ -1,7 +1,7 @@
 #' A fibonacci generator function
 #'
 #' This function allows you to generate N numbers of the
-#'   Fibonacci Sequnce
+#'   Fibonacci Sequence
 #' @param n, Number of Values returned
 #' @keywords fibonacci
 #' @export
