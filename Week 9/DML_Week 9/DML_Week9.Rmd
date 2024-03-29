@@ -1,0 +1,135 @@
+---
+title: "Spatial Data/Maps"
+author: Dina Lauricella
+date: "`r format(Sys.Date())`"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    codefolding: show
+    number_sections: no
+  word_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(dplyr, quietly = TRUE)
+library(ggplot2)
+library(RColorBrewer)
+library(sf)
+library(maps)
+```
+## Data and data structure:
+
+```{r}
+# https://simplemaps.com/data/us-zips
+zip_csv <- read_csv("/Users/dml/Documents/GitHub/BIFX551_SPRING24/Week 9/uszips.csv")
+
+# View data
+str(zip_csv)
+```
+
+## US outline map
+```{r}
+us_map <- map_data("usa" )
+ggplot( aes(x = long, y = lat), data = us_map ) +
+  geom_polygon( aes(group = group), fill=NA, color="blue") +
+  coord_quickmap()
+```
+
+## US zip code density map
+From this you can see that the zip codes correspond to the population density areas around big cities. You can also see horizontal lines of zip codes in the Midwest. If there were major highway data available, it would be interesting to see if the zip codes follow the major roads.
+```{r}
+# Load map data for the USA
+usa_map <- map_data("usa")
+
+# Load state boundaries
+state_lines <- map_data("state")
+
+# Plot zip code on map
+
+# Plot the map with latitude and longitude data
+ggplot() +
+  geom_polygon(data = usa_map, aes(x = long, y = lat, group = group), fill = "grey90") +
+  geom_path(data = state_lines, aes(x = long, y = lat, group = group), color = "blue") +
+  geom_point(data = zip_csv, aes(x = lng, y = lat), color = "red", alpha = .1, shape = 20) +
+  coord_cartesian(xlim = c(-130, -70), ylim = c(25, 50)) +
+  labs(x = "Longitude", y = "Latitude", title = "US Zip Codes")
+
+```
+
+## Michigan outline and zip code densities map
+It is possible that the zip codes in Michigan follow major roads as well.
+```{r}
+mi_map <- map_data("state", "Michigan" )
+
+# Read us zip codes file
+zip_csv <- read_csv("/Users/dml/Documents/GitHub/BIFX551_SPRING24/Week 9/uszips.csv")
+
+# Filter zip code data for Michigan only
+zip_csv_mi <- zip_csv[zip_csv$state_name == "Michigan", ]
+
+ggplot( aes(x = long, y = lat), data = mi_map ) +
+  geom_polygon( aes(group = group), fill=NA, color="lightblue") +
+  coord_quickmap()
+
+# Plot the map of Michigan
+d <- ggplot() +
+  geom_polygon(data = mi_map, aes(x = long, y = lat, group = group), fill = "grey95", color = "lightblue") +
+  coord_fixed() +  # Keep aspect ratio
+  labs(x = "Longitude", y = "Latitude", title = "Michigan Map with Zip Codes")
+
+# Overlay zip code points for Michigan
+if (nrow(zip_csv_mi) > 0) {
+  d <- d +
+    geom_point(data = zip_csv_mi, aes(x = lng, y = lat), color = "blue", alpha = .1) +
+    labs(x = "Longitude", y = "Latitude", title = "Michigan Zip Codes")
+  } else {
+  print("No zip code data for Michigan provided.")
+}
+
+print(d)
+
+```
+
+## Maryland outline and zip code densities map
+It is harder to see if zip codes in Maryland follow major roads. Unlike the Midwest, Eastern roads are curvier, so straight lines are not seen.
+```{r}
+md_map <- map_data("state", "Maryland" )
+
+# Read us zip codes file
+zip_csv <- read_csv("/Users/dml/Documents/GitHub/BIFX551_SPRING24/Week 9/uszips.csv")
+
+# Filter zip code data for Maryland only
+zip_csv_md <- zip_csv[zip_csv$state_name == "Maryland", ]
+
+ggplot( aes(x = long, y = lat), data = md_map ) +
+  geom_polygon( aes(group = group), fill=NA, color="purple") +
+  coord_quickmap()
+
+# Plot the map of Maryland
+p <- ggplot() +
+  geom_polygon(data = md_map, aes(x = long, y = lat, group = group), fill = "grey95", color = "purple") +
+  coord_fixed() +  # Keep aspect ratio
+  labs(x = "Longitude", y = "Latitude", title = "Maryland Map with Zip Codes")
+
+# Overlay zip code points for Maryland
+if (nrow(zip_csv_md) > 0) {
+  p <- p +
+    geom_point(data = zip_csv_md, aes(x = lng, y = lat), color = "black", alpha = .1) +
+    coord_cartesian(xlim = c(-79.8, -75), ylim = c(37.8, 39.8)) +
+    labs(x = "Longitude", y = "Latitude", title = "Maryland Zip Codes")
+  } else {
+  print("No zip code data for Maryland provided.")
+}
+
+print(p)
+```
+
+
+
