@@ -1,0 +1,46 @@
+---
+title: "Maps"
+author: "Jamilet Cordon"
+date: "2024-03-29"
+output: html_document
+---
+
+## Population Density
+
+Populations near the coast's and or major USA ports tend to be at a higher population density due to several factors that causes people to move for either economics, educational, political and or employment opportunities. I will compare the population density within the east coast states and west coast states to see which coast has the highest population density. I believe that the east coast will have the highest population density compared to the west, due to several major cities, generally more states, and more major ports residing in the east coast. I also expect to see higher level of population density generally in the coast and decreases as you move away from the coast line.
+
+## Data Wrangling and Cleaning
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("zipcodeR")
+#install.packages("ggmap")
+library(zipcodeR)
+library(maps)
+library(dplyr)
+library(ggplot2)
+
+#Map Data frames
+#Get a map of the US and color by state
+usa_map <- map_data("state")  
+
+#Zipcode Data frames
+df<-search_state(c('NJ','MD', 'VA', 'MA', 'NC', 'SC', 'OH', 'KY', 'WV', 'TN', 'GA', 'AL', 'IN', 'IL', 'MS', 'NY', 'PA', 'DE', 'RI', 'CT', 'NH', 'VT', 'ME', 'MI', 'WI', 'IL', 'MO', 'AR', 'MN', 'LA', 'FL', 'TX', 'OK', 'KS', 'NE', 'SD', 'ND', 'MT', 'WY', 'CO', 'NM', 'AZ', 'UT', 'ID', 'NV', 'OR', 'WA', 'CA', 'IA' )) %>% mutate(state=case_when(state=="NJ"~"new jersey", state=="MD"~"maryland", state=="VA"~"virginia", state=="MA"~"massachusetts", state=="OH"~"ohio", state=="KY"~"kentucky", state=="WV"~"west virgiinia", state=="TN"~"tenessee",state=="GA"~"georgia", state=="NC"~"north carolina", state=="SC"~"south carolina", state=="AL"~"alabama", state=="IN"~"indiana", state=="IL"~"illnois", state=="MS"~"mississppi", state=="NY"~"new york",state=="PA"~"pennsylvania", state=="DE"~"delaware", state=="RI"~"rhode island", state=="CT"~"connecticut", state=="NH"~"new hampshire", state=="VT"~"vermont", state=="ME"~"maine", state=="MI"~"michigan", state=="WI"~"wisconsin", state=="IL"~"iowa", state=="MO"~"missouri", state=="AR"~"arkansas", state=="MN"~"minnesota", state=="LA"~"louisiana", state=="FL"~"florida", state=="TX"~"texas", state=="OK"~"oklahoma", state=="KS"~"kansas", state=="NE"~"nebraska", state=="SD"~"south dakota", state=="ND"~"north dakota", state=="MT"~"montana", state=="WY"~"wyoming", state=="CO"~"colorado", state=="NM"~"new mexico", state=="AZ"~"arizona", state=="UT"~"utah", state=="ID"~"idaho", state=="NV"~"nevada", state=="OR"~"oregon", state=="WA"~"washington", state=="CA"~"california", state=="IA"~"iowa"))
+
+```
+
+## Map Plots
+
+```{r map}
+#Plot Data onto Map
+
+ggplot(data = df, aes(x=lng, y=lat )) +  
+  geom_polygon( data=usa_map, aes(x=long, y = lat, group = group), fill = "lightyellow", show.legend = FALSE, color="grey50") + 
+  geom_point(aes(color=population_density), size=0.2, alpha=0.5)
+  coord_quickmap()
+
+```
+
+## Conclusion
+
+As expected the East Coast has a larger population density compared to the West coast. The East Coast has 8 out of 10 top busiest and largest ports . Whereas the West Coast has 2 out of 10 largest and busiest ports. Additionally the East Coast houses several major cities like, Charleston, Atlanta, Washington D.C, Baltimore, Boston, and New York.
