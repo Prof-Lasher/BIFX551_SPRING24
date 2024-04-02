@@ -1,0 +1,111 @@
+---
+title: "Reproducible Report"
+author: "Isabella Czernia"
+date: "2024-03-14"
+output: pdf_document
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+# The Endangered Species Act and Species Conservation
+
+The Endangered Species Act (ESA) was first enacted in 1973 to establish
+protections of endangered and threatened flora and fauna of the US.
+Species can be added and removed as needed, and many recovery programs
+have been implemented for species.
+
+It’s common knowledge that we are currently in the midst of the
+Anthropocene extinction, and even as conservation efforts double-down it
+sometimes feels that efforts are wasted. Based on the data, which
+species groups are more at risk for future listings (endangered or
+threatened)?
+
+The data I am using is from the US Fish and Wildlife Service’s
+Environmental Conservation Online System (ECOS). It is an interactive
+database that can create reports concerning ESA listed species. I will
+only be using species that are considered domestic to the US.
+
+You can use the link, <https://ecos.fws.gov/ecp/>, to access the
+database. For timeline purposes, the database was last accessed on
+3/14/2024.
+
+```{r ESA Listed Species in US, echo=FALSE}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(lubridate)
+
+speciesdf <- read.csv('listed-species.csv', sep=",", header = TRUE) #read file into usable df
+
+speciesdf <- na.omit(speciesdf) #remove rows with any na value
+
+#filter dataset to eliminate species that are listed in multiple areas, this will help reduce duplication in the dataset
+speciesdf <- distinct(speciesdf, Scientific, .keep_all = TRUE)
+
+speciesdf <- speciesdf %>% mutate(Date = lubridate::mdy(Date)) #converts date column to the date data class for easier use
+
+head(speciesdf) #make a summary table for the data frame
+```
+
+## Graphical Analysis of Data Based on Species Group
+
+Our first analysis of the data is the amount of listed species based on
+their species group and listed status of endangered or threatened.
+
+```{r Listed Species by Species Group, echo=FALSE, message=TRUE}
+
+end_thr <- speciesdf %>% filter(Listing == 'Endangered'|Listing == 'Threatened') #make a df with only endangered and threatened species
+
+a <- ggplot(end_thr, aes(Group, fill = Listing)) #create plot
+a + geom_bar(stat = "count", position = "stack") + labs(title = 'Analysis of Listed Species by Group', x = 'Species Group', y = 'Number of Species') + scale_fill_manual(values = c(Endangered = "red", Threatened = "yellow")) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) #make the bar graph
+```
+
+It is very obvious that the flowering plants have the most species
+listing in both categories. Even with all of the animal species groups
+combined, it does not compare to the flowering plants group. This was
+surprising to me because most conservation efforts are for animal
+species; you don't hear much about plant species conservation efforts.
+
+## Graphical Analysis of Data Based on Time of Listing
+
+Now we will see how the date of listings compare over the entire time
+period, up until when the database was last accessed.
+
+```{r Listing Date Analysis, echo=FALSE, message = TRUE}
+c <- ggplot(end_thr, aes(Date))
+c + geom_freqpoly(binwidth = 250) + labs(x= 'Date of Listing', y= 'Number of Species', title= 'Number of Species Listed Over Time')
+```
+
+Over time the number of species listed varies greatly, according to our
+graph. There are periods of time where there are large spikes in the
+amount of species listed, while sometimes there are less than 10. There
+doesn't seem to be a clear trend with this graph.
+
+## Species Listing Change by Species Group
+
+The next analysis I want to look at is how, over time, species listing
+has increased or decreased based on the species group. This will give us
+a more in-depth look at our data. For this we will need to look at the
+change of species listings over time. Is there a difference between
+endangered and threatened listings? Which type are increasing faster?
+
+```{r Species Listing Change, echo=FALSE}
+#plot the listing occurrences over time by their species group
+d <- ggplot(end_thr, aes(Date)) + geom_point(stat = "count", aes(color = factor(Listing))) + scale_color_manual(values = c("red", "yellow"))  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none", strip.text.x = element_text(angle = 90)) + labs(x = 'Date of Listing', y ='Number of Species', title = 'Comparing Endangered vs Threatened Listings Over Time by Species Group')
+d + facet_grid(cols = vars(Group), rows = vars(Listing))
+```
+The large graph shows that, the largest spike seen was in the Flowering Plants group. Near the year 2000 there were more than 70 species listed as endangered in the US, however there wasn't a similar spike in threatened species listings. Overall, there is a common "base" listing number among all the species throughout the year, with exceptions of species groups which have only a few data points. 
+
+I would have thought that there would be a significant and steady increase in species listings over the years, but it seems that my misconception may be due to improper media representation.
+
+# Most At Risk and the Future
+
+The statistical analysis I have chosen is a one-way ANOVA test between the date of listing and the species group. Does the listing date correspond at all to the species group? My null hypothesis is that all species groups are at the same risk for future listings.
+
+```{r One-Way ANOVA, echo=FALSE, message=TRUE}
+summary(aov(Date ~ Group, data = end_thr))
+```
+
+Based on the test, we can reject the null that all species are at the same risk. It is difficult to determine which groups will have more listings as of the present day since 2024 just started, but it will be interesting to see the future data.

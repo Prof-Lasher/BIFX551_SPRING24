@@ -1,0 +1,100 @@
+---
+title: "Data Science Report"
+author: "Jamilet Cordon"
+date: "2024-02-29"
+output: html_document
+---
+
+## Data Wrangling
+
+```{r }
+install.packages("readxl")
+library(readxl)
+County_Health_Rankings <- read_excel("BIFX551_SPRING24/Week 5/JC. Week5/County_Health_Rankings.xlsx",sheet="Maryland", col_names=c("State","County","State code","County code", "Year span", "Measure name", "Measure id","Numerator", "Denominator", "Raw value","Confidence Interval Lower Bound", "Confidence Interval Upper Bound","Data Release Year", "fipscode"), na="")
+View(County_Health_Rankings)
+
+```
+
+## Exploratory Analysis
+
+### U.S. County Health Rankings
+
+The United States is globally recognized as an unhealthy country with a high rise of illness and health issues. There are several factors such as work-culture, food-deserts, easy access to processed foods, endocrine disruptor in daily products, and carcinogens in our ingredients that overall are huge driving forces to the poor health conditions and decisions (economical) made in America. This data set will be used to rank U.S counties on their health based on various factors.
+
+What I find interesting about this data set is its focus on counties, instead of just states. This reduces bias interpretations and increases visibility of regions in the state that may be facing health issues, instead of masking these regions.
+
+I am going to [explore the health ranking between counties within the state of Maryland.]{.underline} Potentially extending the analysis between the socioeconomic of each counties correlated to their health ranking. But, first the health ranking analysis
+
+## Model Building
+
+### Plot w/continuous variable
+
+#### Scatter Plot
+
+```{r pressure, echo=FALSE}
+install.packages("ggplot2")
+library(ggplot2)
+# Scatter plot
+ggplot(data = County_Health_Rankings, aes(x = County, y = `Raw value`)) +geom_line()+
+  geom_point() +
+  labs(x = "County", y = "Raw Value") +
+  theme_minimal()
+
+#ggplot(data= County_Health_Rankings) + #geom_point(mapping=aes(x= 'County', y='raw #value'))+ geom_line()
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+### Plot w/Discrete Variables
+
+#### Bar Plot
+
+```{r pressure, echo=FALSE}
+library(ggplot2)
+
+# Bar plot
+ggplot(data = County_Health_Rankings, aes(x = 'Raw Value')) +
+  geom_bar() +
+  labs(x = "Raw Value", y = "Count") +
+  theme_minimal()
+
+```
+
+### Plot w/Color or size to represent a Quantity
+
+#### Scatter Plot w/size
+
+```{r pressure, echo=FALSE}
+# Scatter plot with size mapping
+library(ggplot2)
+
+# Scatter plot with color mapping
+ggplot(data = County_Health_Rankings, aes(x = County, y = `Raw value`, color = `County`)) +
+  geom_point() +
+  labs(x = "County", y = "Raw Value") +
+  theme_minimal()
+
+
+```
+
+### A faceted plot
+
+```{r}
+# Scatter plot with size mapping
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+# Scatter plot with color mapping
+
+new_df <- County_Health_Rankings[-c(1), ]
+
+new_df %>% mutate( `Year span` = as.numeric(`Year span`) ) %>%
+  filter(`Year span` == c("2003","2004"))   %>% 
+  ggplot( aes( x=`Year span`, y= `Raw value`, group=`County`, color = `County`)) + 
+  geom_point() + geom_line()+scale_x_discrete(limits=c(2003,2004)) +facet_wrap('County')
+
+```
+
+### Communication
+
+I need to manipulate the data to better show the Health Rankings throughout the years 2003-2004 within Each county. The goal is to be able to clearly show trends between county's and their health trends. In the Faceted table, there is more clearity of the health ranking increasing between 2003-2004 throughout all counties in Maryland. I hope to continue to analyze these trends till 2014. Additionally, looking into the socioeconomic of each county to see if there is a statistical correlation to wealth disparities and health ranking.
