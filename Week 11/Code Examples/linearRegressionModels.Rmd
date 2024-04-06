@@ -1,0 +1,268 @@
+---
+title: "LinearModels"
+author: "Brandon Lasher"
+date: "2024-04-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r }
+
+#Markdown setup
+library(tidyverse)
+```
+
+
+```{r cars}
+View(cars)
+
+#Let's use ggplot to first visualize a linear model
+# We've seen this before in class
+cars %>% 
+  ggplot( aes( x = speed, y=dist) ) +
+  geom_point() +
+  geom_smooth( formula = y ~ x, method = lm, se = FALSE )
+
+# X is your explanatory or independent variable, Y is your dependant or your outcome
+
+```
+
+
+```{r cars}
+#Lets make a very simple model
+#Why data=. ? That is because lm() wants data argument second.
+cars %>% 
+  lm( dist ~ speed, data = . ) %>%
+  summary()
+
+# Residuals are how far off the point is from the predicted line.
+#   A good model will be roughly symmetric. 
+#
+# Pr is very small which shows that the Null is false
+#    The null in case is that the slope is zero ( Or no matter the speed the stopping distance is zero ).
+#
+# R2 is the regression line to the data. 
+#    The higher the value the better it fits, 
+#    The lower the value worse it fits.
+#   It is a measure of variation of the data vs the model
+
+```
+
+
+```{r cars}
+#Same thing as above
+#  But allows to use the model a bit more
+mod <- lm( dist ~ speed, data = cars ) 
+mod 
+summary(mod)
+```
+
+
+```{r}
+#what is inside the model
+attributes(mod)
+
+#List the residuals
+mod$residuals
+
+#Are the residuals symmetric around zero?
+hist( mod$residuals )
+
+boxplot( mod$residuals )
+
+```
+
+
+## Using the model for prediction
+```{r}
+
+#Speeds we want to check
+newSpeeds <- data.frame( speed = c(10,20,50) )
+
+View(newSpeeds )
+
+#Pass into the predict function and pipe to round funciton
+predict(mod, newSpeeds ) %>% round(1)
+
+```
+# Multi-variable regression model
+```{r trees}
+data(trees)
+View(trees)
+?trees
+
+trees %>%
+ggplot(aes(Girth, Volume, color = Height))+
+geom_point()+
+geom_smooth(method = lm, se = F)+
+theme_bw()+
+labs(title = "Tree Volume explained by Girth and Height")
+
+```
+ 
+```{r trees}
+#We want to predict the volume of a tree based on height and diameter (inches )
+treeModel <- lm( formula = Volume ~ Girth + Height, data = trees ) 
+summary(treeModel)
+
+#Need to look at the R2 adjusted value to evaluate fit.
+# As more variables get added R2 itself is less reliable.
+```
+```{r Categroical Variables}
+data(mpg)
+?mpg
+
+mpg %>%
+ggplot(aes(x = displ,
+y = hwy))+
+geom_jitter()+
+geom_smooth(method = lm, se = F)+
+theme_bw()+
+labs(title = "Highway Fuel Efficiency explained by engine size",
+x = "Engine size",
+y = "Highway fuel efficiency")
+
+
+```
+
+```{r}
+lm(hwy ~ displ, data = mpg) %>%
+summary()
+
+# Okay 0.5868% of the change in Highway MPG can be attributed to engine size
+
+```
+#Lets add a catigroical vairble to help it along
+```{r}
+#Change the front(f) and rear(r) wheel drive to be expressed by 2
+mpg %>%
+mutate(drv = fct_recode(drv, "2" = "f", "2" = "r"))%>%
+ggplot(aes(displ, hwy, color = drv))+
+geom_point()+
+geom_smooth(method = lm, se = F)+
+theme_bw()+
+labs(title = "Highway Fuel Efficiency explained by engine size",
+x = "Engine size",
+y = "Highway fuel efficiency",
+color = "Drive")
+
+#Similar slope.. but different intercept 
+```
+```{r}
+#Build the model!
+mpg %>%
+mutate(drv = fct_recode(drv, "2" = "f", "2" = "r"))%>%
+lm(hwy ~ displ + drv, data = .) %>%
+summary()
+
+#drv2          4.9486     0.4347   11.38   <2e-16 ***
+# What's this mean?
+# With a Categorical variable you can only change between catagories... so if you change from a 2wd to 4wd you gain gas mileage
+# R will choose a reference category and compare the others to it. ( default is alphabetical )
+# Adjusted R2 73% of the change of in MPG can be explained by size and drive
+```
+#What if we have more than 1 Catagory
+```{r}
+# Call palmerpenguins package
+library(palmerpenguins)
+
+View(penguins)
+
+# Plot Bill length vs Bill Depth
+penguins %>%
+ggplot(aes(bill_depth_mm, bill_length_mm))+
+geom_point()+
+geom_smooth(method = lm, se = F)+
+theme_bw()+
+labs(title = "Penguin Bill Length explained by Bill Depth",
+x = "Bill Depth",
+y = "Bill Length")
+
+# As bill depth increases bill length decreases?
+# Let's take a closer look 
+```
+```{r}
+#Aggregate by species 
+penguins %>%
+ggplot(aes(bill_depth_mm, bill_length_mm))+
+geom_point(aes(color = species), alpha = 0.7)+
+geom_smooth(aes(color = species),method = lm, se = F)+
+theme_bw()+
+labs(title = "Penguin Bill Length explained by Bill Depth",
+x = "Bill Depth",
+y = "Bill Length")
+
+# This is the opposite of the total we saw above. Howeverm each group seems to be following the same trend.
+```
+```{r}
+lm(bill_length_mm ~ bill_depth_mm + species, data = penguins) %>%
+summary()
+
+#Looking at the summary, we now have 3 categories.  Adelie is being used as the reference.
+```
+
+#Let's Look at Logistic Models
+A Logistic model will give the probability of the dependent variable occurring. 
+
+```{r College admissions}
+admissions <- read_csv("admissions.csv")
+View(admissions)
+
+ggplot(admissions, aes(x = gpa, 
+                       y = admitted)) +
+  geom_jitter(height = .05, 
+              alpha = .3)
+
+
+#Let's make a general linear model
+model <- glm(admitted ~ gpa, 
+             data = admissions,
+             family = "binomial")
+
+summary(model)
+
+```
+
+```{r}
+ggplot(admissions, aes(x = gpa, 
+                       y = admitted)) +
+  geom_jitter(height = .05, 
+              alpha = .1) +
+  geom_smooth(method = "glm",
+              method.args = list(family = "binomial"),
+              se = FALSE)
+```
+```{r}
+#Let's look at this in another way
+#Modify the data set to calc the prop of admission per gpa ( basically what the glm is doing )
+adm_sum <- admissions %>% 
+  group_by(gpa) %>% 
+  summarize(prop_adm = mean(admitted),
+            count = n())
+adm_sum
+
+#Plot to see the groupings
+ggplot(adm_sum, aes(x = gpa, y = prop_adm)) +
+  geom_point()
+
+#How does this compare to our initial model?
+model2 <- glm(prop_adm ~ gpa, 
+              family = "binomial",
+              data = adm_sum, 
+              weights = count)
+summary(model2)
+
+
+#Plot with curve
+ggplot(adm_sum, aes(x = gpa, 
+                    y = prop_adm,
+                    weight = count)) +
+  geom_point() +
+  geom_smooth(method = "glm",
+              se = FALSE,
+              method.args = list(family = "binomial"))
+```
+
