@@ -1,0 +1,66 @@
+---
+title: "RPackage"
+author: "Jamilet Cordon"
+date: "2024-04-01"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{RPackage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+```
+
+## Writing an R package from Scratch
+
+```{r packages}
+#install.packages("devtools")
+#install.packages("roxygen2")
+library(roxygen2)
+library(devtools)
+
+#Create package directory 
+source("../R/Celsius_Conversions.R")
+source("../R/Fahrenheit_Conversions.R")
+```
+
+### Question 1
+## Function
+
+##  Fahrenheit to Celsius 
+```{r, error=TRUE}
+
+F_to_C(56) 
+```
+## Celsius to Fahrenheit 
+```{r, error=TRUE}
+
+C_to_F(23) 
+```
+## Question 2
+
+Under the Test folder I can see that the files are labeled with its intended function.
+
+The gather package has multiple functions that tells the program to search/collect for data
+
+within columns of tables. There are functions for errors, groups, empty columns,
+
+integers vs character etc. In this package there are some functions I do not understand, but
+
+I think its due to not knowing what is in the datasets. There is a test that, "gathers throws
+
+error for werid objects", it is hard to compute b/c I do not know what or how the program
+
+will know what "werid objects" are. It appears to mean that the packages under test are
+
+like The packages under Vignett are written in a style that is familar .Rmd. These are the
+
+code/function that we have mainly performing. With a written preview and a code preview.
+
+there is no data available
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
