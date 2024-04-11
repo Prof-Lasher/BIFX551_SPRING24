@@ -264,5 +264,27 @@ ggplot(adm_sum, aes(x = gpa,
   geom_smooth(method = "glm",
               se = FALSE,
               method.args = list(family = "binomial"))
+
+```
+
+```{r}
+
+#Logit output as probability
+#pred <- predict(logit,newdata=data) #gives you b0 + b1x1 + b2x2 + b3x3
+#probs <- exp(pred)/(1+exp(pred)) #gives you probability that y=1 for each observation
+pred <- predict( model, data.frame( gpa=c(1,2.3,3.4) ) ) 
+pred
+
+#convert to probability
+probs <- exp(pred)/(1+exp(pred))
+probs
+
+
+#Can also do....
+predict( model, data.frame( gpa=c(1,2.3,3.4) ), type = "response")
+
+
+#Check model2 does the same?
+predict( model2, data.frame( gpa=c(1,2.3,3.4) ), type = "response")
 ```
 

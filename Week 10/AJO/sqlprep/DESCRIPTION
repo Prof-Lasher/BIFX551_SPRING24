@@ -1,0 +1,12 @@
+Package: sqlprep
+Title: Provides basic tools for quickly editing text documents into sql ready statements or sql readable data.
+Version: 0.0.0.9000
+Authors@R: 
+    person("Abraham", "Olsson", , "ajo2@hood.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0008-6425-7311"))
+Description: Provides basic tools for quickly editing text documents into sql ready statements or sql readable data. Package functions include (dotsfirst) which will convert "." with "_" in the first line of a datafile. Another function that may make life easier is count_create_table which simply counts create table statements in a text file and prints the count. 
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1.9000
