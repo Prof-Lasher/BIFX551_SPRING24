@@ -5,26 +5,27 @@ date: "2024-04-11"
 output: html_document
 ---
 
+## Reading in the file, and getitng a Summary
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+
+
+
+sampleData <- read.csv("https://gist.githubusercontent.com/kevin336/acbb2271e66c10a5b73aacf82ca82784/raw/e38afe62e088394d61ed30884dd50a6826eee0a8/employees.csv")
+
+summary(sampleData)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Making the graph
 
 ```{r cars}
-summary(cars)
+plot(sampleData$DEPARTMENT_ID,
+      sampleData$SALARY,
+      xlab="Department as classified by Department ID",
+      ylab = "Salary per Month",
+      main="Salary in relation to Department")
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
