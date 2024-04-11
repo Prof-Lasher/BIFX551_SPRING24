@@ -44,8 +44,8 @@ Your final project will be an R Shiny application, you will hand in
 - A link to the actual application (likely hosted on [shinyapps.io](shinyapps.io))
 
 ## Demo and Presentation
- As a part of this project your group will give a demo and discussion of your application
- During this presentation please go over 
+As a part of this project your group will give a demo and discussion of your application  
+During this presentation please go over 
   - The dataset
   - Thought processes
   - Findings and models
