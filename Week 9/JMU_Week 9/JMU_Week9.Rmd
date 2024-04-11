@@ -1,0 +1,93 @@
+---
+title: "JMU_Week9"
+author: "Joanne Unite"
+date: "2024-03-26"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# install packages
+
+library(dplyr, quietly = TRUE)
+library(ggplot2)
+library(RColorBrewer)
+library(sf)
+library(maps)
+library(tidyr)
+```
+
+# Uploading Data
+
+I retrieved the data from Kaggle: https://www.kaggle.com/datasets/pavansanagapati/us-wages-via-zipcode
+
+```{r}
+zips <- read.csv("/Users/junite/Desktop/BIFX551/BIFX551_SPRING24/Week 9/JMU_Week 9/zipcode-database.csv")
+```
+
+
+# Inspect the data
+```{r}
+str(zips) 
+```
+# Explore Data
+
+```{r, explore}
+#inspect the number of zipcodes per state
+zips %>% 
+  group_by( State ) %>% 
+  summarise(nZipcode = n_distinct(Zipcode) )
+
+#inspect the amount of cities per state
+zips %>% 
+  group_by( State ) %>%
+  summarise(nCity = n_distinct( City) )
+
+```
+
+
+
+
+
+```{r, creating map with states }
+#use map_data to select what we want
+states_map <- map_data("state")
+
+#look at the new states data frame
+View(states_map)
+
+#Plot the map to check if it looks good
+states_map %>%
+  ggplot( aes(x = long, y = lat) ) +
+  geom_polygon( aes(group = group), fill= NA, color="black") +
+  theme_void()+
+  theme(legend.position = "none") +
+  coord_quickmap()
+
+
+```
+
+```{r, Zipcode location plot}
+#Use the map created above and add a layer with zipcode points
+ggplot(zips, aes(Long,Lat), fill = State) +
+  geom_polygon(data = states_map,aes(x = long,y = lat, group = group, fill = region),color='blue', show.legend = FALSE, alpha=.35) +
+  geom_point(aes(),size=.15,alpha=.25) +
+  xlim(-125,-65) + ylim(22,50) + 
+  ggtitle("Zipcode Density Across the United States") + 
+  coord_quickmap()
+```
+
+# Assignment questions
+
+## What can you infer from this plot?
+
+You can infer that the highly dense areas are likely where population is higher.
+
+## Does the concentration of zip codes in a given area tell you anything about that area?
+
+You can observe that the there is a higher number of points located surrounding major cities. 
+
+## What would be the next steps to test your hypothesis?
+
+The next step I would do to test my hypothesis is to create a map showing the major cities across the United states. Then I would create a density plot on the map using the population data.
