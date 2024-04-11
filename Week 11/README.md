@@ -49,7 +49,7 @@ Your final project will be an R Shiny application, you will hand in
   - The dataset
   - Thought processes
   - Findings and models
-  - Any issues you had along the way. 
+  - Any issues you had along the way 
 You may also want to include what else can be done. Or how you might change or improve your application. 
 
 ## Requirements
