@@ -1,0 +1,61 @@
+---
+title: "MJM_Week9"
+author: "Mike Murphy"
+date: "r Sys.Date()"
+output: html_document
+---
+# Loading librarys
+```{r}
+library(ggplot2)
+library(maps)
+library(leaflet)
+library(readxl)
+library(sf)
+```
+
+# Download and load CSV file
+```{r}
+# CSV from https://simplemaps.com/data/us-zips
+
+zipcodes <- read.csv("uszips.csv")
+```
+
+# Load map data and generate a blank map of the US
+```{r}
+usa_map <- map_data("state") #get a map of the US states  
+USPlot <- ggplot( aes(x=long, y=lat ), data = usa_map ) +  
+   geom_polygon( aes(group = group), fill = NA, show.legend = FALSE, color="grey50") +  
+  coord_quickmap() + 
+  theme_void()
+
+USPlot
+```
+
+```{r}
+uszipcodes <- zipcodes %>% 
+  filter(between(lat, 25, 50) & between(lng, -127, -65 ))
+
+zipcode_plot <- USPlot + geom_point(aes(x = lng, y= lat), data = uszipcodes, alpha = 0.05)
+
+zipcode_plot
+```
+# What can you infer from this plot?
+## We can infer that the darker zones caused from more points overlapping consist of more zipcodes, and the lighter areas consist of less overlapping points and fewer zipcodes. 
+# Does the concentration of zip codes in a given area tell you anything about that area?
+## Concentration of zipcodes is a good measure of population density.
+# What would be the next steps to test your hypothesis?
+## We can plot the US cities on the map and see if they coincide with the darker, or more overlapped points of zipcodes. 
+```{r}
+us_cities <- us.cities
+
+#Sort the cities by population
+us_cities <- us_cities[order(us_cities$pop),]
+
+#Take the top 25 cities by population
+topcities <- tail(us_cities, n=25)
+
+#Plot the top 25 cities
+zipcode_plot + 
+  geom_point(aes(x = long, y= lat, color = name), data = topcities, size = 4, alpha = 0.5)
+```
+# We can see that the cities sit on top of a lot of the areas with more zipcodes. 
