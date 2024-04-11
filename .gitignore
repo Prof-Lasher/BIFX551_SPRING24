@@ -51,7 +51,7 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
-<<<<<<< Updated upstream
+
 Week 3/boulder-precip-temp.csv
 Week 3/dataceo.txt
 DATA/*
@@ -63,9 +63,9 @@ Week 5/Code Examples/*
 Week 6/Code Examples/*
 Week 7/Code Examples/cdc_dataset.csv
 Week 3/dummy_data.csv
-=======
+Week 9/Code Examples/mapsExample.Rmd
+Week 9/DML_Week9.html
 Week 4/Big_Cities.csv
 Week 4/Big_Cities.csv
 Week 4/Big_Cities.csv
 Week 4/Blood_test.csv
->>>>>>> Stashed changes
