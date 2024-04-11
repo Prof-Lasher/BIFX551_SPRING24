@@ -1,0 +1,40 @@
+---
+title: "SW_Week10"
+author: "Spencer Weed"
+date: "2024-04-10"
+output: html_document
+---
+
+
+
+## Part 1:
+
+Made a package that does simple math things, one takes an input and adds it to itself and another multiplies an input against itself.
+
+```{r example}
+library(RPackageExample)
+x <- 7
+multSelf(x)
+addSelf(x)
+```
+
+## Part 2:
+
+Took a look at test-drop-na, since we have convered drop-na a good bit in class already.
+
+This test is pretty obvious: you need to make sure when a dropped variable is specified, that is the variable dropped
+
+```{r test for tidyr, echo=FALSE}
+test_that("specifying (a) variables considers only that variable(s)", {
+  df <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
+```
+
+This test is less obvious: Version control, making sure old methods do not influence results.
+
+```{r test for tidyr, echo=FALSE}
+test_that("works with rcrd cols", {
+  skip_if(
+    packageVersion("vctrs") <= "0.3.8",
+    "vec_detect_complete() treated rcrds differently"
+  )
+```

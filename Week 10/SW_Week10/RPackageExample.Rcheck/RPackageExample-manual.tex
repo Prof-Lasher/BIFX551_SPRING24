@@ -1,0 +1,68 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `RPackageExample'}}
+\par\bigskip{\large \today}
+\end{center}
+\inputencoding{utf8}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdftitle = {RPackageExample: Does simple math for Homework Assignment}}}{}
+\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Does simple math for Homework Assignment}
+\item[Version]\AsIs{0.1.0}
+\item[Author]\AsIs{SW}
+\item[Maintainer]\AsIs{The package maintainer }\email{yourself@somewhere.net}\AsIs{}
+\item[Description]\AsIs{More about what it does (maybe more than one line)
+Use four spaces when indenting paragraphs within the Description.}
+\item[License]\AsIs{GPL-3}
+\item[Encoding]\AsIs{UTF-8}
+\item[RoxygenNote]\AsIs{7.3.1}
+\item[NeedsCompilation]\AsIs{no}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{addSelf}{Function takes one input, adds input to itself, and returns}{addSelf}
+%
+\begin{Description}
+Function takes one input, adds input to itself, and returns
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+addSelf(x)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] numeric variable
+\end{ldescription}
+\end{Arguments}
+\inputencoding{utf8}
+\HeaderA{multSelf}{Function takes one input, multiplies input to itself, and returns}{multSelf}
+%
+\begin{Description}
+Function takes one input, multiplies input to itself, and returns
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+multSelf(x)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{x}] numeric variable
+\end{ldescription}
+\end{Arguments}
+\printindex{}
+\end{document}
