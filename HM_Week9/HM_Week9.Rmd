@@ -1,0 +1,110 @@
+---
+title: "Week 10"
+author: "Hamere Mogus"
+date: "2024-03-27"
+output: html_document
+---
+
+#Loading necessary libraries 
+```{r}
+library(ggplot2)
+library(RColorBrewer)
+library(sf)
+library(maps)
+library(zipcodeR)
+library(tidyverse)
+library(DataExplorer)
+library(dbscan)
+```
+
+#Downloading Zipcodes from a built in package 
+```{r}
+download_zip_data()
+```
+
+#Zip code data is filtered to remove missing latitude values and restrict the geographical area to the continental USA
+```{r}
+#Data cleaning
+zip_code_clean <- zip_code_db %>% 
+  filter(!is.na(lat)) %>%
+  filter( between( lat, 25, 50 ) & between( lng, -127, -65 ) )
+```
+
+#Loading USA map data
+```{r}
+#Continental US boundary
+usa_map <- map_data("state")
+```
+
+#Plotting Zip Code Locations
+```{r}
+ggplot() +
+  geom_point(data = zip_code_clean, aes(x = lng, y = lat), alpha = 0.1, color = "lightblue") +
+  geom_polygon(data = usa_map, aes(x=long, y=lat, group = group), fill=NA, show.legend = FALSE, color="black") +  
+  coord_quickmap() +
+  theme_minimal()
+```
+
+#Clustering Zip Codes
+#K-means clustering is performed on the latitude and longitude coordinates of zip codes aiming for 20 clusters
+```{r}
+uszipsContin_lat_lng <- zip_code_clean %>% select(lat,lng)
+
+set.seed(123)
+k2 <- kmeans( uszipsContin_lat_lng, centers = 20, nstart=100, iter.max= 1000 )
+
+# Plot on map with clusters!
+ggplot() +
+  geom_point(data = zip_code_clean, aes(x = lng, y = lat, color = as.factor(k2$cluster)), alpha = 0.1) +
+  geom_polygon(data = usa_map, aes(x=long, y=lat, group = group), fill=NA, show.legend = FALSE, color="black") +  
+  coord_quickmap() +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+#DBSCAN Clustering to identify areas with high density of zip codes, which might correspond to densely populated regions
+```{r}
+db <- dbscan(uszipsContin_lat_lng, eps = .15, minPts = 45)
+
+uszipsContin_db <- zip_code_clean %>% 
+  mutate( cluster = db$cluster ) %>%
+  filter( cluster > 0 )
+
+#Plotting DBSCAN clusters
+ggplot() +
+  geom_point( aes( x=lng, y=lat, color = as.factor(cluster) ), shape=20, data = uszipsContin_db, alpha=.5 ) +
+  geom_polygon(data = usa_map, aes(x=long, y=lat, group = group), fill=NA, show.legend = FALSE, color="black") +  
+  coord_quickmap() +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+#Identifying top cities based on population to show how population centers align with zip code density
+```{r}
+nCities <- length( unique(uszipsContin_db$cluster ) )
+
+topNCities <- us.cities %>% 
+  mutate( rank = min_rank(-pop) ) %>%
+  filter( rank <= nCities) 
+
+ggplot() +
+  geom_point( aes( x=lng, y=lat, color = as.factor(cluster) ), shape=20, data = uszipsContin_db, alpha=.5 ) +
+  geom_point( aes( x=long, y=lat), shape=4, data = topNCities, alpha=1 ) +
+  geom_polygon(data = usa_map, aes(x=long, y=lat, group = group), fill=NA, show.legend = FALSE, color="black") +  
+  coord_quickmap() +
+  labs( title = paste( "Top", nCities , "Cites"), subtitle = "Population vs zip code Density" ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+
+#1,What can you infer from this plot?
+The zip codes are more densely concentrated in certain regions, particularly around major population centers such as cities and urban areas.The addition of top cities overlay helps to visually correlate population centers with zip code density.
+
+#2,Does the concentration of zip codes in a given area tell you anything about that area?
+Areas with higher concentrations of zip codes likely indicate higher population densities, more urban development, and potentially greater economic activity.
+
+#3,What would be the next steps to test your hypothesis?
+Spatial analysis techniques
