@@ -1,0 +1,51 @@
+---
+title: "AJO_Week10_HW"
+author: "Abe Olsson"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Question 2 - Response
+
+Look at one of the packages in the Tidyverse on github, [like tidyr](https://github.com/tidyverse/tidyr). Open the test folder and find the test for a function you are familiar with, what is one test that seems obvious, what is one that seems less obvious. Also look at one vignette, how is this similar to reports you have written in R-markdown. Is the data used in the vignette available in the same folder?
+
+### Part 1.)
+
+-Separate() will separate values in a column into however many characters there are . i.e. un-separated column A_B, you can use separate to split the data into A and B separate columns with their respective data values. This one is pretty straight forward function. One obvious and clear test is
+
+```{r}
+test_that("missing values in input are missing in output", { df \<- tibble(x = c(NA, "a b")) out \<- separate(df, x, c("x", "y")) expect_equal(out$x, c(NA, "a"))  expect_equal(out$y, c(NA, "b")) }) 
+```
+
+Here it tests the input columns for its values and compares the output values to the input values.
+
+On the other hand, the test "too few pieces dealt with as requested"
+
+```{r}
+test_that("too few pieces dealt with as requested", {
+  df <- tibble(x = c("a b", "a b c"))
+
+  expect_snapshot(separate(df, x, c("x", "y", "z")))
+
+  left <- separate(df, x, c("x", "y", "z"), fill = "left")
+  expect_equal(left$x, c(NA, "a"))
+  expect_equal(left$y, c("a", "b"))
+  expect_equal(left$z, c("b", "c"))
+
+  right <- separate(df, x, c("x", "y", "z"), fill = "right")
+  expect_equal(right$z, c(NA, "c"))
+})
+
+```
+
+This begins similar to the separate, however it is slightly different in that this case is testing how the separate function deals with too few pieces to separate than expected (using fill) . This test incorporates what would happen if the specified columns are too many for the number of pieces in the original column.
+
+### Part 2.) 
+
+I looked at programming.Rmd and saw that the markdown is basically written exactly the same as what we have down for classwork, the only differences might be in the YAML code.
+
+The data is in the same directory as the .Rmd file. Just like we have learned to do in class. This makes it much easier for the user to download and also the program Rmd has an easier time finding it.
