@@ -39,8 +39,8 @@ Make literally any graph interactive. Feel free to adjust one of the built-in ex
 ## What to turn in
 Your final project will be an R Shiny application, you will hand in
 - An .r file of your groups code
-- A powerpoint discussing your thought processes and results.
-- A short writeup that documents worked on what sections of your project
+- A powerpoint discussing your thought processes and results
+- A short writeup that documents who worked on what sections of your project
 - A link to the actual application (likely hosted on [shinyapps.io](shinyapps.io))
 
 ## Demo and Presentation
