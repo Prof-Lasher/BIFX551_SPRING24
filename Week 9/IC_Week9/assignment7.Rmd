@@ -1,0 +1,28 @@
+---
+title: "Assignment 7"
+author: "Isabella Czernia"
+date: "2024-03-28"
+output: html_document
+---
+
+```{r US zip codes map, echo = FALSE, message = TRUE}
+library(maps)
+library(tidyr)
+library(RColorBrewer)
+library(dplyr)
+library(ggplot2)
+
+usa_map <- map_data("state")
+a <- ggplot( aes(x=long, y=lat ), data = usa_map ) +  
+   geom_polygon( aes(group = group, fill='white'), show.legend = FALSE, color="grey50") +  
+  coord_quickmap()
+
+#load csv
+us_zip <- read.csv('uswages.csv', sep=",", header = TRUE)
+
+a + geom_point( aes(x=Long, y= Lat), data = us_zip, alpha = 0.01) + xlim(-130, -60) + ylim(25, 50)
+```
+
+1)  We can infer that the East coast is more dense than the West coast.
+2)  The more concentrated the zip code, the more populous. Zip codes are set by the USPS.
+3)  The next steps would be to plot the population densities of the zip codes and see if yes, the denser the zip code areas, the denser the populations.

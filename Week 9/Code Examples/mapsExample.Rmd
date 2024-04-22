@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ---
 title: "Spatial Data"
 author: "Brandon Lasher"
@@ -462,3 +463,477 @@ leaflet(states) %>%
 ```
 
 
+=======
+---
+title: "Spatial Data"
+author: "Brandon Lasher"
+date: "2024-03-06"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr, quietly = TRUE)
+library(ggplot2)
+library(RColorBrewer)
+library(sf)
+library(maps)
+
+
+```
+# Spatial data
+## What is spatial data?
+- Spatial data is any type of data that directly or indirectly references a specific geographical area or location.
+## Why is this useful?
+- Sometimes it is useful to plot things based off of geographical information to see if the location plays a part in the data. For example if you wanted to visualize annual rainfall and you could see if mountain ranges effected the amount rain. Or if you wanted to track the movement of something over time. This combined with clustering is often a useful tool 
+
+# How to use this with ggplot2
+- GGplot will plot this through the use of geom_polygon and geom_sf
+  - geom_polygon allows you to specify a list of points to make a polygon then you can label and color accordingly. 
+  - geom_sf allows you to defined a "simple features" map
+
+# Lets take a quick look at geom_polygon
+```{r}
+#Let's keep things simple and make a square
+poly_sq <- data.frame(
+            x=c(-4,-4,4,4),
+            y=c(-4,4,4,-4)
+            )
+poly_sq
+
+poly_sq %>%
+  ggplot( aes(x = x, y = y) ) +
+  geom_polygon( fill="orange", color="black")
+
+```
+
+```{r}
+
+#Lets do something a bit more compilicated
+# N sided poly gone with radius r1 and r2. 
+r1 = 1
+r2 = 2
+nPoints = 4
+n <- seq(0:nPoints-1)
+
+#inner points
+r1_x <- r1*sin( (2*pi*n/nPoints - pi/nPoints) )
+r1_y <- r1*cos( (2*pi*n/nPoints - pi/nPoints) )
+
+#outer points
+r2_x <- r2*sin( (2*pi*n/nPoints) )
+r2_y <- r2*cos( (2*pi*n/nPoints) )
+
+#Interleave the points. 
+r12_x <- c(rbind(r1_x, r2_x))
+r12_y <- c(rbind(r1_y, r2_y))
+
+#See each rings shape before interleave
+poly_st_inner <- data.frame( 
+              x=c(r1_x),
+              y=c(r1_y)
+            )
+
+poly_st_outer <- data.frame( 
+              x=c(r2_x),
+              y=c(r2_y)
+            )
+
+
+ggplot( ) +
+geom_polygon( aes(x=x, y=y), data=poly_st_outer, fill="blue", color="black")+
+geom_polygon( aes(x=x, y=y), data=poly_st_inner, fill="red", color="black")
+  
+
+# combine
+poly_st <- data.frame( 
+              x=c(r12_x),
+              y=c(r12_y)
+            )
+
+#See final shape with the squre as a background  
+ggplot( ) +
+  geom_polygon( aes(x=x, y=y), data=poly_sq, fill="orange", color="black")+
+  geom_polygon( aes(x=x, y=y), data=poly_st, fill="blue", color="black")
+  
+
+#Use geom_ploygon_pattern as fill
+library(ggpattern)
+ggplot( ) +
+  geom_polygon_pattern(
+    aes(x = x, y = y), data=poly_sq,
+    pattern = 'stripe',
+    fill = 'orange',
+    pattern_fill = 'white',
+    color = 'black',
+    pattern_angle   = 0
+    )+
+  geom_polygon( aes(x=x, y=y), data=poly_st, fill="purple", color="black")
+  
+```
+# ggplot sf exmaple
+Now that we have an idea about how plotting polygons. Let's take a look at how to use map information. We will use the *maps* package to get base maps to work with.  
+- https://www.rdocumentation.org/packages/maps/versions/3.4.2  
+- https://cran.r-project.org/web/packages/maps/maps.pdf  
+
+## Get a map of the world!
+```{r FirstMap}
+worldMap <- map_data("world")
+
+#Notice that this contains point vertices for drawing the ploygons of your map
+view(worldMap)
+
+#Without Coord set notice the distortion
+ggplot( aes(x = long, y = lat), data = worldMap ) +
+  geom_polygon( aes(group = group), fill=NA, color="black")
+
+#With coord set for map
+ggplot( aes(x = long, y = lat), data = worldMap ) +
+```
+
+
+```{r FirstMap}
+geom_polygon( aes(group = group), fill=NA, color="black") +
+  coord_quickmap()
+```
+
+
+```{r FirstMap}
+```
+## What now?
+Okay, we now have a world map with all the countries outlined. We then can take this and use fill, color or other layers to draw and show information
+
+
+Let's take a look at one for the state of Maryland and then plot the major cities on on it. 
+
+```{r}
+
+
+md_map <- map_data("state", "Maryland" )
+ggplot( aes(x = long, y = lat), data = md_map ) +
+  geom_polygon( aes(group = group), fill=NA, color="black") +
+  coord_quickmap()
+
+#Get the city information
+us_cities <- us.cities
+md_cities <- us_cities[us_cities$`country.etc` == "MD", ]
+
+view(md_cities)
+
+
+ggplot( aes(x = long, y = lat), data = md_map ) +
+  geom_polygon( aes(group = group), fill=NA, color="black") +
+  geom_point( aes(x=long, y=lat), data=md_cities, fill=NA, color="black") + 
+  coord_quickmap()
+
+
+```
+
+Great, but in the end this isn't very useful. What else could we do? 
+- We could identify the points? 
+- We could limit to the top 4 cities?
+- We could change the point size to be based on population
+- We could use a county map instead and color by county, in the background. 
+
+Let's do all of those things.
+
+```{r}
+#Lets start with getting the county map
+md_county_map <- map_data("county", "Maryland" )
+
+#plot the county map with colors per county
+md_plot <- ggplot() +
+  geom_polygon( aes( x = long, y = lat, group = group, fill=factor(subregion), alpha=.2), data = md_county_map, show.legend = FALSE, color="grey50") +
+  coord_quickmap() 
+
+md_plot
+
+```
+```{r}
+#Lets now limit to the top 4 most populous cities.
+view(md_cities)
+
+#Notice the - to allow the highest pop to be rank 1
+md_cities %>% 
+  mutate( rank = min_rank(-pop ) ) 
+
+
+top_4_pop_md_cities <- md_cities %>% 
+  mutate( rank = min_rank(-pop ) ) %>%
+  filter( rank <= 4 )
+
+top_4_pop_md_cities
+
+#Lets now add the points for the cities
+md_plot + geom_point(aes(x = long, y = lat), data=top_4_pop_md_cities )
+
+
+
+#Lets change the Dot size to for each based on population
+library(stringr)
+names_clean <- str_remove(top_4_pop_md_cities$name, "MD")
+names_clean <- trimws(names_clean)
+
+md_name_pop <- paste(names_clean, ", Pop: ", top_4_pop_md_cities$pop, sep = "" )
+md_name_pop
+
+md_plot + 
+  geom_point(aes(x = long, y = lat, size=pop, shape=name, stroke = 1), data=top_4_pop_md_cities ) +
+    theme( legend.position = c(.25, .6), 
+           legend.background = element_blank(), 
+           legend.key = element_blank(), 
+           panel.background = element_blank(),
+           axis.text = element_blank(),
+           axis.ticks = element_blank()
+           ) +
+    scale_size( guide="none")+
+    labs( 
+          size="Cities",
+          title = "Maryland most populated cities",
+          y = element_blank(),
+          x = element_blank() ) +
+  
+    scale_shape_manual( name="Cities and Population",
+               labels=md_name_pop,
+               values=c(15,16,17,18 ),
+               )
+  
+
+
+
+
+md_plot + 
+  geom_point(aes(x = long, y = lat, size=pop), data=top_4_pop_md_cities ) +
+    theme( legend.position = c(.25, .6), 
+           legend.background = element_blank(), 
+           legend.key = element_blank(), 
+           panel.background = element_blank(),
+           axis.text = element_blank(),
+           axis.ticks = element_blank()
+           ) +
+    labs( 
+          size="Population",
+          title = "Maryland most populated cities",
+          y = element_blank(),
+          x = element_blank() 
+        ) +
+  geom_text( aes(x = long, y = lat, label = names_clean), color="black",
+             data=top_4_pop_md_cities, 
+             nudge_y = c(0, -.05, .07, -.05 ),
+             nudge_x = c(.32, 0, -.17, 0 )
+             )
+  
+
+  
+
+
+```
+#Pratical Example 
+## Read in the data
+```{r DownloadAndOpen, echo=FALSE}
+library(readr)
+
+# base API from CDC only allows for 1000 entries
+#  There is a larger data file available if exported from website
+# Data set description URL:
+#   https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/about_data
+#
+# For Direct download
+#   https://data.cdc.gov/resource/nxst-x9p4.csv 
+download.file( url = "https://data.cdc.gov/resource/cwsq-ngmh.csv",
+               destfile = "cdc_dataset.csv",
+               quiet = TRUE )
+
+csv_data = read_csv( "cdc_dataset.csv", show_col_types = FALSE )
+
+```
+
+## Inspect the dataset
+
+```{r Inspection, echo=FALSE}
+str(csv_data)
+```
+
+
+```{r ExploringData}
+
+# Look at number of measures and 
+csv_data %>% 
+  group_by(year, stateabbr ) %>% 
+  summarise(nMeasures = n_distinct(measure) )
+
+# Look at how many county have info per state 
+csv_data %>% 
+  filter( year == 2021  ) %>% 
+  group_by( stateabbr ) %>%
+  summarise(nCounty = n_distinct( countyname) )
+```
+
+
+```{r simplePlot}
+#Lets look at obesity data by county in AL
+obe_AL <- csv_data %>% 
+  filter( stateabbr == "AL", measure == "Obesity among adults aged >=18 years" )
+
+obe_AL
+
+#There are repeating entries for Jefferson, Coffee, Colbert, Calhoun
+#  Lets fix this and remove data from the data frame we don't want 
+obe_AL <- obe_AL %>% 
+  group_by(countyname) %>% 
+  summarise( data_value = mean( data_value) )
+
+
+#Lets plot it as a bar graph
+#First lets create the colors we want so it will be pretty
+colorCount = length(unique(obe_AL$countyname))          #Get number of colors needed
+getPalette = colorRampPalette(brewer.pal(8, "Dark2"))  #Set a palette function
+
+obe_AL %>% 
+  ggplot( aes(x=countyname, y=data_value, fill=factor(countyname) )  ) +
+  geom_bar(stat="identity", ) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), legend.position = "none", plot.title = element_text(hjust=0.5) ) + 
+  scale_fill_manual(values = getPalette(colorCount)) +
+  geom_text( aes(label = signif(data_value, 3), y=data_value/2), size=4, angle = 90) + 
+  labs( title="Alabama: Obesity among adults aged >=18 years") +
+  ylab("Pct") +
+  xlab("County")
+  
+
+
+```
+
+
+```{r}
+# Okay, that's great.. but we can do better... 
+# Lets plpot using geom_polygon
+
+
+#Get the county data
+mymap <- map_data("county")
+mymap <- mymap[mymap$region == "alabama", ]
+
+#Plot the outline of a map
+mymap %>%
+  ggplot( aes(x = long, y = lat) ) +
+  geom_polygon( aes(group = group), fill=NA, color="black") +
+  theme_void()+
+  theme(legend.position = "none") +
+  coord_quickmap()
+  
+
+```
+
+
+
+
+```{r}
+#Okay now lets plot the data for the counties we know
+#fix obe_AL countyname to be name
+
+obe_AL2 <- obe_AL %>%
+  rename( subregion=countyname) %>%
+  mutate( subregion= tolower(subregion) )
+
+mymap2 <- left_join(mymap, obe_AL2, by="subregion");
+
+
+```
+
+```{r}
+#Lets plot our Obesity percentage on counties that we have
+mymap2 %>%
+  ggplot( aes(x = long, y = lat) ) +
+  geom_polygon( aes(group = group, fill=data_value), color="black") +
+  theme_void()+
+  labs(fill="Obesity %") +
+  coord_quickmap()
+
+```
+
+```{r}
+
+library(tidyverse)
+library(sf)
+
+#create a polygon for each
+polygon <- mymap %>%
+  group_by(subregion, group) %>%
+  st_as_sf(coords = c("long", "lat"), crs = 4326) %>%
+  summarise(geometry = st_combine(geometry), .groups="keep")  %>%
+  st_cast("POLYGON")
+polygon
+
+#join to the rest of the 
+mymap3 <- left_join(polygon, obe_AL2, by="subregion");
+
+#plot as SF
+mymap3 %>%
+  ggplot() +
+  geom_sf( aes(group = group, fill=data_value), color="grey50" ) +
+  theme_void()+
+  coord_sf() +
+  scale_fill_gradient( name ="Obesity %", low="yellow", high="red", na.value = "grey95" ) +
+  geom_sf_text( aes( label= subregion, fontface="bold" ), 
+                data = subset(mymap3, !(is.na(mymap3$data_value) ) ),  #Only get the names for data I have!
+                nudge_y = c(0, .1, 0, 0, 0, -.1, 0, 0, 0, 0, 0, .1, 0, 0 )  # remove some of the overlap
+              )
+
+
+#tmp <- subset(mymap3, !( is.na(mymap3$data_value) ) )
+#tmp
+
+```
+
+#Fancy maps
+There are a few very nice map packages out there one of them is Leaflet. Leaflet is an open-source JavaScript library for interactive maps. I would encourage you to explore some of the examples and see what is possible. 
+
+https://rstudio.github.io/leaflet/
+
+
+Below is an example of a Choropleth map. ( The same kind we've been looking ).
+
+```{r}
+# From http://leafletjs.com/examples/choropleth/us-states.js
+states <- geojsonio::geojson_read("https://rstudio.github.io/leaflet/json/us-states.geojson", what = "sp")
+
+bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
+pal <- colorBin("YlOrRd", domain = states$density, bins = bins)
+
+labels <- sprintf(
+  "<strong>%s</strong><br/>%g people / mi<sup>2</sup>",
+  states$name, states$density
+) %>% lapply(htmltools::HTML)
+
+leaflet(states) %>%
+  setView(-96, 37.8, 4) %>%
+  addProviderTiles("MapBox", options = providerTileOptions(
+    id = "mapbox.light",
+    accessToken = Sys.getenv('MAPBOX_ACCESS_TOKEN'))) %>%
+  addPolygons(
+    fillColor = ~pal(density),
+    weight = 2,
+    opacity = 1,
+    color = "white",
+    dashArray = "3",
+    fillOpacity = 0.7,
+    highlightOptions = highlightOptions(
+      weight = 5,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE),
+    label = labels,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto")) %>%
+  addLegend(pal = pal, values = ~density, opacity = 0.7, title = NULL,
+    position = "bottomright")
+```
+
+
+>>>>>>> Stashed changes

@@ -1,0 +1,18 @@
+---
+title: "Question 2 answers"
+author: "Joanne Unite"
+date: "2024-04-02"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Test-Drop-Na file from tidyr 
+
+It is obvious that they would test the groups are preseved and error araise. It wasnt't obvious to me to test that the drop_na function works list columns.
+
+# Vignette file
+
+I looked at the in-packages.Rmd file. This file looks identical to what we have been learning how to do in R markdown. They have formatted sections, blocks of code, and detailed descriptions to accompany the code.

@@ -1,0 +1,12 @@
+---
+title: "Question2"
+author: "Isabella Czernia"
+date: "2024-04-03"
+output: html_document
+---
+
+One test that doesn't seem very obvious in drop_na is how to preserve data frame with only a single variable. I didn't realize that you have to be careful of how you use it depending on the size of your data frame.
+
+An obvious test for drop_na is to make sure that errors are raised if there are any. This is important, especially working with large data frames where you can't just go through to make sure it was done correctly.
+
+The "tidy data" markdown document is very similar to the markdown documents we have produced for class. It involves inserting code chunks into the document and then following it up with an analysis or explanation of the code chunk. Not all of the data sets are located in the vignette folder; some are built into RStudio.
