@@ -1,0 +1,4 @@
+addSelf                 Function takes one input, adds input to itself,
+                        and returns
+multSelf                Function takes one input, multiplies input to
+                        itself, and returns

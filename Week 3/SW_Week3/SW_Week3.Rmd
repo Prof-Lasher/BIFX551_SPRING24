@@ -1,0 +1,31 @@
+---
+title: "SW_week3"
+author: "Spencer Weed"
+date: "2024-04-11"
+output: html_document
+---
+
+## Reading in the file, and getitng a Summary
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+
+
+
+sampleData <- read.csv("https://gist.githubusercontent.com/kevin336/acbb2271e66c10a5b73aacf82ca82784/raw/e38afe62e088394d61ed30884dd50a6826eee0a8/employees.csv")
+
+summary(sampleData)
+```
+
+## Making the graph
+
+```{r cars}
+plot(sampleData$DEPARTMENT_ID,
+      sampleData$SALARY,
+      xlab="Department as classified by Department ID",
+      ylab = "Salary per Month",
+      main="Salary in relation to Department")
+```
